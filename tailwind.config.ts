@@ -12,8 +12,15 @@ export default {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ['DM Sans', 'sans-serif'],
+    },
     extend: {
       colors: {
+        "converter-result": {
+          bg: "hsl(var(--converter-result-bg))",
+          border: "hsl(var(--converter-result-border))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
