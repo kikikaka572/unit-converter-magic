@@ -84,18 +84,11 @@ const Index = () => {
               <label className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                 변환할 값
               </label>
-              <div className="flex gap-3">
-                <input
-                  type="number"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  className="flex-1 text-3xl sm:text-4xl font-bold text-foreground px-4 py-3 border border-input rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent tabular-nums"
-                  placeholder="0"
-                />
+              <div className="flex flex-col gap-2">
                 <select
                   value={fromUnit}
                   onChange={(e) => setFromUnit(e.target.value)}
-                  className="px-3 py-3 border border-input rounded-lg text-sm sm:text-base font-medium text-foreground bg-secondary hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent min-w-[100px]"
+                  className="w-full px-3 py-2.5 border border-input rounded-lg text-sm font-medium text-foreground bg-secondary hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                 >
                   {units.map((u) => (
                     <option key={u.key} value={u.key}>
@@ -103,6 +96,13 @@ const Index = () => {
                     </option>
                   ))}
                 </select>
+                <input
+                  type="number"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  className="w-full text-3xl sm:text-4xl font-bold text-foreground px-4 py-3 border border-input rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent tabular-nums"
+                  placeholder="0"
+                />
               </div>
             </div>
 
@@ -122,18 +122,11 @@ const Index = () => {
               <label className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                 결과
               </label>
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={result}
-                  readOnly
-                  className="flex-1 text-3xl sm:text-4xl font-bold text-primary px-4 py-3 border border-converter-result-border rounded-lg bg-converter-result-bg focus:outline-none tabular-nums"
-                  placeholder="—"
-                />
+              <div className="flex flex-col gap-2">
                 <select
                   value={toUnit}
                   onChange={(e) => setToUnit(e.target.value)}
-                  className="px-3 py-3 border border-input rounded-lg text-sm sm:text-base font-medium text-foreground bg-secondary hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent min-w-[100px]"
+                  className="w-full px-3 py-2.5 border border-input rounded-lg text-sm font-medium text-foreground bg-secondary hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                 >
                   {units.map((u) => (
                     <option key={u.key} value={u.key}>
@@ -141,6 +134,13 @@ const Index = () => {
                     </option>
                   ))}
                 </select>
+                <input
+                  type="text"
+                  value={result}
+                  readOnly
+                  className="w-full text-3xl sm:text-4xl font-bold text-primary px-4 py-3 border border-converter-result-border rounded-lg bg-converter-result-bg focus:outline-none tabular-nums"
+                  placeholder="—"
+                />
               </div>
             </div>
 
