@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -27,8 +28,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - name: Copy 404.html for SPA routing
-        run: cp dist/index.html dist/404.html
+      - name: Prepare SPA files for GitHub Pages
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
