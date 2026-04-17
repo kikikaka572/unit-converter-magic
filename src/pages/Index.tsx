@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { ArrowLeftRight } from "lucide-react";
+import LifeCalculators from "@/components/LifeCalculators";
 import {
   type Category,
   categories,
@@ -181,6 +182,8 @@ const Index = () => {
             </div>
           </div>
         </div>
+
+        <LifeCalculators />
       </div>
     </div>
   );
