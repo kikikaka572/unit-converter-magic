@@ -311,21 +311,29 @@ export default function LifeCalculators() {
 
   return (
     <section className="w-full">
-      <div className="flex flex-wrap gap-2 mb-4">
-        {lifeCalculators.map((c) => (
-          <button
-            key={c.key}
-            onClick={() => setActive(c.key)}
-            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 ${
-              active === c.key
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-secondary-foreground hover:bg-muted"
-            }`}
-          >
-            <span className="mr-1.5">{c.icon}</span>
-            {c.labelKo}
-          </button>
-        ))}
+      <div className="-mx-4 sm:mx-0 mb-4">
+        <div
+          className="flex gap-2 overflow-x-auto px-4 sm:px-0 pb-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          role="tablist"
+          aria-label="실생활 계산기 선택"
+        >
+          {lifeCalculators.map((c) => (
+            <button
+              key={c.key}
+              role="tab"
+              aria-selected={active === c.key}
+              onClick={() => setActive(c.key)}
+              className={`shrink-0 snap-start px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors duration-150 ${
+                active === c.key
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground hover:bg-muted"
+              }`}
+            >
+              <span className="mr-1">{c.icon}</span>
+              {c.labelKo}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="bg-card rounded-lg border border-border shadow-sm p-5 sm:p-8">
