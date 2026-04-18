@@ -23,6 +23,11 @@ export const lifeCalculators: LifeCalcMeta[] = [
   { key: 'parcel', icon: '📦', labelKo: '용량 → 택배 부피 무게', descKo: '가로·세로·높이로 부피무게(kg) 계산' },
   { key: 'interior', icon: '🏠', labelKo: '평수 → 인테리어 비용', descKo: '평수 기반 대략적인 인테리어 비용' },
   { key: 'serving', icon: '🍗', labelKo: '인분 → g 환산', descKo: '음식 종류별 인분당 그램 환산' },
+  { key: 'electricity', icon: '💡', labelKo: '전기 사용량 → 요금', descKo: '월 kWh 사용량으로 전기요금 추정' },
+  { key: 'water', icon: '🚿', labelKo: '수도 사용량 → 요금', descKo: '월 m³ 사용량으로 수도요금 추정' },
+  { key: 'gas', icon: '🔥', labelKo: '가스 사용량 → 요금', descKo: '월 m³ 사용량으로 도시가스 요금 추정' },
+  { key: 'moving', icon: '🚚', labelKo: '이사 거리 → 예상 비용', descKo: '거리·평수·이사 종류별 예상 비용' },
+  { key: 'dday', icon: '📅', labelKo: '날짜 → D-day', descKo: '두 날짜 사이의 남은/지난 일수 계산' },
 ];
 
 // 월급 → 시급
