@@ -18,19 +18,19 @@ export interface LifeCalcMeta {
 }
 
 export const lifeCalculators: LifeCalcMeta[] = [
-  { key: 'salary', icon: '💰', labelKo: '월급 → 시급', descKo: '월급을 시급으로 환산' },
-  { key: 'fuel', icon: '🚗', labelKo: '주행거리 → 연료비', descKo: '주행거리 기반 예상 연료비' },
-  { key: 'parcel', icon: '📦', labelKo: '용량 → 택배 부피 무게', descKo: '가로·세로·높이로 부피무게(kg) 계산' },
-  { key: 'interior', icon: '🏠', labelKo: '평수 → 인테리어 비용', descKo: '평수 기반 대략적인 인테리어 비용' },
-  { key: 'serving', icon: '🍗', labelKo: '인분 → g 환산', descKo: '음식 종류별 인분당 그램 환산' },
-  { key: 'electricity', icon: '💡', labelKo: '전기 사용량 → 요금', descKo: '월 kWh 사용량으로 전기요금 추정' },
-  { key: 'water', icon: '🚿', labelKo: '수도 사용량 → 요금', descKo: '월 m³ 사용량으로 수도요금 추정' },
-  { key: 'gas', icon: '🔥', labelKo: '가스 사용량 → 요금', descKo: '월 m³ 사용량으로 도시가스 요금 추정' },
-  { key: 'moving', icon: '🚚', labelKo: '이사 거리 → 예상 비용', descKo: '거리·평수·이사 종류별 예상 비용' },
-  { key: 'dday', icon: '📅', labelKo: '날짜 → D-day', descKo: '두 날짜 사이의 남은/지난 일수 계산' },
+  { key: 'salary', icon: '💰', labelKo: '시급계산', descKo: '월급을 시급으로 환산' },
+  { key: 'fuel', icon: '🚗', labelKo: '차량연료비', descKo: '주행거리 기반 예상 연료비' },
+  { key: 'parcel', icon: '📦', labelKo: '택배요금계산', descKo: '가로·세로·높이로 부피무게(kg) 계산' },
+  { key: 'interior', icon: '🏠', labelKo: '인테리어비용', descKo: '평수 기반 대략적인 인테리어 비용' },
+  { key: 'serving', icon: '🍗', labelKo: '몇인분계산', descKo: '음식 종류별 인분당 그램 환산' },
+  { key: 'electricity', icon: '💡', labelKo: '전기요금계산', descKo: '월 kWh 사용량으로 전기요금 추정' },
+  { key: 'water', icon: '🚿', labelKo: '수도요금계산', descKo: '월 m³ 사용량으로 수도요금 추정' },
+  { key: 'gas', icon: '🔥', labelKo: '가스요금계산', descKo: '월 m³ 사용량으로 도시가스 요금 추정' },
+  { key: 'moving', icon: '🚚', labelKo: '이사비용계산', descKo: '거리·평수·이사 종류별 예상 비용' },
+  { key: 'dday', icon: '📅', labelKo: 'D-day계산', descKo: '두 날짜 사이의 남은/지난 일수 계산' },
 ];
 
-// 월급 → 시급
+// 시급계산
 export function calcHourlyWage(monthlySalary: number, weeklyHours: number): number {
   // 주당 시간 × 4.345주 = 월 근무시간
   const monthlyHours = weeklyHours * 4.345;
@@ -38,7 +38,7 @@ export function calcHourlyWage(monthlySalary: number, weeklyHours: number): numb
   return monthlySalary / monthlyHours;
 }
 
-// 주행거리 → 예상 연료비
+// 치량연료비
 export function calcFuelCost(distanceKm: number, fuelEfficiency: number, fuelPrice: number): number {
   // 연비(km/L), 유가(원/L)
   if (fuelEfficiency <= 0) return 0;
@@ -46,17 +46,17 @@ export function calcFuelCost(distanceKm: number, fuelEfficiency: number, fuelPri
   return liters * fuelPrice;
 }
 
-// 택배 부피무게 (cm 기준, 부피무게 = (가로×세로×높이) / 6000 kg, 국제 표준)
+// 택배요금계산 (cm 기준, 부피무게 = (가로×세로×높이) / 6000 kg, 국제 표준)
 export function calcParcelVolumetricWeight(w: number, h: number, d: number, divisor = 6000): number {
   return (w * h * d) / divisor;
 }
 
-// 평수 → 인테리어 비용 (평당 단가)
+// 인테리어비용 (평당 단가)
 export function calcInteriorCost(pyeong: number, pricePerPyeong: number): number {
   return pyeong * pricePerPyeong;
 }
 
-// 인분 → g
+// 몇인분계산
 export const servingPresets: Record<string, { labelKo: string; gramsPerServing: number }> = {
   rice: { labelKo: '밥', gramsPerServing: 210 },
   noodle: { labelKo: '면(생면)', gramsPerServing: 150 },
@@ -84,7 +84,7 @@ export function formatDecimal(n: number, digits = 2): string {
   return n.toLocaleString('ko-KR', { maximumFractionDigits: digits });
 }
 
-// 전기요금 (한전 주택용 저압 누진제 간이 계산, 부가세·기금 포함 대략치)
+// 전기요금계산 (한전 주택용 저압 누진제 간이 계산, 부가세·기금 포함 대략치)
 export function calcElectricityBill(kwh: number): { base: number; usage: number; total: number; tier: string } {
   if (kwh <= 0) return { base: 0, usage: 0, total: 0, tier: '-' };
   let base = 0;
@@ -108,7 +108,7 @@ export function calcElectricityBill(kwh: number): { base: number; usage: number;
   return { base, usage, total, tier };
 }
 
-// 수도요금 (서울시 가정용 누진 간이 계산, 원/m³, 상수도+하수도+물이용부담금)
+// 수도요금계산 (서울시 가정용 누진 간이 계산, 원/m³, 상수도+하수도+물이용부담금)
 export function calcWaterBill(cubicMeters: number): { water: number; sewer: number; fund: number; total: number } {
   if (cubicMeters <= 0) return { water: 0, sewer: 0, fund: 0, total: 0 };
   // 상수도 누진 (가정용)
@@ -127,13 +127,13 @@ export function calcWaterBill(cubicMeters: number): { water: number; sewer: numb
   return { water, sewer, fund, total };
 }
 
-// 도시가스 요금 (간이, 원/m³ 기준 단가 적용 + 기본요금)
+// 가스요금계산 (간이, 원/m³ 기준 단가 적용 + 기본요금)
 export function calcGasBill(cubicMeters: number, unitPrice: number, baseFee: number): number {
   if (cubicMeters < 0) return 0;
   return baseFee + cubicMeters * unitPrice;
 }
 
-// 이사 비용 (km당 단가 + 평수 단가 + 기본료)
+// 이사비용계산 (km당 단가 + 평수 단가 + 기본료)
 export const movingTypes: Record<string, { labelKo: string; baseFee: number; perPyeong: number; perKm: number }> = {
   general: { labelKo: '일반이사 (포장X)', baseFee: 200000, perPyeong: 30000, perKm: 2000 },
   semi: { labelKo: '반포장이사', baseFee: 400000, perPyeong: 50000, perKm: 2500 },
@@ -146,7 +146,7 @@ export function calcMovingCost(distanceKm: number, pyeong: number, type: string)
   return m.baseFee + m.perPyeong * pyeong + m.perKm * distanceKm;
 }
 
-// D-day 계산
+// D-day계산
 export function calcDday(targetDate: string): { days: number; label: string } {
   if (!targetDate) return { days: 0, label: '-' };
   const target = new Date(targetDate);
