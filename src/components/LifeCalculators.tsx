@@ -314,24 +314,33 @@ const calcMap: Record<LifeCalcKey, () => JSX.Element> = {
 
 export default function LifeCalculators() {
   const [active, setActive] = useState<LifeCalcKey>("salary");
+  const [open, setOpen] = useState(false);
   const ActiveCalc = calcMap[active];
   const meta = lifeCalculators.find((c) => c.key === active)!;
 
+  // 활성 항목은 항상 노출되도록 앞쪽에 보이게 정렬
+  const visibleCount = 4;
+  const ordered = [
+    ...lifeCalculators.filter((c) => c.key === active),
+    ...lifeCalculators.filter((c) => c.key !== active),
+  ];
+  const visible = ordered.slice(0, visibleCount);
+
   return (
     <section className="w-full">
-      <div className="-mx-4 sm:mx-0 mb-4">
+      <div className="mb-4 flex items-center gap-2">
         <div
-          className="flex gap-2 overflow-x-auto px-4 sm:px-0 pb-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          className="flex-1 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           role="tablist"
           aria-label="실생활 계산기 선택"
         >
-          {lifeCalculators.map((c) => (
+          {visible.map((c) => (
             <button
               key={c.key}
               role="tab"
               aria-selected={active === c.key}
               onClick={() => setActive(c.key)}
-              className={`shrink-0 snap-start px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors duration-150 ${
+              className={`shrink-0 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors duration-150 ${
                 active === c.key
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary text-secondary-foreground hover:bg-muted"
@@ -342,6 +351,43 @@ export default function LifeCalculators() {
             </button>
           ))}
         </div>
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <button
+              type="button"
+              aria-label="전체 계산기 보기"
+              className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium bg-secondary text-secondary-foreground hover:bg-muted transition-colors"
+            >
+              <MoreHorizontal className="w-4 h-4" />
+              더보기
+            </button>
+          </DialogTrigger>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>실생활 계산기</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              {lifeCalculators.map((c) => (
+                <button
+                  key={c.key}
+                  onClick={() => {
+                    setActive(c.key);
+                    setOpen(false);
+                  }}
+                  className={`flex items-center gap-2 px-3 py-3 rounded-lg text-sm font-medium text-left transition-colors ${
+                    active === c.key
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary text-secondary-foreground hover:bg-muted"
+                  }`}
+                >
+                  <span className="text-lg">{c.icon}</span>
+                  <span className="truncate">{c.labelKo}</span>
+                </button>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="bg-card rounded-lg border border-border shadow-sm p-5 sm:p-8">
