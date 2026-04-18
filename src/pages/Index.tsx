@@ -1,6 +1,7 @@
 import { useState } from "react";
 import UnitConverter from "@/components/UnitConverter";
 import LifeCalculators from "@/components/LifeCalculators";
+import ShareButton from "@/components/ShareButton";
 
 type MainTab = "converter" | "life";
 
@@ -13,15 +14,18 @@ const Index = () => {
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
           {/* Header */}
-          <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-              {tab === "converter" ? "단위 환산 계산기" : "실생활 계산기"}
-            </h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              {tab === "converter"
-                ? "간편하고 정확한 단위 변환"
-                : "일상에서 자주 쓰는 빠른 계산"}
-            </p>
+          <div className="mb-6 sm:mb-8 flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+                {tab === "converter" ? "단위 환산 계산기" : "실생활 계산기"}
+              </h1>
+              <p className="text-muted-foreground text-sm mt-1">
+                {tab === "converter"
+                  ? "간편하고 정확한 단위 변환"
+                  : "일상에서 자주 쓰는 빠른 계산"}
+              </p>
+            </div>
+            <ShareButton />
           </div>
 
           {/* Main tab switcher */}
