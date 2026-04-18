@@ -8,6 +8,12 @@ import {
   calcInteriorCost,
   calcServingGrams,
   servingPresets,
+  calcElectricityBill,
+  calcWaterBill,
+  calcGasBill,
+  calcMovingCost,
+  movingTypes,
+  calcDday,
   formatKRW,
   formatDecimal,
 } from "@/lib/lifeCalculators";
@@ -179,12 +185,123 @@ function ServingCalc() {
   );
 }
 
+function ElectricityCalc() {
+  const [kwh, setKwh] = useState("300");
+  const r = calcElectricityBill(parseFloat(kwh) || 0);
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className={labelClass}>월 사용량 (kWh)</label>
+        <input type="number" value={kwh} onChange={(e) => setKwh(e.target.value)} className={inputClass} />
+      </div>
+      <ResultBox label={`예상 전기요금 (${r.tier})`} value={formatKRW(r.total)} unit="원" />
+      <p className="text-xs text-muted-foreground text-center">
+        기본 {formatKRW(r.base)}원 + 사용 {formatKRW(r.usage)}원 (부가세·기금 포함)
+      </p>
+      <p className="text-xs text-muted-foreground text-center">※ 한전 주택용 저압 누진제 기반 추정치</p>
+    </div>
+  );
+}
+
+function WaterCalc() {
+  const [m3, setM3] = useState("20");
+  const r = calcWaterBill(parseFloat(m3) || 0);
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className={labelClass}>월 사용량 (m³)</label>
+        <input type="number" value={m3} onChange={(e) => setM3(e.target.value)} className={inputClass} />
+      </div>
+      <ResultBox label="예상 수도요금" value={formatKRW(r.total)} unit="원" />
+      <p className="text-xs text-muted-foreground text-center">
+        상수도 {formatKRW(r.water)} + 하수도 {formatKRW(r.sewer)} + 물이용부담금 {formatKRW(r.fund)}
+      </p>
+      <p className="text-xs text-muted-foreground text-center">※ 서울시 가정용 누진 단가 기반 추정치</p>
+    </div>
+  );
+}
+
+function GasCalc() {
+  const [m3, setM3] = useState("50");
+  const [unit, setUnit] = useState("1100");
+  const [base, setBase] = useState("1000");
+  const cost = calcGasBill(parseFloat(m3) || 0, parseFloat(unit) || 0, parseFloat(base) || 0);
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className={labelClass}>월 사용량 (m³)</label>
+        <input type="number" value={m3} onChange={(e) => setM3(e.target.value)} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>단가 (원/m³)</label>
+        <input type="number" value={unit} onChange={(e) => setUnit(e.target.value)} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>기본요금 (원)</label>
+        <input type="number" value={base} onChange={(e) => setBase(e.target.value)} className={inputClass} />
+      </div>
+      <ResultBox label="예상 가스요금" value={formatKRW(cost)} unit="원" />
+      <p className="text-xs text-muted-foreground text-center">※ 지역·계절별 단가가 다르니 고지서 단가를 입력하면 정확합니다</p>
+    </div>
+  );
+}
+
+function MovingCalc() {
+  const [distance, setDistance] = useState("30");
+  const [pyeong, setPyeong] = useState("20");
+  const [type, setType] = useState("full");
+  const cost = calcMovingCost(parseFloat(distance) || 0, parseFloat(pyeong) || 0, type);
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className={labelClass}>이사 거리 (km)</label>
+        <input type="number" value={distance} onChange={(e) => setDistance(e.target.value)} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>평수</label>
+        <input type="number" value={pyeong} onChange={(e) => setPyeong(e.target.value)} className={inputClass} />
+      </div>
+      <div>
+        <label className={labelClass}>이사 종류</label>
+        <select value={type} onChange={(e) => setType(e.target.value)} className={selectClass}>
+          {Object.entries(movingTypes).map(([k, v]) => (
+            <option key={k} value={k}>{v.labelKo}</option>
+          ))}
+        </select>
+      </div>
+      <ResultBox label="예상 이사 비용" value={formatKRW(cost)} unit="원" />
+      <p className="text-xs text-muted-foreground text-center">※ 시즌·층수·짐량에 따라 실제 견적과 차이가 있을 수 있습니다</p>
+    </div>
+  );
+}
+
+function DdayCalc() {
+  const today = new Date().toISOString().slice(0, 10);
+  const [date, setDate] = useState(today);
+  const r = calcDday(date);
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className={labelClass}>목표 날짜</label>
+        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className={inputClass} />
+      </div>
+      <ResultBox label={r.label} value={formatDecimal(Math.abs(r.days), 0)} unit={r.days >= 0 ? "일 남음" : "일 지남"} />
+      <p className="text-xs text-muted-foreground text-center">오늘 기준 {date} 까지의 일수</p>
+    </div>
+  );
+}
+
 const calcMap: Record<LifeCalcKey, () => JSX.Element> = {
   salary: SalaryCalc,
   fuel: FuelCalc,
   parcel: ParcelCalc,
   interior: InteriorCalc,
   serving: ServingCalc,
+  electricity: ElectricityCalc,
+  water: WaterCalc,
+  gas: GasCalc,
+  moving: MovingCalc,
+  dday: DdayCalc,
 };
 
 export default function LifeCalculators() {
