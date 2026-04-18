@@ -310,16 +310,7 @@ export default function LifeCalculators() {
   const meta = lifeCalculators.find((c) => c.key === active)!;
 
   return (
-    <section className="w-full max-w-2xl mt-10">
-      <div className="mb-4">
-        <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
-          실생활 계산기
-        </h2>
-        <p className="text-muted-foreground text-sm mt-1">
-          일상에서 자주 쓰는 빠른 계산
-        </p>
-      </div>
-
+    <section className="w-full">
       <div className="flex flex-wrap gap-2 mb-4">
         {lifeCalculators.map((c) => (
           <button
