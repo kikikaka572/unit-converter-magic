@@ -56,15 +56,13 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Bottom ad slot */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur border-t border-border">
+      {/* Bottom ad slot (영역만 확보) */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
         <div
           id="ad-slot-bottom"
-          className="mx-auto max-w-2xl h-[60px] sm:h-[90px] flex items-center justify-center text-xs text-muted-foreground"
+          className="mx-auto max-w-2xl h-[60px] sm:h-[90px]"
           aria-label="광고 영역"
-        >
-          광고 영역 (728×90 / 320×50)
-        </div>
+        />
       </div>
     </div>
   );
