@@ -1,4 +1,14 @@
-export type LifeCalcKey = 'salary' | 'fuel' | 'parcel' | 'interior' | 'serving';
+export type LifeCalcKey =
+  | 'salary'
+  | 'fuel'
+  | 'parcel'
+  | 'interior'
+  | 'serving'
+  | 'electricity'
+  | 'water'
+  | 'gas'
+  | 'moving'
+  | 'dday';
 
 export interface LifeCalcMeta {
   key: LifeCalcKey;
