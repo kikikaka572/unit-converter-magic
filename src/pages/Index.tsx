@@ -60,6 +60,21 @@ const Index = () => {
         </div>
       </main>
 
+      {/* Side ad slot - PC only (카카오 애드핏 세로 160x600) */}
+      <aside
+        className="hidden xl:block fixed top-1/2 -translate-y-1/2 z-40"
+        style={{ right: "max(1rem, calc((100vw - 42rem) / 2 - 180px))" }}
+        aria-label="사이드 광고 영역"
+      >
+        <ins
+          className="kakao_ad_area"
+          style={{ display: "none" }}
+          data-ad-unit="DAN-T9XQ5UbtP5nbv77q"
+          data-ad-width="160"
+          data-ad-height="600"
+        />
+      </aside>
+
       {/* Bottom ad slot (카카오 애드핏) */}
       <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
         <div
