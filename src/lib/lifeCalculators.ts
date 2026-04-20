@@ -56,22 +56,31 @@ export function calcInteriorCost(pyeong: number, pricePerPyeong: number): number
   return pyeong * pricePerPyeong;
 }
 
-// 몇인분계산
-export const servingPresets: Record<string, { labelKo: string; gramsPerServing: number }> = {
-  rice: { labelKo: '밥', gramsPerServing: 210 },
-  noodle: { labelKo: '면(생면)', gramsPerServing: 150 },
-  pasta: { labelKo: '파스타(건면)', gramsPerServing: 100 },
-  meat: { labelKo: '고기', gramsPerServing: 150 },
-  chicken: { labelKo: '닭고기', gramsPerServing: 200 },
-  fish: { labelKo: '생선', gramsPerServing: 120 },
-  vegetable: { labelKo: '채소', gramsPerServing: 100 },
-  soup: { labelKo: '국·찌개', gramsPerServing: 300 },
+// 칼로리계산 (음식 종류별 1인분 기준 칼로리)
+export const caloriePresets: Record<string, { labelKo: string; kcalPerServing: number; servingDescKo: string }> = {
+  rice: { labelKo: '밥', kcalPerServing: 310, servingDescKo: '공기 (210g)' },
+  ramen: { labelKo: '라면', kcalPerServing: 500, servingDescKo: '1봉지' },
+  noodle: { labelKo: '국수·잔치국수', kcalPerServing: 450, servingDescKo: '1그릇' },
+  pasta: { labelKo: '파스타', kcalPerServing: 600, servingDescKo: '1접시' },
+  bread: { labelKo: '식빵', kcalPerServing: 130, servingDescKo: '1쪽' },
+  pizza: { labelKo: '피자', kcalPerServing: 280, servingDescKo: '1조각' },
+  chicken: { labelKo: '치킨', kcalPerServing: 250, servingDescKo: '1조각' },
+  burger: { labelKo: '햄버거', kcalPerServing: 500, servingDescKo: '1개' },
+  pork: { labelKo: '삼겹살', kcalPerServing: 330, servingDescKo: '100g' },
+  beef: { labelKo: '소고기', kcalPerServing: 250, servingDescKo: '100g' },
+  egg: { labelKo: '달걀', kcalPerServing: 75, servingDescKo: '1개' },
+  apple: { labelKo: '사과', kcalPerServing: 95, servingDescKo: '1개 (200g)' },
+  banana: { labelKo: '바나나', kcalPerServing: 90, servingDescKo: '1개' },
+  milk: { labelKo: '우유', kcalPerServing: 130, servingDescKo: '1잔 (200ml)' },
+  coke: { labelKo: '콜라', kcalPerServing: 100, servingDescKo: '1캔 (250ml)' },
+  beer: { labelKo: '맥주', kcalPerServing: 150, servingDescKo: '1캔 (355ml)' },
+  soju: { labelKo: '소주', kcalPerServing: 360, servingDescKo: '1병 (360ml)' },
 };
 
-export function calcServingGrams(servings: number, foodKey: string): number {
-  const preset = servingPresets[foodKey];
+export function calcCalories(servings: number, foodKey: string): number {
+  const preset = caloriePresets[foodKey];
   if (!preset) return 0;
-  return servings * preset.gramsPerServing;
+  return servings * preset.kcalPerServing;
 }
 
 export function formatKRW(n: number): string {
