@@ -13,6 +13,8 @@ import {
   calcHourlyWage,
   calcFuelCost,
   calcParcelVolumetricWeight,
+  calcParcelFee,
+  parcelCarriers,
   calcInteriorCost,
   calcCalories,
   caloriePresets,
@@ -94,13 +96,19 @@ function ParcelCalc() {
   const [w, setW] = useState("30");
   const [h, setH] = useState("20");
   const [d, setD] = useState("15");
+  const [actualWeight, setActualWeight] = useState("3");
+  const [carrier, setCarrier] = useState("cj");
   const [divisor, setDivisor] = useState("6000");
-  const vol = calcParcelVolumetricWeight(
-    parseFloat(w) || 0,
-    parseFloat(h) || 0,
-    parseFloat(d) || 0,
-    parseFloat(divisor) || 6000
-  );
+
+  const wn = parseFloat(w) || 0;
+  const hn = parseFloat(h) || 0;
+  const dn = parseFloat(d) || 0;
+  const aw = parseFloat(actualWeight) || 0;
+  const div = parseFloat(divisor) || 6000;
+
+  const vol = calcParcelVolumetricWeight(wn, hn, dn, div);
+  const fee = calcParcelFee(wn, hn, dn, aw, carrier, div);
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-3 gap-3">
@@ -117,16 +125,47 @@ function ParcelCalc() {
           <input type="number" value={d} onChange={(e) => setD(e.target.value)} className={inputClass} />
         </div>
       </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className={labelClass}>실제 무게 (kg)</label>
+          <input type="number" step="0.1" value={actualWeight} onChange={(e) => setActualWeight(e.target.value)} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>부피무게 계수</label>
+          <select value={divisor} onChange={(e) => setDivisor(e.target.value)} className={selectClass}>
+            <option value="6000">국제 표준 (6000)</option>
+            <option value="5000">항공 특송 (5000)</option>
+            <option value="8000">국내 택배 (8000)</option>
+          </select>
+        </div>
+      </div>
       <div>
-        <label className={labelClass}>부피무게 계수</label>
-        <select value={divisor} onChange={(e) => setDivisor(e.target.value)} className={selectClass}>
-          <option value="6000">국제 표준 (6000)</option>
-          <option value="5000">항공 특송 (5000)</option>
-          <option value="8000">국내 택배 (8000)</option>
+        <label className={labelClass}>택배사</label>
+        <select value={carrier} onChange={(e) => setCarrier(e.target.value)} className={selectClass}>
+          {Object.entries(parcelCarriers).map(([k, v]) => (
+            <option key={k} value={k}>{v.labelKo}</option>
+          ))}
         </select>
       </div>
-      <ResultBox label="부피 무게" value={formatDecimal(vol, 2)} unit="kg" />
-      <p className="text-xs text-muted-foreground text-center">부피무게 = (가로 × 세로 × 높이) ÷ {divisor}</p>
+      <ResultBox
+        label={`예상 택배요금 (${fee.sizeLabel}${fee.oversize ? ' · 추가요금 발생' : ''})`}
+        value={formatKRW(fee.price)}
+        unit="원"
+      />
+      <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+        <div className="bg-secondary rounded-md px-3 py-2">
+          <div className="text-[10px] uppercase tracking-wider mb-0.5">부피무게</div>
+          <div className="font-semibold text-foreground tabular-nums">{formatDecimal(vol, 2)} kg</div>
+        </div>
+        <div className="bg-secondary rounded-md px-3 py-2">
+          <div className="text-[10px] uppercase tracking-wider mb-0.5">3변 합</div>
+          <div className="font-semibold text-foreground tabular-nums">{formatDecimal(fee.sumCm, 0)} cm</div>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground text-center">
+        적용 무게 {formatDecimal(fee.applyWeightKg, 2)}kg (실무게·부피무게 중 큰 값)
+      </p>
+      <p className="text-xs text-muted-foreground text-center">※ 택배사 표준 운임 기반 추정치, 실제 요금은 계약·지역에 따라 다릅니다</p>
     </div>
   );
 }

@@ -51,6 +51,103 @@ export function calcParcelVolumetricWeight(w: number, h: number, d: number, divi
   return (w * h * d) / divisor;
 }
 
+// 택배사별 요금표 (국내 일반 택배 기준, 무게 + 3변 합 기준 중 큰 쪽 적용)
+// 요금은 2025년 기준 평균 단가 (실제 요금은 계약·지역에 따라 다름)
+export interface ParcelRateRow {
+  maxWeightKg: number; // 이하
+  maxSumCm: number; // 가로+세로+높이 이하
+  sizeLabel: string;
+  price: number;
+}
+
+export const parcelCarriers: Record<string, { labelKo: string; rates: ParcelRateRow[] }> = {
+  cj: {
+    labelKo: 'CJ대한통운',
+    rates: [
+      { maxWeightKg: 2, maxSumCm: 80, sizeLabel: '극소형', price: 4000 },
+      { maxWeightKg: 5, maxSumCm: 100, sizeLabel: '소형', price: 5000 },
+      { maxWeightKg: 10, maxSumCm: 120, sizeLabel: '중형', price: 6000 },
+      { maxWeightKg: 20, maxSumCm: 140, sizeLabel: '대형', price: 8000 },
+      { maxWeightKg: 30, maxSumCm: 160, sizeLabel: '특대형', price: 10000 },
+    ],
+  },
+  hanjin: {
+    labelKo: '한진택배',
+    rates: [
+      { maxWeightKg: 2, maxSumCm: 80, sizeLabel: '극소형', price: 4000 },
+      { maxWeightKg: 5, maxSumCm: 100, sizeLabel: '소형', price: 5000 },
+      { maxWeightKg: 10, maxSumCm: 120, sizeLabel: '중형', price: 6500 },
+      { maxWeightKg: 20, maxSumCm: 140, sizeLabel: '대형', price: 8500 },
+      { maxWeightKg: 30, maxSumCm: 160, sizeLabel: '특대형', price: 11000 },
+    ],
+  },
+  lotte: {
+    labelKo: '롯데택배',
+    rates: [
+      { maxWeightKg: 2, maxSumCm: 80, sizeLabel: '극소형', price: 4000 },
+      { maxWeightKg: 5, maxSumCm: 100, sizeLabel: '소형', price: 5500 },
+      { maxWeightKg: 10, maxSumCm: 120, sizeLabel: '중형', price: 7000 },
+      { maxWeightKg: 20, maxSumCm: 140, sizeLabel: '대형', price: 9000 },
+      { maxWeightKg: 30, maxSumCm: 160, sizeLabel: '특대형', price: 11500 },
+    ],
+  },
+  post: {
+    labelKo: '우체국택배',
+    rates: [
+      { maxWeightKg: 2, maxSumCm: 80, sizeLabel: '극소형', price: 4500 },
+      { maxWeightKg: 5, maxSumCm: 100, sizeLabel: '소형', price: 6000 },
+      { maxWeightKg: 10, maxSumCm: 120, sizeLabel: '중형', price: 7500 },
+      { maxWeightKg: 20, maxSumCm: 140, sizeLabel: '대형', price: 9500 },
+      { maxWeightKg: 30, maxSumCm: 160, sizeLabel: '특대형', price: 12000 },
+    ],
+  },
+};
+
+export interface ParcelFeeResult {
+  applyWeightKg: number; // 적용 무게 (실무게 vs 부피무게 중 큰 값)
+  sumCm: number;
+  sizeLabel: string;
+  price: number;
+  oversize: boolean;
+}
+
+export function calcParcelFee(
+  w: number,
+  h: number,
+  d: number,
+  actualWeightKg: number,
+  carrierKey: string,
+  divisor = 6000
+): ParcelFeeResult {
+  const carrier = parcelCarriers[carrierKey];
+  const volumetric = calcParcelVolumetricWeight(w, h, d, divisor);
+  const applyWeightKg = Math.max(volumetric, actualWeightKg);
+  const sumCm = w + h + d;
+  if (!carrier) {
+    return { applyWeightKg, sumCm, sizeLabel: '-', price: 0, oversize: false };
+  }
+  const matched = carrier.rates.find(
+    (r) => applyWeightKg <= r.maxWeightKg && sumCm <= r.maxSumCm
+  );
+  if (!matched) {
+    const last = carrier.rates[carrier.rates.length - 1];
+    return {
+      applyWeightKg,
+      sumCm,
+      sizeLabel: '규격 외',
+      price: last.price,
+      oversize: true,
+    };
+  }
+  return {
+    applyWeightKg,
+    sumCm,
+    sizeLabel: matched.sizeLabel,
+    price: matched.price,
+    oversize: false,
+  };
+}
+
 // 인테리어비용 (평당 단가)
 export function calcInteriorCost(pyeong: number, pricePerPyeong: number): number {
   return pyeong * pricePerPyeong;
