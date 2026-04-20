@@ -14,8 +14,8 @@ import {
   calcFuelCost,
   calcParcelVolumetricWeight,
   calcInteriorCost,
-  calcServingGrams,
-  servingPresets,
+  calcCalories,
+  caloriePresets,
   calcElectricityBill,
   calcWaterBill,
   calcGasBill,
@@ -166,28 +166,29 @@ function InteriorCalc() {
 }
 
 function ServingCalc() {
-  const [servings, setServings] = useState("2");
+  const [servings, setServings] = useState("1");
   const [food, setFood] = useState("rice");
-  const grams = calcServingGrams(parseFloat(servings) || 0, food);
+  const kcal = calcCalories(parseFloat(servings) || 0, food);
+  const preset = caloriePresets[food];
   return (
     <div className="space-y-4">
       <div>
         <label className={labelClass}>음식 종류</label>
         <select value={food} onChange={(e) => setFood(e.target.value)} className={selectClass}>
-          {Object.entries(servingPresets).map(([k, v]) => (
+          {Object.entries(caloriePresets).map(([k, v]) => (
             <option key={k} value={k}>
-              {v.labelKo} (1인분 {v.gramsPerServing}g)
+              {v.labelKo} ({v.servingDescKo} · {v.kcalPerServing}kcal)
             </option>
           ))}
         </select>
       </div>
       <div>
-        <label className={labelClass}>인분 수</label>
-        <input type="number" value={servings} onChange={(e) => setServings(e.target.value)} className={inputClass} />
+        <label className={labelClass}>섭취량 (인분/개수)</label>
+        <input type="number" step="0.5" value={servings} onChange={(e) => setServings(e.target.value)} className={inputClass} />
       </div>
-      <ResultBox label="총 분량" value={formatDecimal(grams, 0)} unit="g" />
+      <ResultBox label="총 칼로리" value={formatDecimal(kcal, 0)} unit="kcal" />
       <p className="text-xs text-muted-foreground text-center">
-        {servingPresets[food].labelKo} 1인분 기준 {servingPresets[food].gramsPerServing}g
+        {preset.labelKo} {preset.servingDescKo} 기준 {preset.kcalPerServing}kcal
       </p>
     </div>
   );
