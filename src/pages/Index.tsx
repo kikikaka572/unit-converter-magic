@@ -60,13 +60,21 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Bottom ad slot (영역만 확보) */}
+      {/* Bottom ad slot (카카오 애드핏) */}
       <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
         <div
           id="ad-slot-bottom"
-          className="mx-auto max-w-2xl h-[60px] sm:h-[90px]"
+          className="mx-auto max-w-2xl h-[60px] sm:h-[90px] flex items-center justify-center pointer-events-auto"
           aria-label="광고 영역"
-        />
+        >
+          <ins
+            className="kakao_ad_area"
+            style={{ display: "none" }}
+            data-ad-unit="DAN-6tTcPC6UlHze0Mjr"
+            data-ad-width="320"
+            data-ad-height="50"
+          />
+        </div>
       </div>
     </div>
   );
