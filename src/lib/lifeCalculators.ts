@@ -83,33 +83,6 @@ export function formatDecimal(n: number, digits = 2): string {
   if (!isFinite(n)) return '0';
   return n.toLocaleString('ko-KR', { maximumFractionDigits: digits });
 }
-}// 몇인분계산
-export const servingPresets: Record<string, { labelKo: string; gramsPerServing: number }> = {
-  rice: { labelKo: '밥', gramsPerServing: 210 },
-  noodle: { labelKo: '면(생면)', gramsPerServing: 150 },
-  pasta: { labelKo: '파스타(건면)', gramsPerServing: 100 },
-  meat: { labelKo: '고기', gramsPerServing: 150 },
-  chicken: { labelKo: '닭고기', gramsPerServing: 200 },
-  fish: { labelKo: '생선', gramsPerServing: 120 },
-  vegetable: { labelKo: '채소', gramsPerServing: 100 },
-  soup: { labelKo: '국·찌개', gramsPerServing: 300 },
-};
-
-export function calcServingGrams(servings: number, foodKey: string): number {
-  const preset = servingPresets[foodKey];
-  if (!preset) return 0;
-  return servings * preset.gramsPerServing;
-}
-
-export function formatKRW(n: number): string {
-  if (!isFinite(n)) return '0';
-  return Math.round(n).toLocaleString('ko-KR');
-}
-
-export function formatDecimal(n: number, digits = 2): string {
-  if (!isFinite(n)) return '0';
-  return n.toLocaleString('ko-KR', { maximumFractionDigits: digits });
-}
 
 // 전기요금계산 (한전 주택용 저압 누진제 간이 계산, 부가세·기금 포함 대략치)
 export function calcElectricityBill(kwh: number): { base: number; usage: number; total: number; tier: string } {
