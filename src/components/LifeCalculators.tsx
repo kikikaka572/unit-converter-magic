@@ -13,6 +13,8 @@ import {
   calcHourlyWage,
   calcFuelCost,
   calcParcelVolumetricWeight,
+  calcParcelFee,
+  parcelCarriers,
   calcInteriorCost,
   calcCalories,
   caloriePresets,
