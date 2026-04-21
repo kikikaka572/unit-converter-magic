@@ -54,9 +54,18 @@ export default function SalaryCalculator() {
               <input
                 type="number"
                 value={annualMan}
-                onChange={(e) => setAnnualMan(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const num = parseFloat(val) || 0;
+                  if (num <= 30000) {
+                    setAnnualMan(val);
+                  } else {
+                    setAnnualMan("30000");
+                  }
+                }}
                 className={inputClass}
                 min={0}
+                max={30000}
               />
             </div>
             <div>
