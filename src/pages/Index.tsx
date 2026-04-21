@@ -97,12 +97,12 @@ const Index = () => {
       <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
         <div
           id="ad-slot-bottom"
-          className="mx-auto max-w-3xl h-[60px] sm:h-[100px] flex items-center justify-center pointer-events-auto"
+          className="mx-auto max-w-3xl h-[60px] sm:h-[100px] flex items-center justify-center pointer-events-none"
           aria-label="광고 영역"
         >
           {/* Mobile: 320x50 */}
           <ins
-            className="kakao_ad_area sm:hidden"
+            className="kakao_ad_area sm:hidden pointer-events-auto"
             style={{ display: "none" }}
             data-ad-unit="DAN-6tTcPC6UlHze0Mjr"
             data-ad-width="320"
@@ -110,7 +110,7 @@ const Index = () => {
           />
           {/* PC: 728x90 */}
           <ins
-            className="kakao_ad_area hidden sm:inline-block"
+            className="kakao_ad_area hidden sm:inline-block pointer-events-auto"
             style={{ display: "none" }}
             data-ad-unit="DAN-rZBdEeZIqgjpI6x9"
             data-ad-width="728"
