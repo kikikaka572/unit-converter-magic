@@ -6,6 +6,7 @@ import {
   MIN_WAGE_2026,
 } from "@/lib/salaryCalculator";
 import { formatKRW } from "@/lib/lifeCalculators";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const inputClass =
   "w-full px-3 py-2.5 border border-input rounded-lg text-sm font-medium text-foreground bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent tabular-nums";
@@ -25,32 +26,33 @@ function Row({ label, value, sub }: { label: string; value: string; sub?: string
 }
 
 export default function SalaryCalculator() {
-  const [annualMan, setAnnualMan] = useState("4000"); // 만원 단위 입력
+  const { t, lang } = useLanguage();
+  const [annualMan, setAnnualMan] = useState("4000");
   const [dependents, setDependents] = useState("1");
-  const [nonTaxable, setNonTaxable] = useState("200000"); // 월 비과세 (식대 등)
+  const [nonTaxable, setNonTaxable] = useState("200000");
   const [showTable, setShowTable] = useState(false);
 
   const annual = (parseFloat(annualMan) || 0) * 10_000;
   const deps = parseInt(dependents) || 1;
   const nt = parseFloat(nonTaxable) || 0;
   const b = useMemo(() => calcNetSalary(annual, deps, nt), [annual, deps, nt]);
-
   const table = useMemo(() => buildSalaryTable(2_000, 30_000, 100, deps), [deps]);
+
+  const wonUnit = t("salary.unitWon");
+  const manUnit = t("salary.unitMan");
 
   return (
     <section className="w-full">
       <div className="bg-card rounded-lg border border-border shadow-sm p-5 sm:p-8">
         <div className="mb-4">
-          <h3 className="text-base font-semibold text-foreground">💼 2026년 연봉 실수령액 계산기</h3>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            2026년 4대보험 요율 기준 · 비과세 식대 월 20만원 자동 적용
-          </p>
+          <h3 className="text-base font-semibold text-foreground">{t("salary.heading")}</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">{t("salary.subheading")}</p>
         </div>
 
         <div className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className={labelClass}>연봉 (만원)</label>
+              <label className={labelClass}>{t("salary.annualLabel")}</label>
               <input
                 type="number"
                 value={annualMan}
@@ -69,7 +71,7 @@ export default function SalaryCalculator() {
               />
             </div>
             <div>
-              <label className={labelClass}>부양가족 수 (본인 포함)</label>
+              <label className={labelClass}>{t("salary.dependentsLabel")}</label>
               <input
                 type="number"
                 value={dependents}
@@ -79,7 +81,7 @@ export default function SalaryCalculator() {
               />
             </div>
             <div>
-              <label className={labelClass}>월 비과세액 (원)</label>
+              <label className={labelClass}>{t("salary.nonTaxableLabel")}</label>
               <input
                 type="number"
                 value={nonTaxable}
@@ -92,56 +94,65 @@ export default function SalaryCalculator() {
 
           {/* 실수령액 강조 */}
           <div className="bg-converter-result-bg border border-converter-result-border rounded-lg px-4 py-4">
-            <div className="text-xs text-muted-foreground mb-1">월 실수령액</div>
+            <div className="text-xs text-muted-foreground mb-1">{t("salary.netMonthly")}</div>
             <div className="text-3xl sm:text-4xl font-bold text-primary tabular-nums">
               {formatKRW(Math.round(b.netMonthly))}{" "}
-              <span className="text-base font-medium text-muted-foreground">원</span>
+              <span className="text-base font-medium text-muted-foreground">{wonUnit}</span>
             </div>
             <div className="text-xs text-muted-foreground mt-2">
-              연 실수령 약 {formatKRW(Math.round(b.netAnnual))}원 · 월 공제 합계{" "}
-              {formatKRW(Math.round(b.totalDeduction))}원
+              {t("salary.netAnnualText")} {formatKRW(Math.round(b.netAnnual))} {wonUnit} ·{" "}
+              {t("salary.deductionTotalText")} {formatKRW(Math.round(b.totalDeduction))} {wonUnit}
             </div>
           </div>
 
           {/* 공제 내역 */}
           <div className="bg-secondary/40 rounded-lg px-4 py-3">
             <div className="text-[11px] uppercase tracking-wider text-muted-foreground mb-1">
-              월 공제 내역 (4대보험 + 세금)
+              {t("salary.deductionHeading")}
             </div>
             <Row
-              label="국민연금"
+              label={t("salary.nationalPension")}
               sub={`(${(INSURANCE_RATES_2026.nationalPension.rate * 100).toFixed(1)}%)`}
-              value={`${formatKRW(b.nationalPension)} 원`}
+              value={`${formatKRW(b.nationalPension)} ${wonUnit}`}
             />
             <Row
-              label="건강보험"
+              label={t("salary.healthInsurance")}
               sub={`(${(INSURANCE_RATES_2026.healthInsurance.rate * 100).toFixed(3)}%)`}
-              value={`${formatKRW(b.healthInsurance)} 원`}
+              value={`${formatKRW(b.healthInsurance)} ${wonUnit}`}
             />
             <Row
-              label="장기요양보험"
-              sub={`(건보료의 ${(INSURANCE_RATES_2026.longTermCare.rate * 100).toFixed(2)}%)`}
-              value={`${formatKRW(b.longTermCare)} 원`}
+              label={t("salary.longTermCare")}
+              sub={`(${t("salary.longTermCareSub")} ${(INSURANCE_RATES_2026.longTermCare.rate * 100).toFixed(2)}%)`}
+              value={`${formatKRW(b.longTermCare)} ${wonUnit}`}
             />
             <Row
-              label="고용보험"
+              label={t("salary.employmentInsurance")}
               sub={`(${(INSURANCE_RATES_2026.employmentInsurance.rate * 100).toFixed(1)}%)`}
-              value={`${formatKRW(b.employmentInsurance)} 원`}
+              value={`${formatKRW(b.employmentInsurance)} ${wonUnit}`}
             />
-            <Row label="소득세" sub="(간이세액표)" value={`${formatKRW(b.incomeTax)} 원`} />
-            <Row label="지방소득세" sub="(소득세의 10%)" value={`${formatKRW(b.localTax)} 원`} />
+            <Row
+              label={t("salary.incomeTax")}
+              sub={t("salary.incomeTaxSub")}
+              value={`${formatKRW(b.incomeTax)} ${wonUnit}`}
+            />
+            <Row
+              label={t("salary.localTax")}
+              sub={t("salary.localTaxSub")}
+              value={`${formatKRW(b.localTax)} ${wonUnit}`}
+            />
             <div className="flex items-center justify-between pt-2 mt-1 border-t border-border">
-              <div className="text-sm font-semibold text-foreground">공제 합계</div>
+              <div className="text-sm font-semibold text-foreground">{t("salary.totalDeduction")}</div>
               <div className="text-sm font-bold tabular-nums text-destructive">
-                -{formatKRW(Math.round(b.totalDeduction))} 원
+                -{formatKRW(Math.round(b.totalDeduction))} {wonUnit}
               </div>
             </div>
           </div>
 
           <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
-            ※ 2026년 최저임금 시급 {formatKRW(MIN_WAGE_2026.hourly)}원 / 월{" "}
-            {formatKRW(MIN_WAGE_2026.monthly)}원 (주 40h + 주휴 209h 기준) 반영
-            <br />※ 본 계산은 추정치이며, 실제 급여명세서와 일부 차이가 있을 수 있습니다
+            {t("salary.minWageNote")}: {formatKRW(MIN_WAGE_2026.hourly)} {wonUnit} /{" "}
+            {formatKRW(MIN_WAGE_2026.monthly)} {wonUnit}
+            <br />
+            {t("salary.estimateNote")}
           </p>
 
           {/* 연봉별 실수령 표 */}
@@ -151,7 +162,7 @@ export default function SalaryCalculator() {
               onClick={() => setShowTable((v) => !v)}
               className="w-full py-2.5 text-sm font-medium rounded-lg bg-secondary hover:bg-muted transition-colors"
             >
-              {showTable ? "▲ 연봉별 실수령액 표 닫기" : "▼ 연봉별 실수령액 표 보기 (100만원 단위 · 3억까지)"}
+              {showTable ? t("salary.tableClose") : t("salary.tableOpen")}
             </button>
 
             {showTable && (
@@ -159,16 +170,19 @@ export default function SalaryCalculator() {
                 <table className="w-full text-xs">
                   <thead className="sticky top-0 bg-secondary text-muted-foreground">
                     <tr>
-                      <th className="px-3 py-2 text-left font-semibold">연봉</th>
-                      <th className="px-3 py-2 text-right font-semibold">월 세전</th>
-                      <th className="px-3 py-2 text-right font-semibold">월 공제</th>
-                      <th className="px-3 py-2 text-right font-semibold">월 실수령</th>
+                      <th className="px-3 py-2 text-left font-semibold">{t("salary.col.annual")}</th>
+                      <th className="px-3 py-2 text-right font-semibold">{t("salary.col.monthly")}</th>
+                      <th className="px-3 py-2 text-right font-semibold">{t("salary.col.deduction")}</th>
+                      <th className="px-3 py-2 text-right font-semibold">{t("salary.col.net")}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {table.map((r) => {
-                      const highlight =
-                        Math.abs(r.annual - annual) < 1_000_000;
+                      const highlight = Math.abs(r.annual - annual) < 1_000_000;
+                      const annualLabel =
+                        lang === "ko"
+                          ? `${(r.annual / 10_000).toLocaleString()}${manUnit}`
+                          : `₩${(r.annual / 10_000).toLocaleString()} ${manUnit}`;
                       return (
                         <tr
                           key={r.annual}
@@ -176,12 +190,8 @@ export default function SalaryCalculator() {
                             highlight ? "bg-primary/10 font-semibold" : ""
                           }`}
                         >
-                          <td className="px-3 py-1.5 text-left">
-                            {(r.annual / 10_000).toLocaleString()}만원
-                          </td>
-                          <td className="px-3 py-1.5 text-right">
-                            {formatKRW(Math.round(r.monthly))}
-                          </td>
+                          <td className="px-3 py-1.5 text-left">{annualLabel}</td>
+                          <td className="px-3 py-1.5 text-right">{formatKRW(Math.round(r.monthly))}</td>
                           <td className="px-3 py-1.5 text-right text-destructive/80">
                             -{formatKRW(Math.round(r.deduction))}
                           </td>

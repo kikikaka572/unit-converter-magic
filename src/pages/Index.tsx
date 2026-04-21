@@ -3,56 +3,61 @@ import UnitConverter from "@/components/UnitConverter";
 import LifeCalculators from "@/components/LifeCalculators";
 import SalaryCalculator from "@/components/SalaryCalculator";
 import ShareButton from "@/components/ShareButton";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 type MainTab = "salary" | "life" | "converter";
 
-const TAB_META: Record<MainTab, { title: string; desc: string; emoji: string; label: string }> = {
-  salary: {
-    title: "연봉 실수령액 계산기",
-    desc: "2026년 4대보험·세금 반영 실수령액",
-    emoji: "💼",
-    label: "연봉 계산",
-  },
-  life: {
-    title: "실생활 계산기",
-    desc: "일상에서 자주 쓰는 빠른 계산",
-    emoji: "🧮",
-    label: "실생활 계산",
-  },
-  converter: {
-    title: "단위 환산 계산기",
-    desc: "간편하고 정확한 단위 변환",
-    emoji: "📐",
-    label: "단위 환산",
-  },
-};
-
 const TAB_ORDER: MainTab[] = ["salary", "life", "converter"];
+
+const TAB_EMOJI: Record<MainTab, string> = {
+  salary: "💼",
+  life: "🧮",
+  converter: "📐",
+};
 
 const Index = () => {
   const [tab, setTab] = useState<MainTab>("salary");
-  const meta = TAB_META[tab];
+  const { t, lang } = useLanguage();
+
+  const titleKey =
+    tab === "salary"
+      ? "header.salary.title"
+      : tab === "life"
+      ? "header.life.title"
+      : "header.converter.title";
+  const descKey =
+    tab === "salary"
+      ? "header.salary.desc"
+      : tab === "life"
+      ? "header.life.desc"
+      : "header.converter.desc";
+
+  const labelKey = (k: MainTab) =>
+    k === "salary" ? "tab.salary" : k === "life" ? "tab.life" : "tab.converter";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
-          {/* Header */}
-          <div className="mb-6 sm:mb-8 flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
-                {meta.title}
-              </h1>
-              <p className="text-muted-foreground text-sm mt-1">{meta.desc}</p>
-            </div>
+          {/* Top bar: language + share */}
+          <div className="flex items-center justify-end gap-2 mb-3">
+            <LanguageSwitcher />
             <ShareButton />
+          </div>
+
+          {/* Header */}
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+              {t(titleKey)}
+            </h1>
+            <p className="text-muted-foreground text-sm mt-1">{t(descKey)}</p>
           </div>
 
           {/* Main tab switcher */}
           <div role="tablist" className="grid grid-cols-3 gap-2 p-1 bg-secondary rounded-lg mb-6">
             {TAB_ORDER.map((key) => {
-              const m = TAB_META[key];
               const active = tab === key;
               return (
                 <button
@@ -66,7 +71,7 @@ const Index = () => {
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {m.emoji} {m.label}
+                  {TAB_EMOJI[key]} {t(labelKey(key))}
                 </button>
               );
             })}
@@ -75,6 +80,13 @@ const Index = () => {
           {tab === "salary" && <SalaryCalculator />}
           {tab === "life" && <LifeCalculators />}
           {tab === "converter" && <UnitConverter />}
+
+          {/* Footer notice for English visitors */}
+          {lang === "en" && (
+            <p className="mt-10 text-center text-xs text-muted-foreground">
+              {t("footer.foreignNotice")}
+            </p>
+          )}
         </div>
       </main>
 
@@ -82,7 +94,7 @@ const Index = () => {
       <aside
         className="hidden xl:block fixed top-1/2 -translate-y-1/2 z-40"
         style={{ right: "max(1rem, calc((100vw - 42rem) / 2 - 180px))" }}
-        aria-label="사이드 광고 영역"
+        aria-label="ad"
       >
         <ins
           className="kakao_ad_area"
@@ -98,7 +110,7 @@ const Index = () => {
         <div
           id="ad-slot-bottom"
           className="mx-auto max-w-3xl h-[60px] sm:h-[100px] flex items-center justify-center pointer-events-none"
-          aria-label="광고 영역"
+          aria-label="ad"
         >
           {/* Mobile: 320x50 */}
           <ins
