@@ -10,10 +10,11 @@ import {
   formatNumber,
 } from "@/lib/conversions";
 import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/translations";
 
 const categoryKeys = Object.keys(categories) as Category[];
 
-const catLabelKey: Record<Category, string> = {
+const catLabelKey: Record<Category, TranslationKey> = {
   length: "uc.cat.length",
   weight: "uc.cat.weight",
   temperature: "uc.cat.temperature",
