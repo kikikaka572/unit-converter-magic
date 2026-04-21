@@ -9,10 +9,21 @@ import {
   getConversionFormula,
   formatNumber,
 } from "@/lib/conversions";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const categoryKeys = Object.keys(categories) as Category[];
 
+const catLabelKey: Record<Category, string> = {
+  length: "uc.cat.length",
+  weight: "uc.cat.weight",
+  temperature: "uc.cat.temperature",
+  volume: "uc.cat.volume",
+  area: "uc.cat.area",
+  speed: "uc.cat.speed",
+};
+
 export default function UnitConverter() {
+  const { t, lang } = useLanguage();
   const [category, setCategory] = useState<Category>("length");
   const [fromUnit, setFromUnit] = useState(() => getDefaultUnits("length")[0]);
   const [toUnit, setToUnit] = useState(() => getDefaultUnits("length")[1]);
@@ -45,6 +56,9 @@ export default function UnitConverter() {
     if (result) setInputValue(result);
   };
 
+  const unitLabel = (info: { label: string; labelKo: string; symbol: string }) =>
+    lang === "ko" ? `${info.labelKo} (${info.symbol})` : `${info.label} (${info.symbol})`;
+
   return (
     <div className="w-full">
       {/* Category Tabs */}
@@ -60,7 +74,7 @@ export default function UnitConverter() {
             }`}
           >
             <span className="mr-1.5">{categories[cat].icon}</span>
-            {categories[cat].labelKo}
+            {t(catLabelKey[cat])}
           </button>
         ))}
       </div>
@@ -71,7 +85,7 @@ export default function UnitConverter() {
           {/* From */}
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-              변환할 값
+              {t("uc.fromLabel")}
             </label>
             <div className="flex flex-col gap-2">
               <select
@@ -81,7 +95,7 @@ export default function UnitConverter() {
               >
                 {units.map((u) => (
                   <option key={u.key} value={u.key}>
-                    {u.info.labelKo} ({u.info.symbol})
+                    {unitLabel(u.info)}
                   </option>
                 ))}
               </select>
@@ -100,7 +114,8 @@ export default function UnitConverter() {
             <button
               onClick={handleSwap}
               className="p-2 rounded-full bg-secondary hover:bg-muted text-muted-foreground hover:text-foreground transition-colors duration-150"
-              title="단위 교환"
+              title={t("uc.swap")}
+              aria-label={t("uc.swap")}
             >
               <ArrowLeftRight className="w-5 h-5" />
             </button>
@@ -109,7 +124,7 @@ export default function UnitConverter() {
           {/* To */}
           <div>
             <label className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-              결과
+              {t("uc.toLabel")}
             </label>
             <div className="flex flex-col gap-2">
               <select
@@ -119,7 +134,7 @@ export default function UnitConverter() {
               >
                 {units.map((u) => (
                   <option key={u.key} value={u.key}>
-                    {u.info.labelKo} ({u.info.symbol})
+                    {unitLabel(u.info)}
                   </option>
                 ))}
               </select>
@@ -134,15 +149,13 @@ export default function UnitConverter() {
           </div>
 
           {/* Formula */}
-          <p className="text-center text-muted-foreground text-sm">
-            {formula}
-          </p>
+          <p className="text-center text-muted-foreground text-sm">{formula}</p>
         </div>
 
         {/* Quick Presets */}
         <div className="bg-secondary/50 p-5 sm:p-8 border-t border-border rounded-b-lg">
           <h2 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">
-            빠른 프리셋
+            {t("uc.presets")}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
@@ -162,9 +175,7 @@ export default function UnitConverter() {
                 className="bg-card p-3 rounded-lg border border-border hover:shadow-md transition-shadow duration-150 flex flex-col items-center justify-center text-center"
               >
                 <span className="text-xl mb-1">{preset.icon}</span>
-                <span className="text-xs font-medium text-muted-foreground">
-                  {preset.label}
-                </span>
+                <span className="text-xs font-medium text-muted-foreground">{preset.label}</span>
               </button>
             ))}
           </div>
