@@ -16,8 +16,14 @@ const TAB_EMOJI: Record<MainTab, string> = {
   converter: "📐",
 };
 
+const getInitialTab = (): MainTab => {
+  if (typeof window === "undefined") return "salary";
+  const t = new URLSearchParams(window.location.search).get("tab");
+  return t === "life" || t === "converter" || t === "salary" ? t : "salary";
+};
+
 const Index = () => {
-  const [tab, setTab] = useState<MainTab>("salary");
+  const [tab, setTab] = useState<MainTab>(getInitialTab);
   const { t, lang } = useLanguage();
 
   const titleKey =
