@@ -41,17 +41,22 @@ const Index = () => {
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
-          {/* Top bar: language + share */}
-          <div className="flex items-center justify-end gap-2 mb-3">
-            <LanguageSwitcher />
-            <ShareButton />
+          {/* Top bar: brand + language + share */}
+          <div className="flex items-center justify-between gap-2 mb-4">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Lifetool
+            </h1>
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher />
+              <ShareButton />
+            </div>
           </div>
 
-          {/* Header */}
+          {/* Per-tab header */}
           <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
               {t(titleKey)}
-            </h1>
+            </h2>
             <p className="text-muted-foreground text-sm mt-1">{t(descKey)}</p>
           </div>
 
