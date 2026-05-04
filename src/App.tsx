@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import { LanguageProvider } from "./i18n/LanguageContext";
+import Board from "./components/Board";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -21,6 +22,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
+            <Route path="/community" element={<Board />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
