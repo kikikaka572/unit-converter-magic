@@ -1,6 +1,4 @@
-# Lifetool — robots.txt
-# Allow all major search & AI crawlers
-
+https://unit-converter-magic.vercel.app/sitemap.xml
 User-agent: Googlebot
 Allow: /
 
