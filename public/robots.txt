@@ -1,5 +1,4 @@
 # Lifetool — robots.txt
-# Allow all major search & AI crawlers
 
 User-agent: Googlebot
 Allow: /
