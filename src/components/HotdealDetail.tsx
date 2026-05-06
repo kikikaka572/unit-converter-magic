@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ExternalLink, Copy, Check } from "lucide-react";
-import { getSupabase, type Hotdeal } from "@/lib/hotdeals";
+import { getHotdealById, type Hotdeal } from "@/lib/hotdeals";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 import { useSeo, SITE_URL } from "@/lib/seo";
@@ -16,17 +16,16 @@ export default function HotdealDetail() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const supabase = getSupabase();
-      if (!supabase || !id) {
+      if (!id) {
         setDeal(null);
         return;
       }
-      const { data } = await supabase
-        .from("hotdeals")
-        .select("*")
-        .eq("id", id)
-        .maybeSingle();
-      if (!cancelled) setDeal((data as Hotdeal) ?? null);
+      try {
+        const found = await getHotdealById(id);
+        if (!cancelled) setDeal(found);
+      } catch {
+        if (!cancelled) setDeal(null);
+      }
     })();
     return () => {
       cancelled = true;

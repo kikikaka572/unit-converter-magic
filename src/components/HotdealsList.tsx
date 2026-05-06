@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink, Share2, RefreshCw } from "lucide-react";
-import { getSupabase, type Hotdeal } from "@/lib/hotdeals";
+import { loadHotdeals, clearHotdealsCache, type Hotdeal } from "@/lib/hotdeals";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 
-// Sample fallback so UI works even without DB set up
+// Sample fallback shown only when JSON file is empty (first deploy before workflow ran)
 const SAMPLE: Hotdeal[] = [
   {
     id: "sample-1",
     external_id: "sample-1",
     source: "ppomppu",
-    title: "[샘플] 핫딜 게시판이 비어있어요 — 백엔드 설정을 완료해주세요",
+    title: "[샘플] 핫딜 게시판이 곧 자동 업데이트됩니다",
     url: "https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu",
     thumbnail_url: null,
-    description: "Supabase에 hotdeals 테이블을 만들고 RSS 수집 함수를 배포하면 자동으로 채워집니다.",
+    description: "GitHub Actions가 매일 1회 RSS를 수집해 자동으로 이 자리를 채웁니다.",
     price: null,
     category: "etc",
     posted_at: new Date().toISOString(),
@@ -39,23 +39,15 @@ export default function HotdealsList() {
 
   const load = async () => {
     setRefreshing(true);
-    const supabase = getSupabase();
-    if (!supabase) {
+    try {
+      clearHotdealsCache();
+      const { deals: data } = await loadHotdeals();
+      setDeals(data.length > 0 ? data : SAMPLE);
+    } catch {
       setDeals(SAMPLE);
+    } finally {
       setRefreshing(false);
-      return;
     }
-    const { data, error } = await supabase
-      .from("hotdeals")
-      .select("*")
-      .order("posted_at", { ascending: false })
-      .limit(100);
-    if (error || !data || data.length === 0) {
-      setDeals(SAMPLE);
-    } else {
-      setDeals(data as Hotdeal[]);
-    }
-    setRefreshing(false);
   };
 
   useEffect(() => {
