@@ -1,15 +1,6 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
-
-let _client: SupabaseClient | null = null;
-
-export function getSupabase(): SupabaseClient | null {
-  if (_client) return _client;
-  const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-  const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
-  if (!url || !key || url.includes("xxxx")) return null;
-  _client = createClient(url, key);
-  return _client;
-}
+// Static JSON loader — no backend.
+// Data is generated daily by .github/workflows/fetch-hotdeals.yml
+// and committed to public/hotdeals.json.
 
 export interface Hotdeal {
   id: string;
@@ -23,4 +14,32 @@ export interface Hotdeal {
   category: string | null;
   posted_at: string;
   fetched_at: string;
+}
+
+export interface HotdealsFile {
+  generated_at: string;
+  count: number;
+  deals: Hotdeal[];
+}
+
+let _cache: HotdealsFile | null = null;
+
+export async function loadHotdeals(): Promise<HotdealsFile> {
+  if (_cache) return _cache;
+  const base = import.meta.env.BASE_URL || "/";
+  const url = `${base.replace(/\/$/, "")}/hotdeals.json`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load hotdeals.json (${res.status})`);
+  const data = (await res.json()) as HotdealsFile;
+  _cache = data;
+  return data;
+}
+
+export async function getHotdealById(id: string): Promise<Hotdeal | null> {
+  const { deals } = await loadHotdeals();
+  return deals.find((d) => d.id === id) ?? null;
+}
+
+export function clearHotdealsCache() {
+  _cache = null;
 }
