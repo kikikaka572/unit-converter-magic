@@ -32,38 +32,43 @@ export default function Layout({ children, title, description }: Props) {
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
-          {/* Top secondary links — thin pills for Hotdeals / Community */}
-          <div className="flex items-center justify-end gap-1.5 mb-2">
-            {SECONDARY_LINKS.map((link) => {
-              const active = isActive(link.to);
-              return (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors ${
-                    active
-                      ? "bg-accent/20 border-accent/40 text-foreground"
-                      : "bg-card border-border text-muted-foreground hover:text-foreground hover:border-accent/40"
-                  }`}
-                >
-                  <span>{link.emoji}</span>
-                  <span>{t(link.labelKey)}</span>
-                </NavLink>
-              );
-            })}
+          {/* Top thin utility row — Language / Share */}
+          <div className="flex items-center justify-end gap-2 mb-3">
+            <LanguageSwitcher />
+            <ShareButton />
           </div>
 
-          {/* Top bar */}
-          <div className="flex items-center justify-between gap-2 mb-5">
-            <Link
-              to="/"
-              className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
-            >
-              Lifetool
+          {/* Logo / brand area (supports optional image at /logo.png) */}
+          <div className="flex items-center justify-between gap-3 mb-5">
+            <Link to="/" className="flex items-center gap-3 min-w-0">
+              <img
+                src="/logo.png"
+                alt="Lifetool 로고"
+                className="h-12 sm:h-14 w-auto object-contain"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+              />
+              <span className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                Lifetool
+              </span>
             </Link>
-            <div className="flex items-center gap-2">
-              <LanguageSwitcher />
-              <ShareButton />
+            <div className="flex items-center gap-1.5 shrink-0">
+              {SECONDARY_LINKS.map((link) => {
+                const active = isActive(link.to);
+                return (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors ${
+                      active
+                        ? "bg-accent/20 border-accent/40 text-foreground"
+                        : "bg-card border-border text-muted-foreground hover:text-foreground hover:border-accent/40"
+                    }`}
+                  >
+                    <span>{link.emoji}</span>
+                    <span className="hidden xs:inline sm:inline">{t(link.labelKey)}</span>
+                  </NavLink>
+                );
+              })}
             </div>
           </div>
 
