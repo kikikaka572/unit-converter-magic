@@ -12,11 +12,11 @@ const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
 const CATEGORIES = [
   { slug: "all",      name_ko: "전체",       icon: "🌐", color: "#94a3b8" },
-  { slug: "notice",   name_ko: "공지사항",   icon: "📢", color: "#ef4444" },
-  { slug: "general",  name_ko: "자유게시판", icon: "💬", color: "#6366f1" },
-  { slug: "qna",      name_ko: "Q&A",        icon: "❓", color: "#f59e0b" },
-  { slug: "tips",     name_ko: "꿀팁",   icon: "🐽", color: "#10b981" },
-  { slug: "feedback", name_ko: "맛집",       icon: "🍕", color: "#8b5cf6" },
+  { slug: "notice",   name_ko: "서울맛집",   icon: "👍", color: "#ef4444" },
+  { slug: "general",  name_ko: "경기/강원맛집", icon: "❤️", color: "#6366f1" },
+  { slug: "qna",      name_ko: "충정/경상맛집", icon: "😊", color: "#f59e0b" },
+  { slug: "tips",     name_ko: "전라/제주맛집",   icon: "🐽", color: "#10b981" },
+  { slug: "feedback", name_ko: "해외맛집",       icon: "🍕", color: "#8b5cf6" },
 ];
 
 const PAGE_SIZE = 15;
@@ -73,8 +73,8 @@ export default function Board() {
     <div style={s.wrap}>
       <div style={s.header}>
         <div>
-          <h1 style={s.title}>커뮤니티</h1>
-          <p style={s.subtitle}>단위 변환 팁, 질문, 자유로운 이야기를 나눠보세요</p>
+          <h1 style={s.title}>맛집</h1>
+          <p style={s.subtitle}>알고 있는 맛집을 공유해 보세요</p>
         </div>
         <button onClick={() => setShowWrite(v => !v)} style={s.btnPrimary}>
           {showWrite ? "✕ 닫기" : "✏️ 글쓰기"}
