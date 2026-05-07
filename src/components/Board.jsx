@@ -1,4 +1,4 @@
-// Board.jsx — 익명 게시판 (로그인 없음, 관리자 비밀번호 삭제)
+// Board.jsx — 익명 게시판 (글쓰기 시 비밀번호 입력, 수정 지원)
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
 import BoardPost from "./BoardPost";
@@ -73,8 +73,8 @@ export default function Board() {
     <div style={s.wrap}>
       <div style={s.header}>
         <div>
-          <h1 style={s.title}>맛집</h1>
-          <p style={s.subtitle}>알고 있는 맛집을 공유해 보세요</p>
+          <h1 style={s.title}>커뮤니티</h1>
+          <p style={s.subtitle}>단위 변환 팁, 질문, 자유로운 이야기를 나눠보세요</p>
         </div>
         <button onClick={() => setShowWrite(v => !v)} style={s.btnPrimary}>
           {showWrite ? "✕ 닫기" : "✏️ 글쓰기"}
@@ -181,21 +181,25 @@ function PostRow({ post, onClick }) {
   );
 }
 
+// ── 글쓰기 폼 (비밀번호 필드 추가)
 function WriteForm({ supabase, categories, onCreated, onCancel }) {
-  const [form, setForm] = useState({ category: "general", title: "", content: "", author_name: "" });
+  const [form, setForm] = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    if (!form.title.trim())   { setError("제목을 입력해주세요."); return; }
-    if (!form.content.trim()) { setError("내용을 입력해주세요."); return; }
+    if (!form.title.trim())    { setError("제목을 입력해주세요."); return; }
+    if (!form.content.trim())  { setError("내용을 입력해주세요."); return; }
+    if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
+
     const { data: catRow } = await supabase.from("categories").select("id").eq("slug", form.category).single();
     const { error: err } = await supabase.from("posts").insert({
-      category_id: catRow?.id,
-      author_name: form.author_name.trim() || "익명",
-      title: form.title.trim(),
-      content: form.content.trim(),
+      category_id:   catRow?.id,
+      author_name:   form.author_name.trim() || "익명",
+      title:         form.title.trim(),
+      content:       form.content.trim(),
+      post_password: form.password.trim(),
     });
     if (err) { setError(err.message); setSubmitting(false); return; }
     onCreated();
@@ -209,9 +213,20 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
           {categories.map(c => <option key={c.slug} value={c.slug}>{c.icon} {c.name_ko}</option>)}
         </select>
         <input value={form.author_name} onChange={e => setForm(f => ({ ...f, author_name: e.target.value }))}
-          placeholder="닉네임 (미입력 시 익명)" style={{ ...s.input, width: 160 }} />
+          placeholder="닉네임 (미입력 시 익명)" style={{ ...s.input, width: 140 }} />
         <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
           placeholder="제목" style={{ ...s.input, flex: 1 }} />
+      </div>
+      {/* 비밀번호 안내 */}
+      <div style={s.pwRow}>
+        <span style={s.pwLabel}>🔒 수정·삭제 비밀번호</span>
+        <input
+          type="password"
+          value={form.password}
+          onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+          placeholder="나중에 수정/삭제 시 필요합니다"
+          style={{ ...s.input, flex: 1 }}
+        />
       </div>
       <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
         placeholder="내용을 입력하세요..." rows={6} style={s.textarea} />
@@ -254,6 +269,8 @@ const s = {
   pageBtnActive:{ background: "#6366f1", color: "#fff", borderColor: "#6366f1", fontWeight: 700 },
   writeBox:     { background: "#f8fafc", borderRadius: 12, padding: "20px", marginBottom: 20, border: "1.5px solid #e2e8f0" },
   formRow:      { display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" },
+  pwRow:        { display: "flex", alignItems: "center", gap: 10, marginBottom: 10, padding: "10px 12px", background: "#fffbeb", border: "1.5px solid #fde68a", borderRadius: 8 },
+  pwLabel:      { fontSize: 13, fontWeight: 600, color: "#92400e", whiteSpace: "nowrap" },
   select:       { padding: "8px 10px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, background: "#fff", cursor: "pointer" },
   input:        { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
   textarea:     { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", marginBottom: 10 },
