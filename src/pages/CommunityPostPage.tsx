@@ -1,6 +1,5 @@
 // pages/CommunityPostPage.tsx — 게시글 상세 전용 페이지
 import { useParams, useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabase";
 import Layout from "@/components/Layout";
 import BoardPost from "@/components/BoardPost";
 
@@ -16,7 +15,6 @@ export default function CommunityPostPage() {
     <Layout>
       <BoardPost
         postId={id}
-        supabase={supabase}
         adminPw={ADMIN_PW}
         onBack={() => navigate("/community")}
       />
