@@ -1,6 +1,4 @@
-// BoardPost.jsx — 익명 게시글 상세 + 관리자 비밀번호 삭제
-// props: postId, supabase, adminPw, onBack
-
+// BoardPost.jsx — 익명 게시글 상세 + 관리자 비밀번호 삭제 + 공유 버튼
 import { useState, useEffect, useCallback } from "react";
 
 export default function BoardPost({ postId, supabase, adminPw, onBack }) {
@@ -11,9 +9,10 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   const [authorName,  setAuthorName]  = useState("");
   const [replyTo,     setReplyTo]     = useState(null);
   const [submitting,  setSubmitting]  = useState(false);
+  const [toast,       setToast]       = useState("");
 
   // 관리자 삭제 모달 상태
-  const [deleteModal, setDeleteModal] = useState(null); // { type: "post"|"comment", id }
+  const [deleteModal, setDeleteModal] = useState(null);
   const [pwInput,     setPwInput]     = useState("");
   const [pwError,     setPwError]     = useState("");
 
@@ -42,7 +41,34 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     Promise.all([fetchPost(), fetchComments()]).then(() => setLoading(false));
   }, [fetchPost, fetchComments]);
 
-  // ── 좋아요 (단순 카운트 증가, 중복 방지 없음)
+  // ── 공유 버튼
+  const handleShare = async () => {
+    const url = `${window.location.origin}${window.location.pathname}?post=${postId}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: post?.title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        showToast("링크가 복사되었습니다! 🔗");
+      }
+    } catch {
+      // 클립보드 API 실패 시 fallback
+      const el = document.createElement("textarea");
+      el.value = url;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      showToast("링크가 복사되었습니다! 🔗");
+    }
+  };
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(""), 2500);
+  };
+
+  // ── 좋아요
   const handleLike = async () => {
     await supabase.from("posts").update({ like_count: post.like_count + 1 }).eq("id", postId);
     setPost(p => ({ ...p, like_count: p.like_count + 1 }));
@@ -63,18 +89,14 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     setSubmitting(false);
   };
 
-  // ── 관리자 삭제 모달 열기
+  // ── 관리자 삭제 모달
   const openDeleteModal = (type, id) => {
     setDeleteModal({ type, id });
     setPwInput(""); setPwError("");
   };
 
-  // ── 삭제 실행
   const executeDelete = async () => {
-    if (pwInput !== adminPw) {
-      setPwError("비밀번호가 올바르지 않습니다.");
-      return;
-    }
+    if (pwInput !== adminPw) { setPwError("비밀번호가 올바르지 않습니다."); return; }
     if (deleteModal.type === "post") {
       await supabase.from("posts").delete().eq("id", deleteModal.id);
       setDeleteModal(null);
@@ -95,6 +117,11 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
 
   return (
     <div style={s.wrap}>
+      {/* ── 토스트 */}
+      {toast && (
+        <div style={s.toast}>{toast}</div>
+      )}
+
       {/* ── 뒤로가기 */}
       <button onClick={onBack} style={s.backBtn}>← 목록으로</button>
 
@@ -116,7 +143,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
           <span style={s.metaDot}>·</span>
           <span style={s.metaText}>조회 {post.view_count.toLocaleString()}</span>
           <span style={s.metaDot}>·</span>
-          {/* 관리자 삭제 버튼 */}
           <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>
             🗑 관리자 삭제
           </button>
@@ -128,9 +154,14 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, margin: 0 }}>{post.content}</p>
       </div>
 
-      {/* ── 좋아요 */}
-      <div style={s.likeRow}>
-        <button onClick={handleLike} style={s.likeBtn}>♥ 추천 {post.like_count}</button>
+      {/* ── 좋아요 + 공유 버튼 */}
+      <div style={s.actionRow}>
+        <button onClick={handleLike} style={s.likeBtn}>
+          ♥ 추천 {post.like_count}
+        </button>
+        <button onClick={handleShare} style={s.shareBtn}>
+          🔗 공유하기
+        </button>
       </div>
 
       {/* ── 댓글 */}
@@ -217,7 +248,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   );
 }
 
-// ── 댓글 아이템
 function CommentItem({ comment, replies, onReply, onDelete }) {
   return (
     <div style={s.commentItem}>
@@ -250,7 +280,7 @@ function formatDate(iso) {
 }
 
 const s = {
-  wrap:            { maxWidth: 800, margin: "0 auto", padding: "24px 16px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b" },
+  wrap:            { width: "100%", padding: "24px 32px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box", position: "relative" },
   loading:         { textAlign: "center", padding: "80px 0", color: "#94a3b8" },
   backBtn:         { background: "none", border: "none", cursor: "pointer", color: "#6366f1", fontWeight: 700, fontSize: 14, padding: "0 0 20px", display: "block" },
   postHeader:      { marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #f1f5f9" },
@@ -262,8 +292,12 @@ const s = {
   metaText:        { fontSize: 13, color: "#64748b" },
   deleteBtn:       { background: "none", border: "none", cursor: "pointer", fontSize: 12, color: "#94a3b8", padding: 0 },
   body:            { padding: "24px 0", borderBottom: "1.5px solid #f1f5f9" },
-  likeRow:         { display: "flex", justifyContent: "center", padding: "20px 0" },
+  // ── 좋아요 + 공유 나란히
+  actionRow:       { display: "flex", justifyContent: "center", alignItems: "center", gap: 12, padding: "20px 0" },
   likeBtn:         { padding: "10px 28px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#94a3b8", transition: "all .15s" },
+  shareBtn:        { padding: "10px 24px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#6366f1", transition: "all .15s" },
+  // ── 토스트
+  toast:           { position: "fixed", bottom: 32, left: "50%", transform: "translateX(-50%)", background: "#1e293b", color: "#fff", padding: "12px 24px", borderRadius: 24, fontSize: 14, fontWeight: 600, zIndex: 9999, boxShadow: "0 4px 16px rgba(0,0,0,.2)", whiteSpace: "nowrap" },
   commentSection:  { marginTop: 8 },
   commentTitle:    { fontSize: 16, fontWeight: 800, marginBottom: 16 },
   commentItem:     { padding: "14px 0", borderBottom: "1px solid #f1f5f9" },
@@ -281,7 +315,6 @@ const s = {
   btnPrimary:      { padding: "9px 20px", borderRadius: 8, border: "none", background: "#6366f1", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700 },
   btnSecondary:    { padding: "8px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", color: "#64748b", cursor: "pointer", fontSize: 13 },
   btnDanger:       { padding: "8px 16px", borderRadius: 8, border: "none", background: "#ef4444", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700 },
-  // 모달 — position:fixed 대신 normal-flow min-height wrapper
   modalOverlay:    { position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 999 },
   modal:           { background: "#fff", borderRadius: 14, padding: "28px 28px 24px", width: 320, maxWidth: "90vw", boxShadow: "0 8px 32px rgba(0,0,0,.18)" },
   pwInput:         { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 15, outline: "none", boxSizing: "border-box" },
