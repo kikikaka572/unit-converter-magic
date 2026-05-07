@@ -11,6 +11,7 @@ import ConverterPage from "./pages/ConverterPage";
 import HotdealsPage from "./pages/HotdealsPage";
 import HotdealDetailPage from "./pages/HotdealDetailPage";
 import CommunityPage from "./pages/CommunityPage";
+import CommunityPostPage from "./pages/CommunityPostPage";
 import HomePage from "./pages/HomePage";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/hotdeals" element={<HotdealsPage />} />
             <Route path="/hotdeals/:id" element={<HotdealDetailPage />} />
             <Route path="/community" element={<CommunityPage />} />
+            <Route path="/community/:id" element={<CommunityPostPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
