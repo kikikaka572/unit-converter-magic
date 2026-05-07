@@ -1,4 +1,4 @@
-// BoardPost.jsx — 익명 게시글 상세 + 관리자 비밀번호 삭제 + 공유 버튼
+// BoardPost.jsx — 게시글 상세 + 수정(비밀번호 확인) + 관리자 삭제 + 공유
 import { useState, useEffect, useCallback } from "react";
 
 export default function BoardPost({ postId, supabase, adminPw, onBack }) {
@@ -11,7 +11,16 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   const [submitting,  setSubmitting]  = useState(false);
   const [toast,       setToast]       = useState("");
 
-  // 관리자 삭제 모달 상태
+  // 수정 모드
+  const [editMode,    setEditMode]    = useState(false);
+  const [editForm,    setEditForm]    = useState({ title: "", content: "" });
+
+  // 비밀번호 확인 모달 (수정용)
+  const [editPwModal, setEditPwModal] = useState(false);
+  const [editPwInput, setEditPwInput] = useState("");
+  const [editPwError, setEditPwError] = useState("");
+
+  // 관리자 삭제 모달
   const [deleteModal, setDeleteModal] = useState(null);
   const [pwInput,     setPwInput]     = useState("");
   const [pwError,     setPwError]     = useState("");
@@ -29,10 +38,8 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
 
   const fetchComments = useCallback(async () => {
     const { data } = await supabase
-      .from("comments")
-      .select("*")
-      .eq("post_id", postId)
-      .eq("is_hidden", false)
+      .from("comments").select("*")
+      .eq("post_id", postId).eq("is_hidden", false)
       .order("created_at", { ascending: true });
     setComments(data || []);
   }, [postId, supabase]);
@@ -41,32 +48,21 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     Promise.all([fetchPost(), fetchComments()]).then(() => setLoading(false));
   }, [fetchPost, fetchComments]);
 
-  // ── 공유 버튼
+  // ── 공유
   const handleShare = async () => {
     const url = `${window.location.origin}${window.location.pathname}?post=${postId}`;
     try {
-      if (navigator.share) {
-        await navigator.share({ title: post?.title, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        showToast("링크가 복사되었습니다! 🔗");
-      }
+      if (navigator.share) { await navigator.share({ title: post?.title, url }); }
+      else { await navigator.clipboard.writeText(url); showToast("링크가 복사되었습니다! 🔗"); }
     } catch {
-      // 클립보드 API 실패 시 fallback
       const el = document.createElement("textarea");
-      el.value = url;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand("copy");
-      document.body.removeChild(el);
+      el.value = url; document.body.appendChild(el); el.select();
+      document.execCommand("copy"); document.body.removeChild(el);
       showToast("링크가 복사되었습니다! 🔗");
     }
   };
 
-  const showToast = (msg) => {
-    setToast(msg);
-    setTimeout(() => setToast(""), 2500);
-  };
+  const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(""), 2500); };
 
   // ── 좋아요
   const handleLike = async () => {
@@ -74,38 +70,57 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     setPost(p => ({ ...p, like_count: p.like_count + 1 }));
   };
 
+  // ── 수정 비밀번호 확인
+  const openEditPwModal = () => {
+    setEditPwModal(true); setEditPwInput(""); setEditPwError("");
+  };
+  const confirmEditPw = () => {
+    // 작성자 비밀번호 또는 관리자 비밀번호 모두 허용
+    if (editPwInput !== post.post_password && editPwInput !== adminPw) {
+      setEditPwError("비밀번호가 올바르지 않습니다.");
+      return;
+    }
+    setEditPwModal(false);
+    setEditForm({ title: post.title, content: post.content });
+    setEditMode(true);
+  };
+
+  // ── 수정 저장
+  const saveEdit = async () => {
+    if (!editForm.title.trim() || !editForm.content.trim()) return;
+    const { error } = await supabase.from("posts")
+      .update({ title: editForm.title.trim(), content: editForm.content.trim() })
+      .eq("id", postId);
+    if (!error) {
+      await fetchPost();
+      setEditMode(false);
+      showToast("수정이 완료되었습니다 ✅");
+    }
+  };
+
+  // ── 관리자 삭제
+  const openDeleteModal = (type, id) => { setDeleteModal({ type, id }); setPwInput(""); setPwError(""); };
+  const executeDelete = async () => {
+    if (pwInput !== adminPw) { setPwError("비밀번호가 올바르지 않습니다."); return; }
+    if (deleteModal.type === "post") {
+      await supabase.from("posts").delete().eq("id", deleteModal.id);
+      setDeleteModal(null); onBack();
+    } else {
+      await supabase.from("comments").delete().eq("id", deleteModal.id);
+      setDeleteModal(null); await fetchComments();
+    }
+  };
+
   // ── 댓글 등록
   const submitComment = async () => {
     if (!commentText.trim()) return;
     setSubmitting(true);
     await supabase.from("comments").insert({
-      post_id:     postId,
-      parent_id:   replyTo?.id || null,
-      author_name: authorName.trim() || "익명",
-      content:     commentText.trim(),
+      post_id: postId, parent_id: replyTo?.id || null,
+      author_name: authorName.trim() || "익명", content: commentText.trim(),
     });
     setCommentText(""); setReplyTo(null);
-    await fetchComments();
-    setSubmitting(false);
-  };
-
-  // ── 관리자 삭제 모달
-  const openDeleteModal = (type, id) => {
-    setDeleteModal({ type, id });
-    setPwInput(""); setPwError("");
-  };
-
-  const executeDelete = async () => {
-    if (pwInput !== adminPw) { setPwError("비밀번호가 올바르지 않습니다."); return; }
-    if (deleteModal.type === "post") {
-      await supabase.from("posts").delete().eq("id", deleteModal.id);
-      setDeleteModal(null);
-      onBack();
-    } else {
-      await supabase.from("comments").delete().eq("id", deleteModal.id);
-      setDeleteModal(null);
-      await fetchComments();
-    }
+    await fetchComments(); setSubmitting(false);
   };
 
   if (loading) return <div style={s.loading}>불러오는 중...</div>;
@@ -118,9 +133,7 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   return (
     <div style={s.wrap}>
       {/* ── 토스트 */}
-      {toast && (
-        <div style={s.toast}>{toast}</div>
-      )}
+      {toast && <div style={s.toast}>{toast}</div>}
 
       {/* ── 뒤로가기 */}
       <button onClick={onBack} style={s.backBtn}>← 목록으로</button>
@@ -128,14 +141,21 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
       {/* ── 게시글 헤더 */}
       <div style={s.postHeader}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
-          {cat && (
-            <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>
-              {cat.icon} {cat.name_ko}
-            </span>
-          )}
+          {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
           {post.is_pinned && <span style={s.pinBadge}>📌 공지</span>}
         </div>
-        <h2 style={s.postTitle}>{post.title}</h2>
+
+        {/* 수정 모드 제목 */}
+        {editMode ? (
+          <input
+            value={editForm.title}
+            onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))}
+            style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }}
+          />
+        ) : (
+          <h2 style={s.postTitle}>{post.title}</h2>
+        )}
+
         <div style={s.meta}>
           <span style={s.metaText}>{post.author_name}</span>
           <span style={s.metaDot}>·</span>
@@ -143,48 +163,55 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
           <span style={s.metaDot}>·</span>
           <span style={s.metaText}>조회 {post.view_count.toLocaleString()}</span>
           <span style={s.metaDot}>·</span>
-          <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>
-            🗑 관리자 삭제
-          </button>
+          {/* 수정 버튼 — 수정 모드 아닐 때만 표시 */}
+          {!editMode && (
+            <button onClick={openEditPwModal} style={s.editBtn}>✏️ 수정</button>
+          )}
+          <span style={s.metaDot}>·</span>
+          <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>🗑 관리자 삭제</button>
         </div>
       </div>
 
       {/* ── 본문 */}
       <div style={s.body}>
-        <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, margin: 0 }}>{post.content}</p>
+        {editMode ? (
+          <>
+            <textarea
+              value={editForm.content}
+              onChange={e => setEditForm(f => ({ ...f, content: e.target.value }))}
+              rows={10}
+              style={s.editTextarea}
+            />
+            <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 10 }}>
+              <button onClick={() => setEditMode(false)} style={s.btnSecondary}>취소</button>
+              <button onClick={saveEdit} style={s.btnPrimary}>저장</button>
+            </div>
+          </>
+        ) : (
+          <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, margin: 0 }}>{post.content}</p>
+        )}
       </div>
 
-      {/* ── 좋아요 + 공유 버튼 */}
-      <div style={s.actionRow}>
-        <button onClick={handleLike} style={s.likeBtn}>
-          ♥ 추천 {post.like_count}
-        </button>
-        <button onClick={handleShare} style={s.shareBtn}>
-          🔗 공유하기
-        </button>
-      </div>
+      {/* ── 좋아요 + 공유 */}
+      {!editMode && (
+        <div style={s.actionRow}>
+          <button onClick={handleLike} style={s.likeBtn}>♥ 추천 {post.like_count}</button>
+          <button onClick={handleShare} style={s.shareBtn}>🔗 공유하기</button>
+        </div>
+      )}
 
       {/* ── 댓글 */}
       <div style={s.commentSection}>
         <h3 style={s.commentTitle}>댓글 {post.comment_count}</h3>
-
         {rootComments.length === 0 ? (
-          <p style={{ color: "#94a3b8", fontSize: 14, textAlign: "center", padding: "20px 0" }}>
-            첫 댓글을 남겨보세요 💬
-          </p>
+          <p style={{ color: "#94a3b8", fontSize: 14, textAlign: "center", padding: "20px 0" }}>첫 댓글을 남겨보세요 💬</p>
         ) : (
           rootComments.map(c => (
-            <CommentItem
-              key={c.id}
-              comment={c}
-              replies={getReplies(c.id)}
+            <CommentItem key={c.id} comment={c} replies={getReplies(c.id)}
               onReply={() => setReplyTo({ id: c.id, author_name: c.author_name })}
-              onDelete={() => openDeleteModal("comment", c.id)}
-            />
+              onDelete={() => openDeleteModal("comment", c.id)} />
           ))
         )}
-
-        {/* ── 댓글 입력 */}
         <div style={s.commentForm}>
           {replyTo && (
             <div style={s.replyBanner}>
@@ -193,21 +220,13 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
             </div>
           )}
           <div style={s.commentInputRow}>
-            <input
-              value={authorName}
-              onChange={e => setAuthorName(e.target.value)}
-              placeholder="닉네임 (미입력 시 익명)"
-              style={{ ...s.inputSm, width: 160 }}
-            />
+            <input value={authorName} onChange={e => setAuthorName(e.target.value)}
+              placeholder="닉네임 (미입력 시 익명)" style={{ ...s.inputSm, width: 160 }} />
           </div>
-          <textarea
-            value={commentText}
-            onChange={e => setCommentText(e.target.value)}
+          <textarea value={commentText} onChange={e => setCommentText(e.target.value)}
             placeholder={replyTo ? `@${replyTo.author_name}에게 답글...` : "댓글을 입력하세요..."}
-            rows={3}
-            style={s.textarea}
-            onKeyDown={e => { if (e.key === "Enter" && e.ctrlKey) submitComment(); }}
-          />
+            rows={3} style={s.textarea}
+            onKeyDown={e => { if (e.key === "Enter" && e.ctrlKey) submitComment(); }} />
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
             <span style={{ fontSize: 12, color: "#94a3b8" }}>Ctrl+Enter로 빠른 등록</span>
             <button onClick={submitComment} disabled={submitting} style={s.btnPrimary}>
@@ -217,6 +236,27 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         </div>
       </div>
 
+      {/* ── 수정 비밀번호 확인 모달 */}
+      {editPwModal && (
+        <div style={s.modalOverlay}>
+          <div style={s.modal}>
+            <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>게시글 수정</h3>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>
+              작성 시 입력한 비밀번호를 입력하세요.
+            </p>
+            <input type="password" value={editPwInput}
+              onChange={e => { setEditPwInput(e.target.value); setEditPwError(""); }}
+              onKeyDown={e => { if (e.key === "Enter") confirmEditPw(); }}
+              placeholder="비밀번호" autoFocus style={s.pwInput} />
+            {editPwError && <p style={{ color: "#ef4444", fontSize: 13, margin: "6px 0 0" }}>{editPwError}</p>}
+            <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
+              <button onClick={() => setEditPwModal(false)} style={s.btnSecondary}>취소</button>
+              <button onClick={confirmEditPw} style={s.btnPrimary}>확인</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── 관리자 삭제 모달 */}
       {deleteModal && (
         <div style={s.modalOverlay}>
@@ -224,18 +264,11 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
             <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>
               {deleteModal.type === "post" ? "게시글 삭제" : "댓글 삭제"}
             </h3>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>
-              관리자 비밀번호를 입력하세요.
-            </p>
-            <input
-              type="password"
-              value={pwInput}
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>관리자 비밀번호를 입력하세요.</p>
+            <input type="password" value={pwInput}
               onChange={e => { setPwInput(e.target.value); setPwError(""); }}
               onKeyDown={e => { if (e.key === "Enter") executeDelete(); }}
-              placeholder="비밀번호"
-              autoFocus
-              style={s.pwInput}
-            />
+              placeholder="비밀번호" autoFocus style={s.pwInput} />
             {pwError && <p style={{ color: "#ef4444", fontSize: 13, margin: "6px 0 0" }}>{pwError}</p>}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
               <button onClick={() => setDeleteModal(null)} style={s.btnSecondary}>취소</button>
@@ -255,18 +288,14 @@ function CommentItem({ comment, replies, onReply, onDelete }) {
         <span style={s.commentAuthor}>{comment.author_name}</span>
         <span style={s.commentDate}>{formatDate(comment.created_at)}</span>
         <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
-          <button onClick={onReply}  style={s.textBtn}>답글</button>
+          <button onClick={onReply} style={s.textBtn}>답글</button>
           <button onClick={onDelete} style={{ ...s.textBtn, color: "#ef4444" }}>🗑 삭제</button>
         </div>
       </div>
-      <p style={{ whiteSpace: "pre-wrap", margin: "6px 0 0", lineHeight: 1.7, fontSize: 14 }}>
-        {comment.content}
-      </p>
+      <p style={{ whiteSpace: "pre-wrap", margin: "6px 0 0", lineHeight: 1.7, fontSize: 14 }}>{comment.content}</p>
       {replies.length > 0 && (
         <div style={s.replies}>
-          {replies.map(r => (
-            <CommentItem key={r.id} comment={r} replies={[]} onReply={onReply} onDelete={onDelete} />
-          ))}
+          {replies.map(r => <CommentItem key={r.id} comment={r} replies={[]} onReply={onReply} onDelete={onDelete} />)}
         </div>
       )}
     </div>
@@ -290,13 +319,14 @@ const s = {
   meta:            { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" },
   metaDot:         { color: "#cbd5e1" },
   metaText:        { fontSize: 13, color: "#64748b" },
+  editBtn:         { background: "none", border: "none", cursor: "pointer", fontSize: 12, color: "#6366f1", fontWeight: 600, padding: 0 },
   deleteBtn:       { background: "none", border: "none", cursor: "pointer", fontSize: 12, color: "#94a3b8", padding: 0 },
   body:            { padding: "24px 0", borderBottom: "1.5px solid #f1f5f9" },
-  // ── 좋아요 + 공유 나란히
+  editInput:       { width: "100%", padding: "8px 12px", borderRadius: 8, border: "1.5px solid #6366f1", outline: "none", boxSizing: "border-box" },
+  editTextarea:    { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #6366f1", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", lineHeight: 1.8 },
   actionRow:       { display: "flex", justifyContent: "center", alignItems: "center", gap: 12, padding: "20px 0" },
-  likeBtn:         { padding: "10px 28px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#94a3b8", transition: "all .15s" },
-  shareBtn:        { padding: "10px 24px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#6366f1", transition: "all .15s" },
-  // ── 토스트
+  likeBtn:         { padding: "10px 28px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#94a3b8" },
+  shareBtn:        { padding: "10px 24px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#6366f1" },
   toast:           { position: "fixed", bottom: 32, left: "50%", transform: "translateX(-50%)", background: "#1e293b", color: "#fff", padding: "12px 24px", borderRadius: 24, fontSize: 14, fontWeight: 600, zIndex: 9999, boxShadow: "0 4px 16px rgba(0,0,0,.2)", whiteSpace: "nowrap" },
   commentSection:  { marginTop: 8 },
   commentTitle:    { fontSize: 16, fontWeight: 800, marginBottom: 16 },
