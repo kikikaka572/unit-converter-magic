@@ -4,21 +4,13 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-type Tab = {
+type SecondaryLink = {
   to: string;
   emoji: string;
-  labelKey:
-    | "tab.salary"
-    | "tab.life"
-    | "tab.converter"
-    | "tab.hotdeals"
-    | "tab.community";
+  labelKey: "tab.hotdeals" | "tab.community";
 };
 
-const TABS: Tab[] = [
-  { to: "/salary", emoji: "💼", labelKey: "tab.salary" },
-  { to: "/life", emoji: "🧮", labelKey: "tab.life" },
-  { to: "/converter", emoji: "📐", labelKey: "tab.converter" },
+const SECONDARY_LINKS: SecondaryLink[] = [
   { to: "/hotdeals", emoji: "🔥", labelKey: "tab.hotdeals" },
   { to: "/community", emoji: "💬", labelKey: "tab.community" },
 ];
@@ -32,9 +24,9 @@ interface Props {
 export default function Layout({ children, title, description }: Props) {
   const { t, lang } = useLanguage();
   const location = useLocation();
-  // active match (prefix)
   const isActive = (to: string) =>
     location.pathname === to || location.pathname.startsWith(to + "/");
+  const isHome = location.pathname === "/";
 
   return (
     <div className="min-h-screen flex flex-col bg-background">

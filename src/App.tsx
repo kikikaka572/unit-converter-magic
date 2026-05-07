@@ -11,6 +11,7 @@ import ConverterPage from "./pages/ConverterPage";
 import HotdealsPage from "./pages/HotdealsPage";
 import HotdealDetailPage from "./pages/HotdealDetailPage";
 import CommunityPage from "./pages/CommunityPage";
+import HomePage from "./pages/HomePage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -23,7 +24,7 @@ const LegacyRedirect = () => {
     if (tab === "converter") return <Navigate to={`/converter${window.location.search}`} replace />;
     if (tab === "salary") return <Navigate to="/salary" replace />;
   }
-  return <Navigate to="/salary" replace />;
+  return <HomePage />;
 };
 
 const App = () => (
