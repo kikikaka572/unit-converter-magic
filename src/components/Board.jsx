@@ -16,7 +16,7 @@ const CATEGORIES = [
   { slug: "general",  name_ko: "자유게시판", icon: "💬", color: "#6366f1" },
   { slug: "qna",      name_ko: "Q&A",        icon: "❓", color: "#f59e0b" },
   { slug: "tips",     name_ko: "팁 & 노하우",icon: "💡", color: "#10b981" },
-  { slug: "feedback", name_ko: "피드백",     icon: "📝", color: "#8b5cf6" },
+  { slug: "feedback", name_ko: "맛집",     icon: "🍕", color: "#8b5cf6" },
 ];
 
 const PAGE_SIZE = 15;
