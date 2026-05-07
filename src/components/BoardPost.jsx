@@ -1,8 +1,8 @@
 // BoardPost.jsx — 공유 URL을 /community/{postId} 로 변경
-// 나머지 로직은 이전과 동일
 import { useState, useEffect, useCallback } from "react";
+import { supabase } from "@/lib/supabase";
 
-export default function BoardPost({ postId, supabase, adminPw, onBack }) {
+export default function BoardPost({ postId, adminPw, onBack }) {
   const [post,        setPost]        = useState(null);
   const [comments,    setComments]    = useState([]);
   const [loading,     setLoading]     = useState(true);
@@ -28,14 +28,14 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
       setPost(data);
       await supabase.rpc("increment_view_count", { post_uuid: postId });
     }
-  }, [postId, supabase]);
+  }, [postId]);
 
   const fetchComments = useCallback(async () => {
     const { data } = await supabase.from("comments").select("*")
       .eq("post_id", postId).eq("is_hidden", false)
       .order("created_at", { ascending: true });
     setComments(data || []);
-  }, [postId, supabase]);
+  }, [postId]);
 
   useEffect(() => {
     Promise.all([fetchPost(), fetchComments()]).then(() => setLoading(false));
