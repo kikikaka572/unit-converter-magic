@@ -1,4 +1,5 @@
-// BoardPost.jsx — 게시글 상세 + 수정(비밀번호 확인) + 관리자 삭제 + 공유
+// BoardPost.jsx — 공유 URL을 /community/{postId} 로 변경
+// 나머지 로직은 이전과 동일
 import { useState, useEffect, useCallback } from "react";
 
 export default function BoardPost({ postId, supabase, adminPw, onBack }) {
@@ -10,25 +11,18 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   const [replyTo,     setReplyTo]     = useState(null);
   const [submitting,  setSubmitting]  = useState(false);
   const [toast,       setToast]       = useState("");
-
-  // 수정 모드
   const [editMode,    setEditMode]    = useState(false);
   const [editForm,    setEditForm]    = useState({ title: "", content: "" });
-
-  // 비밀번호 확인 모달 (수정용)
   const [editPwModal, setEditPwModal] = useState(false);
   const [editPwInput, setEditPwInput] = useState("");
   const [editPwError, setEditPwError] = useState("");
-
-  // 관리자 삭제 모달
   const [deleteModal, setDeleteModal] = useState(null);
   const [pwInput,     setPwInput]     = useState("");
   const [pwError,     setPwError]     = useState("");
 
   const fetchPost = useCallback(async () => {
     const { data } = await supabase
-      .from("posts")
-      .select("*, categories(slug, name_ko, icon, color)")
+      .from("posts").select("*, categories(slug, name_ko, icon, color)")
       .eq("id", postId).single();
     if (data) {
       setPost(data);
@@ -37,8 +31,7 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
   }, [postId, supabase]);
 
   const fetchComments = useCallback(async () => {
-    const { data } = await supabase
-      .from("comments").select("*")
+    const { data } = await supabase.from("comments").select("*")
       .eq("post_id", postId).eq("is_hidden", false)
       .order("created_at", { ascending: true });
     setComments(data || []);
@@ -48,12 +41,16 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     Promise.all([fetchPost(), fetchComments()]).then(() => setLoading(false));
   }, [fetchPost, fetchComments]);
 
-  // ── 공유
+  // ── 공유 — /community/{postId} 고정 URL
   const handleShare = async () => {
-    const url = `${window.location.origin}${window.location.pathname}?post=${postId}`;
+    const url = `https://unit-converter-magic.vercel.app/community/${postId}`;
     try {
-      if (navigator.share) { await navigator.share({ title: post?.title, url }); }
-      else { await navigator.clipboard.writeText(url); showToast("링크가 복사되었습니다! 🔗"); }
+      if (navigator.share) {
+        await navigator.share({ title: post?.title, url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        showToast("링크가 복사되었습니다! 🔗");
+      }
     } catch {
       const el = document.createElement("textarea");
       el.value = url; document.body.appendChild(el); el.select();
@@ -64,41 +61,29 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
 
   const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(""), 2500); };
 
-  // ── 좋아요
   const handleLike = async () => {
     await supabase.from("posts").update({ like_count: post.like_count + 1 }).eq("id", postId);
     setPost(p => ({ ...p, like_count: p.like_count + 1 }));
   };
 
-  // ── 수정 비밀번호 확인
-  const openEditPwModal = () => {
-    setEditPwModal(true); setEditPwInput(""); setEditPwError("");
-  };
+  const openEditPwModal = () => { setEditPwModal(true); setEditPwInput(""); setEditPwError(""); };
   const confirmEditPw = () => {
-    // 작성자 비밀번호 또는 관리자 비밀번호 모두 허용
     if (editPwInput !== post.post_password && editPwInput !== adminPw) {
-      setEditPwError("비밀번호가 올바르지 않습니다.");
-      return;
+      setEditPwError("비밀번호가 올바르지 않습니다."); return;
     }
     setEditPwModal(false);
     setEditForm({ title: post.title, content: post.content });
     setEditMode(true);
   };
 
-  // ── 수정 저장
   const saveEdit = async () => {
     if (!editForm.title.trim() || !editForm.content.trim()) return;
     const { error } = await supabase.from("posts")
       .update({ title: editForm.title.trim(), content: editForm.content.trim() })
       .eq("id", postId);
-    if (!error) {
-      await fetchPost();
-      setEditMode(false);
-      showToast("수정이 완료되었습니다 ✅");
-    }
+    if (!error) { await fetchPost(); setEditMode(false); showToast("수정이 완료되었습니다 ✅"); }
   };
 
-  // ── 관리자 삭제
   const openDeleteModal = (type, id) => { setDeleteModal({ type, id }); setPwInput(""); setPwError(""); };
   const executeDelete = async () => {
     if (pwInput !== adminPw) { setPwError("비밀번호가 올바르지 않습니다."); return; }
@@ -111,7 +96,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
     }
   };
 
-  // ── 댓글 등록
   const submitComment = async () => {
     if (!commentText.trim()) return;
     setSubmitting(true);
@@ -132,30 +116,21 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
 
   return (
     <div style={s.wrap}>
-      {/* ── 토스트 */}
       {toast && <div style={s.toast}>{toast}</div>}
 
-      {/* ── 뒤로가기 */}
       <button onClick={onBack} style={s.backBtn}>← 목록으로</button>
 
-      {/* ── 게시글 헤더 */}
       <div style={s.postHeader}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
           {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
           {post.is_pinned && <span style={s.pinBadge}>📌 공지</span>}
         </div>
-
-        {/* 수정 모드 제목 */}
         {editMode ? (
-          <input
-            value={editForm.title}
-            onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))}
-            style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }}
-          />
+          <input value={editForm.title} onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))}
+            style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }} />
         ) : (
           <h2 style={s.postTitle}>{post.title}</h2>
         )}
-
         <div style={s.meta}>
           <span style={s.metaText}>{post.author_name}</span>
           <span style={s.metaDot}>·</span>
@@ -163,25 +138,17 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
           <span style={s.metaDot}>·</span>
           <span style={s.metaText}>조회 {post.view_count.toLocaleString()}</span>
           <span style={s.metaDot}>·</span>
-          {/* 수정 버튼 — 수정 모드 아닐 때만 표시 */}
-          {!editMode && (
-            <button onClick={openEditPwModal} style={s.editBtn}>✏️ 수정</button>
-          )}
+          {!editMode && <button onClick={openEditPwModal} style={s.editBtn}>✏️ 수정</button>}
           <span style={s.metaDot}>·</span>
           <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>🗑 관리자 삭제</button>
         </div>
       </div>
 
-      {/* ── 본문 */}
       <div style={s.body}>
         {editMode ? (
           <>
-            <textarea
-              value={editForm.content}
-              onChange={e => setEditForm(f => ({ ...f, content: e.target.value }))}
-              rows={10}
-              style={s.editTextarea}
-            />
+            <textarea value={editForm.content} onChange={e => setEditForm(f => ({ ...f, content: e.target.value }))}
+              rows={10} style={s.editTextarea} />
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 10 }}>
               <button onClick={() => setEditMode(false)} style={s.btnSecondary}>취소</button>
               <button onClick={saveEdit} style={s.btnPrimary}>저장</button>
@@ -192,7 +159,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         )}
       </div>
 
-      {/* ── 좋아요 + 공유 */}
       {!editMode && (
         <div style={s.actionRow}>
           <button onClick={handleLike} style={s.likeBtn}>♥ 추천 {post.like_count}</button>
@@ -200,7 +166,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         </div>
       )}
 
-      {/* ── 댓글 */}
       <div style={s.commentSection}>
         <h3 style={s.commentTitle}>댓글 {post.comment_count}</h3>
         {rootComments.length === 0 ? (
@@ -236,14 +201,11 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         </div>
       </div>
 
-      {/* ── 수정 비밀번호 확인 모달 */}
       {editPwModal && (
         <div style={s.modalOverlay}>
           <div style={s.modal}>
             <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>게시글 수정</h3>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>
-              작성 시 입력한 비밀번호를 입력하세요.
-            </p>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>작성 시 입력한 비밀번호를 입력하세요.</p>
             <input type="password" value={editPwInput}
               onChange={e => { setEditPwInput(e.target.value); setEditPwError(""); }}
               onKeyDown={e => { if (e.key === "Enter") confirmEditPw(); }}
@@ -257,7 +219,6 @@ export default function BoardPost({ postId, supabase, adminPw, onBack }) {
         </div>
       )}
 
-      {/* ── 관리자 삭제 모달 */}
       {deleteModal && (
         <div style={s.modalOverlay}>
           <div style={s.modal}>
