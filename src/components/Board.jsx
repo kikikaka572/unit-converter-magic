@@ -15,8 +15,8 @@ const CATEGORIES = [
   { slug: "notice",   name_ko: "공지사항",   icon: "📢", color: "#ef4444" },
   { slug: "general",  name_ko: "자유게시판", icon: "💬", color: "#6366f1" },
   { slug: "qna",      name_ko: "Q&A",        icon: "❓", color: "#f59e0b" },
-  { slug: "tips",     name_ko: "일뚱일지",icon: "🐽", color: "#10b981" },
-  { slug: "feedback", name_ko: "맛집",     icon: "🍕", color: "#8b5cf6" },
+  { slug: "tips",     name_ko: "일뚱일지",   icon: "🐽", color: "#10b981" },
+  { slug: "feedback", name_ko: "맛집",       icon: "🍕", color: "#8b5cf6" },
 ];
 
 const PAGE_SIZE = 15;
@@ -117,14 +117,22 @@ export default function Board() {
         <div style={s.emptyBox}>게시글이 없습니다. 첫 글을 남겨보세요! 🙌</div>
       ) : (
         <table style={s.table}>
+          <colgroup>
+            <col style={{ width: 110 }} />
+            <col />
+            <col style={{ width: 90 }} />
+            <col style={{ width: 60 }} />
+            <col style={{ width: 60 }} />
+            <col style={{ width: 100 }} />
+          </colgroup>
           <thead>
             <tr style={s.thead}>
-              <th style={{ ...s.th, width: 90 }}>카테고리</th>
-              <th style={{ ...s.th, textAlign: "left" }}>제목</th>
-              <th style={{ ...s.th, width: 90 }}>작성자</th>
-              <th style={{ ...s.th, width: 60 }}>조회</th>
-              <th style={{ ...s.th, width: 60 }}>추천</th>
-              <th style={{ ...s.th, width: 90 }}>날짜</th>
+              <th style={{ ...s.th, textAlign: "center" }}>카테고리</th>
+              <th style={{ ...s.th, textAlign: "left"   }}>제목</th>
+              <th style={{ ...s.th, textAlign: "center" }}>작성자</th>
+              <th style={{ ...s.th, textAlign: "center" }}>조회</th>
+              <th style={{ ...s.th, textAlign: "center" }}>추천</th>
+              <th style={{ ...s.th, textAlign: "center" }}>날짜</th>
             </tr>
           </thead>
           <tbody>
@@ -168,7 +176,7 @@ function PostRow({ post, onClick }) {
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#64748b" }}>{post.author_name}</td>
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#94a3b8" }}>{post.view_count}</td>
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#f59e0b" }}>{post.like_count > 0 ? `♥ ${post.like_count}` : ""}</td>
-      <td style={{ ...s.td, textAlign: "center", fontSize: 12, color: "#94a3b8" }}>{dateStr}</td>
+      <td style={{ ...s.td, textAlign: "center", fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>{dateStr}</td>
     </tr>
   );
 }
@@ -217,29 +225,29 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
 }
 
 const s = {
-  wrap:         { maxWidth: 900, margin: "0 auto", padding: "24px 16px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b" },
+  wrap:         { width: "100%", padding: "24px 32px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
   header:       { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 },
   title:        { margin: 0, fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px" },
   subtitle:     { margin: "4px 0 0", fontSize: 14, color: "#64748b" },
-  btnPrimary:   { padding: "8px 18px", borderRadius: 8, border: "none", background: "#6366f1", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700 },
-  btnSecondary: { padding: "8px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", color: "#64748b", cursor: "pointer", fontSize: 13 },
+  btnPrimary:   { padding: "8px 18px", borderRadius: 8, border: "none", background: "#6366f1", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700, whiteSpace: "nowrap" },
+  btnSecondary: { padding: "8px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", color: "#64748b", cursor: "pointer", fontSize: 13, whiteSpace: "nowrap" },
   catRow:       { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 },
-  catBtn:       { padding: "6px 14px", borderRadius: 20, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569", transition: "all .15s" },
+  catBtn:       { padding: "6px 14px", borderRadius: 20, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569", transition: "all .15s", whiteSpace: "nowrap" },
   searchRow:    { display: "flex", gap: 8, alignItems: "center", marginBottom: 16, flexWrap: "wrap" },
-  searchInput:  { flex: 1, minWidth: 180, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
-  btnSearch:    { padding: "8px 14px", borderRadius: 8, border: "none", background: "#334155", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600 },
-  btnClear:     { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #fca5a5", background: "#fff", color: "#ef4444", cursor: "pointer", fontSize: 13 },
-  countLabel:   { marginLeft: "auto", fontSize: 13, color: "#94a3b8" },
-  table:        { width: "100%", borderCollapse: "collapse", background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
+  searchInput:  { flex: 1, minWidth: 200, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
+  btnSearch:    { padding: "8px 16px", borderRadius: 8, border: "none", background: "#334155", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap" },
+  btnClear:     { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #fca5a5", background: "#fff", color: "#ef4444", cursor: "pointer", fontSize: 13, whiteSpace: "nowrap" },
+  countLabel:   { marginLeft: "auto", fontSize: 13, color: "#94a3b8", whiteSpace: "nowrap" },
+  table:        { width: "100%", tableLayout: "fixed", borderCollapse: "collapse", background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
   thead:        { background: "#f8fafc" },
-  th:           { padding: "12px 10px", fontSize: 13, fontWeight: 700, color: "#64748b", textAlign: "center", borderBottom: "1.5px solid #e2e8f0" },
+  th:           { padding: "12px 12px", fontSize: 13, fontWeight: 700, color: "#64748b", borderBottom: "1.5px solid #e2e8f0", whiteSpace: "nowrap", overflow: "hidden" },
   row:          { cursor: "pointer", borderBottom: "1px solid #f1f5f9", transition: "background .12s" },
-  td:           { padding: "13px 10px", fontSize: 14, verticalAlign: "middle" },
-  tdTitle:      { padding: "13px 10px", fontSize: 14, verticalAlign: "middle", maxWidth: 0, width: "100%", overflow: "hidden" },
-  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block", maxWidth: "100%" },
-  commentCount: { marginLeft: 4, color: "#6366f1", fontSize: 13, fontWeight: 700 },
+  td:           { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden", textOverflow: "ellipsis" },
+  tdTitle:      { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden" },
+  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" },
+  commentCount: { marginLeft: 6, color: "#6366f1", fontSize: 13, fontWeight: 700 },
   pinBadge:     { marginRight: 6 },
-  catBadge:     { display: "inline-block", padding: "2px 8px", borderRadius: 12, fontSize: 11, fontWeight: 700 },
+  catBadge:     { display: "inline-block", padding: "3px 8px", borderRadius: 12, fontSize: 11, fontWeight: 700, whiteSpace: "nowrap" },
   emptyBox:     { textAlign: "center", padding: "60px 0", color: "#94a3b8", fontSize: 15 },
   pagination:   { display: "flex", justifyContent: "center", gap: 4, marginTop: 24 },
   pageBtn:      { width: 34, height: 34, borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 14, color: "#475569", display: "flex", alignItems: "center", justifyContent: "center" },
