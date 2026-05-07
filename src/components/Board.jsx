@@ -1,7 +1,8 @@
-// Board.jsx — 익명 게시판 (글쓰기 시 비밀번호 입력, 수정 지원)
+// Board.jsx — 글 클릭 시 /community/:id 로 이동 (React Router v6 + Vite)
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { createClient } from "@supabase/supabase-js";
-import BoardPost from "./BoardPost";
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
@@ -22,13 +23,13 @@ const CATEGORIES = [
 const PAGE_SIZE = 15;
 
 export default function Board() {
+  const navigate = useNavigate();
   const [posts,          setPosts]          = useState([]);
   const [totalCount,     setTotalCount]     = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
   const [page,           setPage]           = useState(1);
   const [loading,        setLoading]        = useState(true);
   const [showWrite,      setShowWrite]      = useState(false);
-  const [selectedPost,   setSelectedPost]   = useState(null);
   const [searchQuery,    setSearchQuery]    = useState("");
   const [searchInput,    setSearchInput]    = useState("");
 
@@ -58,16 +59,10 @@ export default function Board() {
   const handleCategory = (slug) => { setActiveCategory(slug); setPage(1); };
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-  if (selectedPost) {
-    return (
-      <BoardPost
-        postId={selectedPost}
-        supabase={supabase}
-        adminPw={ADMIN_PW}
-        onBack={() => { setSelectedPost(null); fetchPosts(); }}
-      />
-    );
-  }
+  // ── 글 클릭 → /community/{id} 이동
+  const handlePostClick = (postId) => {
+    navigate(`/community/${postId}`);
+  };
 
   return (
     <div style={s.wrap}>
@@ -136,7 +131,9 @@ export default function Board() {
             </tr>
           </thead>
           <tbody>
-            {posts.map(post => <PostRow key={post.id} post={post} onClick={() => setSelectedPost(post.id)} />)}
+            {posts.map(post => (
+              <PostRow key={post.id} post={post} onClick={() => handlePostClick(post.id)} />
+            ))}
           </tbody>
         </table>
       )}
@@ -181,7 +178,6 @@ function PostRow({ post, onClick }) {
   );
 }
 
-// ── 글쓰기 폼 (비밀번호 필드 추가)
 function WriteForm({ supabase, categories, onCreated, onCancel }) {
   const [form, setForm] = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -192,7 +188,6 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
     if (!form.content.trim())  { setError("내용을 입력해주세요."); return; }
     if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
-
     const { data: catRow } = await supabase.from("categories").select("id").eq("slug", form.category).single();
     const { error: err } = await supabase.from("posts").insert({
       category_id:   catRow?.id,
@@ -217,16 +212,12 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
         <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
           placeholder="제목" style={{ ...s.input, flex: 1 }} />
       </div>
-      {/* 비밀번호 안내 */}
       <div style={s.pwRow}>
         <span style={s.pwLabel}>🔒 수정·삭제 비밀번호</span>
-        <input
-          type="password"
-          value={form.password}
+        <input type="password" value={form.password}
           onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
           placeholder="나중에 수정/삭제 시 필요합니다"
-          style={{ ...s.input, flex: 1 }}
-        />
+          style={{ ...s.input, flex: 1 }} />
       </div>
       <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
         placeholder="내용을 입력하세요..." rows={6} style={s.textarea} />
@@ -255,7 +246,7 @@ const s = {
   countLabel:   { marginLeft: "auto", fontSize: 13, color: "#94a3b8", whiteSpace: "nowrap" },
   table:        { width: "100%", tableLayout: "fixed", borderCollapse: "collapse", background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
   thead:        { background: "#f8fafc" },
-  th:           { padding: "12px 12px", fontSize: 13, fontWeight: 700, color: "#64748b", borderBottom: "1.5px solid #e2e8f0", whiteSpace: "nowrap", overflow: "hidden" },
+  th:           { padding: "12px 12px", fontSize: 13, fontWeight: 700, color: "#64748b", borderBottom: "1.5px solid #e2e8f0", whiteSpace: "nowrap" },
   row:          { cursor: "pointer", borderBottom: "1px solid #f1f5f9", transition: "background .12s" },
   td:           { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden", textOverflow: "ellipsis" },
   tdTitle:      { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden" },
