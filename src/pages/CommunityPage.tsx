@@ -1,10 +1,30 @@
+// pages/CommunityPostPage.tsx — 게시글 상세 전용 페이지
+import { useParams, useNavigate } from "react-router-dom";
+import { createClient } from "@supabase/supabase-js";
 import Layout from "@/components/Layout";
-import Board from "@/components/Board";
+import BoardPost from "@/components/BoardPost";
 
-export default function CommunityPage() {
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
+
+export default function CommunityPostPage() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  if (!id) return null;
+
   return (
     <Layout>
-      <Board />
+      <BoardPost
+        postId={id}
+        supabase={supabase}
+        adminPw={ADMIN_PW}
+        onBack={() => navigate("/community")}
+      />
     </Layout>
   );
 }
