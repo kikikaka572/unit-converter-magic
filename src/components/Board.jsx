@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { supabase } from "@/lib/supabase";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
