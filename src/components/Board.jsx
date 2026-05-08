@@ -1,17 +1,27 @@
-// Board.jsx — 단일 게시판 (카테고리 없음)
+// Board.jsx — 글쓰기 시 이미지 첨부 (Cloudinary)
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { supabase } from "@/lib/supabase";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { uploadImage } from "@/lib/cloudinary";
+
+const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
+
+const CATEGORIES = [
+  { slug: "all",      name_ko: "전체",       icon: "🌐", color: "#94a3b8" },
+  { slug: "notice",   name_ko: "공지사항",   icon: "📢", color: "#ef4444" },
+  { slug: "general",  name_ko: "자유게시판", icon: "💬", color: "#6366f1" },
+  { slug: "qna",      name_ko: "Q&A",        icon: "❓", color: "#f59e0b" },
+  { slug: "tips",     name_ko: "일뚱일지",   icon: "🐽", color: "#10b981" },
+  { slug: "feedback", name_ko: "맛집",       icon: "🍕", color: "#8b5cf6" },
+];
 
 const PAGE_SIZE = 15;
 
 export default function Board() {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [posts,          setPosts]          = useState([]);
   const [totalCount,     setTotalCount]     = useState(0);
+  const [activeCategory, setActiveCategory] = useState("all");
   const [page,           setPage]           = useState(1);
   const [loading,        setLoading]        = useState(true);
   const [showWrite,      setShowWrite]      = useState(false);
@@ -22,26 +32,29 @@ export default function Board() {
     setLoading(true);
     let query = supabase
       .from("posts")
-      .select(`id, title, author_name, view_count, like_count, comment_count, is_pinned, created_at`, { count: "exact" })
+      .select(`id, title, author_name, view_count, like_count, comment_count, is_pinned, created_at, image_url, categories(slug, name_ko, icon, color)`, { count: "exact" })
       .eq("is_hidden", false)
       .order("is_pinned",  { ascending: false })
       .order("created_at", { ascending: false })
       .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
+    if (activeCategory !== "all") {
+      const { data: catRow } = await supabase.from("categories").select("id").eq("slug", activeCategory).single();
+      if (catRow) query = query.eq("category_id", catRow.id);
+    }
     if (searchQuery) query = query.ilike("title", `%${searchQuery}%`);
 
     const { data, count, error } = await query;
     if (!error) { setPosts(data || []); setTotalCount(count || 0); }
     setLoading(false);
-  }, [page, searchQuery]);
+  }, [activeCategory, page, searchQuery]);
 
   useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
+  const handleCategory = (slug) => { setActiveCategory(slug); setPage(1); };
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-  const handlePostClick = (postId) => {
-    navigate(`/community/${postId}`);
-  };
+  const handlePostClick = (postId) => { navigate(`/community/${postId}`); };
 
   return (
     <div style={s.wrap}>
@@ -57,11 +70,20 @@ export default function Board() {
 
       {showWrite && (
         <WriteForm
-          supabase={supabase}
+          categories={CATEGORIES.filter(c => c.slug !== "all")}
           onCreated={() => { setShowWrite(false); setPage(1); fetchPosts(); }}
           onCancel={() => setShowWrite(false)}
         />
       )}
+
+      <div style={s.catRow}>
+        {CATEGORIES.map(cat => (
+          <button key={cat.slug} onClick={() => handleCategory(cat.slug)}
+            style={{ ...s.catBtn, ...(activeCategory === cat.slug ? { background: cat.color, color: "#fff", borderColor: cat.color } : {}) }}>
+            {cat.icon} {cat.name_ko}
+          </button>
+        ))}
+      </div>
 
       <div style={s.searchRow}>
         <input value={searchInput} onChange={e => setSearchInput(e.target.value)}
@@ -76,15 +98,10 @@ export default function Board() {
         <div style={s.emptyBox}>불러오는 중...</div>
       ) : posts.length === 0 ? (
         <div style={s.emptyBox}>게시글이 없습니다. 첫 글을 남겨보세요! 🙌</div>
-      ) : isMobile ? (
-        <div style={s.mList}>
-          {posts.map(post => (
-            <MobilePostRow key={post.id} post={post} onClick={() => handlePostClick(post.id)} />
-          ))}
-        </div>
       ) : (
         <table style={s.table}>
           <colgroup>
+            <col style={{ width: 110 }} />
             <col />
             <col style={{ width: 90 }} />
             <col style={{ width: 60 }} />
@@ -93,7 +110,8 @@ export default function Board() {
           </colgroup>
           <thead>
             <tr style={s.thead}>
-              <th style={{ ...s.th, textAlign: "left"   }}>제목</th>
+              <th style={{ ...s.th, textAlign: "center" }}>카테고리</th>
+              <th style={{ ...s.th, textAlign: "left" }}>제목</th>
               <th style={{ ...s.th, textAlign: "center" }}>작성자</th>
               <th style={{ ...s.th, textAlign: "center" }}>조회</th>
               <th style={{ ...s.th, textAlign: "center" }}>추천</th>
@@ -124,6 +142,7 @@ export default function Board() {
 }
 
 function PostRow({ post, onClick }) {
+  const cat = post.categories;
   const date = new Date(post.created_at);
   const isToday = new Date().toDateString() === date.toDateString();
   const dateStr = isToday
@@ -131,9 +150,13 @@ function PostRow({ post, onClick }) {
     : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
   return (
     <tr style={s.row} onClick={onClick}>
+      <td style={{ ...s.td, textAlign: "center" }}>
+        {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
+      </td>
       <td style={s.tdTitle}>
         {post.is_pinned && <span style={s.pinBadge}>📌</span>}
         <span style={s.titleText}>{post.title}</span>
+        {post.image_url && <span style={s.imgBadge}>🖼</span>}
         {post.comment_count > 0 && <span style={s.commentCount}>[{post.comment_count}]</span>}
       </td>
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#64748b" }}>{post.author_name}</td>
@@ -144,45 +167,50 @@ function PostRow({ post, onClick }) {
   );
 }
 
-function MobilePostRow({ post, onClick }) {
-  const date = new Date(post.created_at);
-  const isToday = new Date().toDateString() === date.toDateString();
-  const dateStr = isToday
-    ? date.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })
-    : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
-  return (
-    <div style={s.mCard} onClick={onClick}>
-      <div style={s.mTitle}>
-        {post.is_pinned && <span style={s.pinBadge}>📌</span>}
-        {post.title}
-        {post.comment_count > 0 && <span style={s.commentCount}>[{post.comment_count}]</span>}
-      </div>
-      <div style={s.mMeta}>
-        <span>{post.author_name}</span>
-        <span>·</span>
-        <span>조회 {post.view_count}</span>
-        {post.like_count > 0 && <><span>·</span><span style={{ color: "#f59e0b" }}>♥ {post.like_count}</span></>}
-        <span style={{ marginLeft: "auto", color: "#94a3b8" }}>{dateStr}</span>
-      </div>
-    </div>
-  );
-}
-
-function WriteForm({ supabase, onCreated, onCancel }) {
-  const [form, setForm] = useState({ title: "", content: "", author_name: "", password: "" });
+// ── 글쓰기 폼 (이미지 첨부 추가)
+function WriteForm({ categories, onCreated, onCancel }) {
+  const [form,       setForm]       = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
+  const [imageFile,  setImageFile]  = useState(null);
+  const [preview,    setPreview]    = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [uploadMsg,  setUploadMsg]  = useState("");
+  const [error,      setError]      = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { setError("이미지는 5MB 이하만 가능합니다."); return; }
+    setImageFile(file);
+    setPreview(URL.createObjectURL(file));
+    setError("");
+  };
 
   const handleSubmit = async () => {
     if (!form.title.trim())    { setError("제목을 입력해주세요."); return; }
     if (!form.content.trim())  { setError("내용을 입력해주세요."); return; }
     if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
+
+    let image_url = null;
+    if (imageFile) {
+      try {
+        setUploadMsg("이미지 업로드 중...");
+        image_url = await uploadImage(imageFile);
+        setUploadMsg("");
+      } catch {
+        setError("이미지 업로드 실패. 다시 시도해주세요.");
+        setSubmitting(false); return;
+      }
+    }
+
+    const { data: catRow } = await supabase.from("categories").select("id").eq("slug", form.category).single();
     const { error: err } = await supabase.from("posts").insert({
+      category_id:   catRow?.id,
       author_name:   form.author_name.trim() || "익명",
       title:         form.title.trim(),
       content:       form.content.trim(),
       post_password: form.password.trim(),
+      image_url,
     });
     if (err) { setError(err.message); setSubmitting(false); return; }
     onCreated();
@@ -192,6 +220,9 @@ function WriteForm({ supabase, onCreated, onCancel }) {
     <div style={s.writeBox}>
       <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>새 글 작성</h3>
       <div style={s.formRow}>
+        <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} style={s.select}>
+          {categories.map(c => <option key={c.slug} value={c.slug}>{c.icon} {c.name_ko}</option>)}
+        </select>
         <input value={form.author_name} onChange={e => setForm(f => ({ ...f, author_name: e.target.value }))}
           placeholder="닉네임 (미입력 시 익명)" style={{ ...s.input, width: 140 }} />
         <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -206,26 +237,50 @@ function WriteForm({ supabase, onCreated, onCancel }) {
       </div>
       <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
         placeholder="내용을 입력하세요..." rows={6} style={s.textarea} />
+
+      {/* 이미지 첨부 */}
+      <div style={s.imgUploadRow}>
+        <label style={s.imgLabel}>
+          📎 이미지 첨부
+          <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
+        </label>
+        {imageFile && (
+          <span style={s.imgFileName}>
+            {imageFile.name}
+            <button onClick={() => { setImageFile(null); setPreview(null); }} style={s.imgRemove}>✕</button>
+          </span>
+        )}
+        <span style={{ fontSize: 12, color: "#94a3b8" }}>최대 5MB</span>
+      </div>
+
+      {/* 이미지 미리보기 */}
+      {preview && (
+        <div style={s.previewBox}>
+          <img src={preview} alt="preview" style={s.previewImg} />
+        </div>
+      )}
+
+      {uploadMsg && <p style={{ color: "#6366f1", fontSize: 13, margin: "4px 0" }}>{uploadMsg}</p>}
       {error && <p style={{ color: "#ef4444", fontSize: 13, margin: "4px 0" }}>{error}</p>}
       <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
         <button onClick={onCancel} style={s.btnSecondary}>취소</button>
-        <button onClick={handleSubmit} disabled={submitting} style={s.btnPrimary}>{submitting ? "등록 중..." : "등록"}</button>
+        <button onClick={handleSubmit} disabled={submitting} style={s.btnPrimary}>
+          {submitting ? "등록 중..." : "등록"}
+        </button>
       </div>
     </div>
   );
 }
 
 const s = {
-  wrap:         { width: "100%", padding: "16px clamp(12px, 4vw, 32px)", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
-  mList:        { display: "flex", flexDirection: "column", gap: 8, background: "#fff", borderRadius: 12, padding: 8, boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
-  mCard:        { padding: "12px", borderRadius: 8, border: "1px solid #f1f5f9", cursor: "pointer", background: "#fff" },
-  mTitle:       { fontSize: 14, fontWeight: 600, color: "#1e293b", lineHeight: 1.4, marginBottom: 6, wordBreak: "break-word" },
-  mMeta:        { display: "flex", gap: 6, fontSize: 12, color: "#64748b", flexWrap: "wrap", alignItems: "center" },
+  wrap:         { width: "100%", padding: "24px 32px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
   header:       { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 },
   title:        { margin: 0, fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px" },
   subtitle:     { margin: "4px 0 0", fontSize: 14, color: "#64748b" },
   btnPrimary:   { padding: "8px 18px", borderRadius: 8, border: "none", background: "#6366f1", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700, whiteSpace: "nowrap" },
   btnSecondary: { padding: "8px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", color: "#64748b", cursor: "pointer", fontSize: 13, whiteSpace: "nowrap" },
+  catRow:       { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 },
+  catBtn:       { padding: "6px 14px", borderRadius: 20, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569", transition: "all .15s", whiteSpace: "nowrap" },
   searchRow:    { display: "flex", gap: 8, alignItems: "center", marginBottom: 16, flexWrap: "wrap" },
   searchInput:  { flex: 1, minWidth: 200, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
   btnSearch:    { padding: "8px 16px", borderRadius: 8, border: "none", background: "#334155", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap" },
@@ -237,9 +292,11 @@ const s = {
   row:          { cursor: "pointer", borderBottom: "1px solid #f1f5f9", transition: "background .12s" },
   td:           { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden", textOverflow: "ellipsis" },
   tdTitle:      { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden" },
-  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "inline" },
+  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" },
+  imgBadge:     { marginLeft: 4, fontSize: 13 },
   commentCount: { marginLeft: 6, color: "#6366f1", fontSize: 13, fontWeight: 700 },
   pinBadge:     { marginRight: 6 },
+  catBadge:     { display: "inline-block", padding: "3px 8px", borderRadius: 12, fontSize: 11, fontWeight: 700, whiteSpace: "nowrap" },
   emptyBox:     { textAlign: "center", padding: "60px 0", color: "#94a3b8", fontSize: 15 },
   pagination:   { display: "flex", justifyContent: "center", gap: 4, marginTop: 24 },
   pageBtn:      { width: 34, height: 34, borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 14, color: "#475569", display: "flex", alignItems: "center", justifyContent: "center" },
@@ -248,6 +305,13 @@ const s = {
   formRow:      { display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" },
   pwRow:        { display: "flex", alignItems: "center", gap: 10, marginBottom: 10, padding: "10px 12px", background: "#fffbeb", border: "1.5px solid #fde68a", borderRadius: 8 },
   pwLabel:      { fontSize: 13, fontWeight: 600, color: "#92400e", whiteSpace: "nowrap" },
+  select:       { padding: "8px 10px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, background: "#fff", cursor: "pointer" },
   input:        { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
   textarea:     { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", marginBottom: 10 },
+  imgUploadRow: { display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" },
+  imgLabel:     { display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569" },
+  imgFileName:  { fontSize: 13, color: "#334155", display: "flex", alignItems: "center", gap: 6 },
+  imgRemove:    { background: "none", border: "none", cursor: "pointer", color: "#94a3b8", fontSize: 14, padding: 0 },
+  previewBox:   { marginBottom: 12, borderRadius: 8, overflow: "hidden", border: "1.5px solid #e2e8f0", display: "inline-block", maxWidth: "100%" },
+  previewImg:   { display: "block", maxWidth: "100%", maxHeight: 300, objectFit: "contain" },
 };
