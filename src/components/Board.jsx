@@ -262,7 +262,13 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
 }
 
 const s = {
-  wrap:         { width: "100%", padding: "24px 32px", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
+  wrap:         { width: "100%", padding: "16px clamp(12px, 4vw, 32px)", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
+  mList:        { display: "flex", flexDirection: "column", gap: 8, background: "#fff", borderRadius: 12, padding: 8, boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
+  mCard:        { padding: "12px", borderRadius: 8, border: "1px solid #f1f5f9", cursor: "pointer", background: "#fff" },
+  mTopRow:      { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, gap: 8 },
+  mDate:        { fontSize: 11, color: "#94a3b8", whiteSpace: "nowrap" },
+  mTitle:       { fontSize: 14, fontWeight: 600, color: "#1e293b", lineHeight: 1.4, marginBottom: 6, wordBreak: "break-word" },
+  mMeta:        { display: "flex", gap: 6, fontSize: 12, color: "#64748b", flexWrap: "wrap" },
   header:       { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 },
   title:        { margin: 0, fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px" },
   subtitle:     { margin: "4px 0 0", fontSize: 14, color: "#64748b" },
