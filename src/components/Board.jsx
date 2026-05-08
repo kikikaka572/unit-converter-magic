@@ -1,20 +1,9 @@
-// Board.jsx — 글 클릭 시 /community/:id 로 이동 (React Router v6 + Vite)
+// Board.jsx — 단일 게시판 (카테고리 없음)
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { supabase } from "@/lib/supabase";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
-
-const CATEGORIES = [
-  { slug: "all",      name_ko: "전체",       icon: "🌐", color: "#94a3b8" },
-  { slug: "notice",   name_ko: "공지사항",   icon: "📢", color: "#ef4444" },
-  { slug: "general",  name_ko: "자유게시판", icon: "💬", color: "#6366f1" },
-  { slug: "qna",      name_ko: "Q&A",        icon: "❓", color: "#f59e0b" },
-  { slug: "tips",     name_ko: "일뚱일지",   icon: "🐽", color: "#10b981" },
-  { slug: "feedback", name_ko: "맛집",       icon: "🍕", color: "#8b5cf6" },
-];
 
 const PAGE_SIZE = 15;
 
@@ -23,7 +12,6 @@ export default function Board() {
   const isMobile = useIsMobile();
   const [posts,          setPosts]          = useState([]);
   const [totalCount,     setTotalCount]     = useState(0);
-  const [activeCategory, setActiveCategory] = useState("all");
   const [page,           setPage]           = useState(1);
   const [loading,        setLoading]        = useState(true);
   const [showWrite,      setShowWrite]      = useState(false);
@@ -34,29 +22,23 @@ export default function Board() {
     setLoading(true);
     let query = supabase
       .from("posts")
-      .select(`id, title, author_name, view_count, like_count, comment_count, is_pinned, created_at, categories(slug, name_ko, icon, color)`, { count: "exact" })
+      .select(`id, title, author_name, view_count, like_count, comment_count, is_pinned, created_at`, { count: "exact" })
       .eq("is_hidden", false)
       .order("is_pinned",  { ascending: false })
       .order("created_at", { ascending: false })
       .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
-    if (activeCategory !== "all") {
-      const { data: catRow } = await supabase.from("categories").select("id").eq("slug", activeCategory).single();
-      if (catRow) query = query.eq("category_id", catRow.id);
-    }
     if (searchQuery) query = query.ilike("title", `%${searchQuery}%`);
 
     const { data, count, error } = await query;
     if (!error) { setPosts(data || []); setTotalCount(count || 0); }
     setLoading(false);
-  }, [activeCategory, page, searchQuery]);
+  }, [page, searchQuery]);
 
   useEffect(() => { fetchPosts(); }, [fetchPosts]);
 
-  const handleCategory = (slug) => { setActiveCategory(slug); setPage(1); };
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
-  // ── 글 클릭 → /community/{id} 이동
   const handlePostClick = (postId) => {
     navigate(`/community/${postId}`);
   };
@@ -76,23 +58,10 @@ export default function Board() {
       {showWrite && (
         <WriteForm
           supabase={supabase}
-          categories={CATEGORIES.filter(c => c.slug !== "all")}
           onCreated={() => { setShowWrite(false); setPage(1); fetchPosts(); }}
           onCancel={() => setShowWrite(false)}
         />
       )}
-
-      <div style={s.catRow}>
-        {CATEGORIES.map(cat => (
-          <button
-            key={cat.slug}
-            onClick={() => handleCategory(cat.slug)}
-            style={{ ...s.catBtn, ...(activeCategory === cat.slug ? { background: cat.color, color: "#fff", borderColor: cat.color } : {}) }}
-          >
-            {cat.icon} {cat.name_ko}
-          </button>
-        ))}
-      </div>
 
       <div style={s.searchRow}>
         <input value={searchInput} onChange={e => setSearchInput(e.target.value)}
@@ -116,7 +85,6 @@ export default function Board() {
       ) : (
         <table style={s.table}>
           <colgroup>
-            <col style={{ width: 110 }} />
             <col />
             <col style={{ width: 90 }} />
             <col style={{ width: 60 }} />
@@ -125,7 +93,6 @@ export default function Board() {
           </colgroup>
           <thead>
             <tr style={s.thead}>
-              <th style={{ ...s.th, textAlign: "center" }}>카테고리</th>
               <th style={{ ...s.th, textAlign: "left"   }}>제목</th>
               <th style={{ ...s.th, textAlign: "center" }}>작성자</th>
               <th style={{ ...s.th, textAlign: "center" }}>조회</th>
@@ -157,7 +124,6 @@ export default function Board() {
 }
 
 function PostRow({ post, onClick }) {
-  const cat = post.categories;
   const date = new Date(post.created_at);
   const isToday = new Date().toDateString() === date.toDateString();
   const dateStr = isToday
@@ -165,9 +131,6 @@ function PostRow({ post, onClick }) {
     : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
   return (
     <tr style={s.row} onClick={onClick}>
-      <td style={{ ...s.td, textAlign: "center" }}>
-        {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
-      </td>
       <td style={s.tdTitle}>
         {post.is_pinned && <span style={s.pinBadge}>📌</span>}
         <span style={s.titleText}>{post.title}</span>
@@ -182,7 +145,6 @@ function PostRow({ post, onClick }) {
 }
 
 function MobilePostRow({ post, onClick }) {
-  const cat = post.categories;
   const date = new Date(post.created_at);
   const isToday = new Date().toDateString() === date.toDateString();
   const dateStr = isToday
@@ -190,10 +152,6 @@ function MobilePostRow({ post, onClick }) {
     : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
   return (
     <div style={s.mCard} onClick={onClick}>
-      <div style={s.mTopRow}>
-        {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
-        <span style={s.mDate}>{dateStr}</span>
-      </div>
       <div style={s.mTitle}>
         {post.is_pinned && <span style={s.pinBadge}>📌</span>}
         {post.title}
@@ -204,13 +162,14 @@ function MobilePostRow({ post, onClick }) {
         <span>·</span>
         <span>조회 {post.view_count}</span>
         {post.like_count > 0 && <><span>·</span><span style={{ color: "#f59e0b" }}>♥ {post.like_count}</span></>}
+        <span style={{ marginLeft: "auto", color: "#94a3b8" }}>{dateStr}</span>
       </div>
     </div>
   );
 }
 
-function WriteForm({ supabase, categories, onCreated, onCancel }) {
-  const [form, setForm] = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
+function WriteForm({ supabase, onCreated, onCancel }) {
+  const [form, setForm] = useState({ title: "", content: "", author_name: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
@@ -219,9 +178,7 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
     if (!form.content.trim())  { setError("내용을 입력해주세요."); return; }
     if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
-    const { data: catRow } = await supabase.from("categories").select("id").eq("slug", form.category).single();
     const { error: err } = await supabase.from("posts").insert({
-      category_id:   catRow?.id,
       author_name:   form.author_name.trim() || "익명",
       title:         form.title.trim(),
       content:       form.content.trim(),
@@ -235,9 +192,6 @@ function WriteForm({ supabase, categories, onCreated, onCancel }) {
     <div style={s.writeBox}>
       <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>새 글 작성</h3>
       <div style={s.formRow}>
-        <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} style={s.select}>
-          {categories.map(c => <option key={c.slug} value={c.slug}>{c.icon} {c.name_ko}</option>)}
-        </select>
         <input value={form.author_name} onChange={e => setForm(f => ({ ...f, author_name: e.target.value }))}
           placeholder="닉네임 (미입력 시 익명)" style={{ ...s.input, width: 140 }} />
         <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -265,17 +219,13 @@ const s = {
   wrap:         { width: "100%", padding: "16px clamp(12px, 4vw, 32px)", fontFamily: "'Pretendard','Noto Sans KR',sans-serif", color: "#1e293b", boxSizing: "border-box" },
   mList:        { display: "flex", flexDirection: "column", gap: 8, background: "#fff", borderRadius: 12, padding: 8, boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
   mCard:        { padding: "12px", borderRadius: 8, border: "1px solid #f1f5f9", cursor: "pointer", background: "#fff" },
-  mTopRow:      { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, gap: 8 },
-  mDate:        { fontSize: 11, color: "#94a3b8", whiteSpace: "nowrap" },
   mTitle:       { fontSize: 14, fontWeight: 600, color: "#1e293b", lineHeight: 1.4, marginBottom: 6, wordBreak: "break-word" },
-  mMeta:        { display: "flex", gap: 6, fontSize: 12, color: "#64748b", flexWrap: "wrap" },
+  mMeta:        { display: "flex", gap: 6, fontSize: 12, color: "#64748b", flexWrap: "wrap", alignItems: "center" },
   header:       { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 12 },
   title:        { margin: 0, fontSize: 26, fontWeight: 800, letterSpacing: "-0.5px" },
   subtitle:     { margin: "4px 0 0", fontSize: 14, color: "#64748b" },
   btnPrimary:   { padding: "8px 18px", borderRadius: 8, border: "none", background: "#6366f1", color: "#fff", cursor: "pointer", fontSize: 14, fontWeight: 700, whiteSpace: "nowrap" },
   btnSecondary: { padding: "8px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", color: "#64748b", cursor: "pointer", fontSize: 13, whiteSpace: "nowrap" },
-  catRow:       { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 },
-  catBtn:       { padding: "6px 14px", borderRadius: 20, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569", transition: "all .15s", whiteSpace: "nowrap" },
   searchRow:    { display: "flex", gap: 8, alignItems: "center", marginBottom: 16, flexWrap: "wrap" },
   searchInput:  { flex: 1, minWidth: 200, padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
   btnSearch:    { padding: "8px 16px", borderRadius: 8, border: "none", background: "#334155", color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap" },
@@ -287,10 +237,9 @@ const s = {
   row:          { cursor: "pointer", borderBottom: "1px solid #f1f5f9", transition: "background .12s" },
   td:           { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden", textOverflow: "ellipsis" },
   tdTitle:      { padding: "14px 12px", fontSize: 14, verticalAlign: "middle", overflow: "hidden" },
-  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" },
+  titleText:    { color: "#1e293b", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "inline" },
   commentCount: { marginLeft: 6, color: "#6366f1", fontSize: 13, fontWeight: 700 },
   pinBadge:     { marginRight: 6 },
-  catBadge:     { display: "inline-block", padding: "3px 8px", borderRadius: 12, fontSize: 11, fontWeight: 700, whiteSpace: "nowrap" },
   emptyBox:     { textAlign: "center", padding: "60px 0", color: "#94a3b8", fontSize: 15 },
   pagination:   { display: "flex", justifyContent: "center", gap: 4, marginTop: 24 },
   pageBtn:      { width: 34, height: 34, borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 14, color: "#475569", display: "flex", alignItems: "center", justifyContent: "center" },
@@ -299,7 +248,6 @@ const s = {
   formRow:      { display: "flex", gap: 8, marginBottom: 10, flexWrap: "wrap" },
   pwRow:        { display: "flex", alignItems: "center", gap: 10, marginBottom: 10, padding: "10px 12px", background: "#fffbeb", border: "1.5px solid #fde68a", borderRadius: 8 },
   pwLabel:      { fontSize: 13, fontWeight: 600, color: "#92400e", whiteSpace: "nowrap" },
-  select:       { padding: "8px 10px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, background: "#fff", cursor: "pointer" },
   input:        { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
   textarea:     { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", marginBottom: 10 },
 };
