@@ -181,6 +181,34 @@ function PostRow({ post, onClick }) {
   );
 }
 
+function MobilePostRow({ post, onClick }) {
+  const cat = post.categories;
+  const date = new Date(post.created_at);
+  const isToday = new Date().toDateString() === date.toDateString();
+  const dateStr = isToday
+    ? date.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })
+    : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
+  return (
+    <div style={s.mCard} onClick={onClick}>
+      <div style={s.mTopRow}>
+        {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
+        <span style={s.mDate}>{dateStr}</span>
+      </div>
+      <div style={s.mTitle}>
+        {post.is_pinned && <span style={s.pinBadge}>📌</span>}
+        {post.title}
+        {post.comment_count > 0 && <span style={s.commentCount}>[{post.comment_count}]</span>}
+      </div>
+      <div style={s.mMeta}>
+        <span>{post.author_name}</span>
+        <span>·</span>
+        <span>조회 {post.view_count}</span>
+        {post.like_count > 0 && <><span>·</span><span style={{ color: "#f59e0b" }}>♥ {post.like_count}</span></>}
+      </div>
+    </div>
+  );
+}
+
 function WriteForm({ supabase, categories, onCreated, onCancel }) {
   const [form, setForm] = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
   const [submitting, setSubmitting] = useState(false);
