@@ -154,11 +154,11 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
           </>
         ) : (
           <>
-<div
-  className="tiptap-content"
-  style={{ lineHeight: 1.8, margin: "0 0 16px", fontSize: 14, wordBreak: "break-word" }}
-  dangerouslySetInnerHTML={{ __html: post.content }}
-/>
+            <div
+              className="tiptap-content"
+              style={{ lineHeight: 1.8, margin: "0 0 16px", fontSize: 14, wordBreak: "break-word" }}
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
             {/* ── 이미지 */}
             {post.image_url && (
               <div style={s.imgWrap}>
