@@ -107,6 +107,12 @@ export default function Board() {
         <div style={s.emptyBox}>불러오는 중...</div>
       ) : posts.length === 0 ? (
         <div style={s.emptyBox}>게시글이 없습니다. 첫 글을 남겨보세요! 🙌</div>
+      ) : isMobile ? (
+        <div style={s.mList}>
+          {posts.map(post => (
+            <MobilePostRow key={post.id} post={post} onClick={() => handlePostClick(post.id)} />
+          ))}
+        </div>
       ) : (
         <table style={s.table}>
           <colgroup>
