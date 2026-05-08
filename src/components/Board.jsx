@@ -1,8 +1,9 @@
-// Board.jsx — 글쓰기 시 이미지 첨부 (Cloudinary)
+// Board.jsx — Tiptap WYSIWYG 에디터 적용
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import { uploadImage } from "@/lib/cloudinary";
+import TiptapEditor from "@/components/TiptapEditor";
 
 const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
@@ -53,7 +54,6 @@ export default function Board() {
 
   const handleCategory = (slug) => { setActiveCategory(slug); setPage(1); };
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-
   const handlePostClick = (postId) => { navigate(`/community/${postId}`); };
 
   return (
@@ -167,50 +167,28 @@ function PostRow({ post, onClick }) {
   );
 }
 
-// ── 글쓰기 폼 (이미지 첨부 추가)
+// ── 글쓰기 폼 (Tiptap 적용)
 function WriteForm({ categories, onCreated, onCancel }) {
-  const [form,       setForm]       = useState({ category: "general", title: "", content: "", author_name: "", password: "" });
-  const [imageFile,  setImageFile]  = useState(null);
-  const [preview,    setPreview]    = useState(null);
+  const [form,       setForm]       = useState({ category: "general", title: "", author_name: "", password: "" });
+  const [content,    setContent]    = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [uploadMsg,  setUploadMsg]  = useState("");
   const [error,      setError]      = useState("");
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) { setError("이미지는 5MB 이하만 가능합니다."); return; }
-    setImageFile(file);
-    setPreview(URL.createObjectURL(file));
-    setError("");
-  };
 
   const handleSubmit = async () => {
     if (!form.title.trim())    { setError("제목을 입력해주세요."); return; }
-    if (!form.content.trim())  { setError("내용을 입력해주세요."); return; }
+    // 에디터 내용이 빈 태그만 있는 경우 체크
+    const plainText = content.replace(/<[^>]*>/g, "").trim();
+    if (!plainText)            { setError("내용을 입력해주세요."); return; }
     if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
-
-    let image_url = null;
-    if (imageFile) {
-      try {
-        setUploadMsg("이미지 업로드 중...");
-        image_url = await uploadImage(imageFile);
-        setUploadMsg("");
-      } catch {
-        setError("이미지 업로드 실패. 다시 시도해주세요.");
-        setSubmitting(false); return;
-      }
-    }
 
     const { data: catRow } = await supabase.from("categories").select("id").eq("slug", form.category).single();
     const { error: err } = await supabase.from("posts").insert({
       category_id:   catRow?.id,
       author_name:   form.author_name.trim() || "익명",
       title:         form.title.trim(),
-      content:       form.content.trim(),
+      content,                        // HTML 그대로 저장
       post_password: form.password.trim(),
-      image_url,
     });
     if (err) { setError(err.message); setSubmitting(false); return; }
     onCreated();
@@ -235,32 +213,14 @@ function WriteForm({ categories, onCreated, onCancel }) {
           placeholder="나중에 수정/삭제 시 필요합니다"
           style={{ ...s.input, flex: 1 }} />
       </div>
-      <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
-        placeholder="내용을 입력하세요..." rows={6} style={s.textarea} />
 
-      {/* 이미지 첨부 */}
-      <div style={s.imgUploadRow}>
-        <label style={s.imgLabel}>
-          📎 이미지 첨부
-          <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: "none" }} />
-        </label>
-        {imageFile && (
-          <span style={s.imgFileName}>
-            {imageFile.name}
-            <button onClick={() => { setImageFile(null); setPreview(null); }} style={s.imgRemove}>✕</button>
-          </span>
-        )}
-        <span style={{ fontSize: 12, color: "#94a3b8" }}>최대 5MB</span>
-      </div>
+      {/* ── Tiptap 에디터 */}
+      <TiptapEditor
+        value={content}
+        onChange={setContent}
+        placeholder="내용을 입력하세요... (이미지는 툴바의 🖼 버튼으로 삽입)"
+      />
 
-      {/* 이미지 미리보기 */}
-      {preview && (
-        <div style={s.previewBox}>
-          <img src={preview} alt="preview" style={s.previewImg} />
-        </div>
-      )}
-
-      {uploadMsg && <p style={{ color: "#6366f1", fontSize: 13, margin: "4px 0" }}>{uploadMsg}</p>}
       {error && <p style={{ color: "#ef4444", fontSize: 13, margin: "4px 0" }}>{error}</p>}
       <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
         <button onClick={onCancel} style={s.btnSecondary}>취소</button>
@@ -307,11 +267,4 @@ const s = {
   pwLabel:      { fontSize: 13, fontWeight: 600, color: "#92400e", whiteSpace: "nowrap" },
   select:       { padding: "8px 10px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, background: "#fff", cursor: "pointer" },
   input:        { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, outline: "none" },
-  textarea:     { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #e2e8f0", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", marginBottom: 10 },
-  imgUploadRow: { display: "flex", alignItems: "center", gap: 10, marginBottom: 10, flexWrap: "wrap" },
-  imgLabel:     { display: "inline-flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 600, color: "#475569" },
-  imgFileName:  { fontSize: 13, color: "#334155", display: "flex", alignItems: "center", gap: 6 },
-  imgRemove:    { background: "none", border: "none", cursor: "pointer", color: "#94a3b8", fontSize: 14, padding: 0 },
-  previewBox:   { marginBottom: 12, borderRadius: 8, overflow: "hidden", border: "1.5px solid #e2e8f0", display: "inline-block", maxWidth: "100%" },
-  previewImg:   { display: "block", maxWidth: "100%", maxHeight: 300, objectFit: "contain" },
 };
