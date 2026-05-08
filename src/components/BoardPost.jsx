@@ -1,6 +1,7 @@
-// BoardPost.jsx — 게시글 상세 + 이미지 렌더링
+// BoardPost.jsx — 게시글 상세 + Tiptap 수정 에디터
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
+import TiptapEditor from "@/components/TiptapEditor";
 
 const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
@@ -14,7 +15,8 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
   const [submitting,  setSubmitting]  = useState(false);
   const [toast,       setToast]       = useState("");
   const [editMode,    setEditMode]    = useState(false);
-  const [editForm,    setEditForm]    = useState({ title: "", content: "" });
+  const [editTitle,   setEditTitle]   = useState("");
+  const [editContent, setEditContent] = useState("");
   const [editPwModal, setEditPwModal] = useState(false);
   const [editPwInput, setEditPwInput] = useState("");
   const [editPwError, setEditPwError] = useState("");
@@ -70,14 +72,17 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
       setEditPwError("비밀번호가 올바르지 않습니다."); return;
     }
     setEditPwModal(false);
-    setEditForm({ title: post.title, content: post.content });
+    setEditTitle(post.title);
+    setEditContent(post.content);
     setEditMode(true);
   };
 
   const saveEdit = async () => {
-    if (!editForm.title.trim() || !editForm.content.trim()) return;
+    if (!editTitle.trim() || !editContent.trim()) return;
+    const plainText = editContent.replace(/<[^>]*>/g, "").trim();
+    if (!plainText) return;
     const { error } = await supabase.from("posts")
-      .update({ title: editForm.title.trim(), content: editForm.content.trim() })
+      .update({ title: editTitle.trim(), content: editContent })
       .eq("id", postId);
     if (!error) { await fetchPost(); setEditMode(false); showToast("수정이 완료되었습니다 ✅"); }
   };
@@ -123,8 +128,12 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
           {post.is_pinned && <span style={s.pinBadge}>📌 공지</span>}
         </div>
         {editMode ? (
-          <input value={editForm.title} onChange={e => setEditForm(f => ({ ...f, title: e.target.value }))}
-            style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }} />
+          <input
+            value={editTitle}
+            onChange={e => setEditTitle(e.target.value)}
+            style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }}
+            placeholder="제목"
+          />
         ) : (
           <h2 style={s.postTitle}>{post.title}</h2>
         )}
@@ -145,8 +154,12 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
       <div style={s.body}>
         {editMode ? (
           <>
-            <textarea value={editForm.content} onChange={e => setEditForm(f => ({ ...f, content: e.target.value }))}
-              rows={10} style={s.editTextarea} />
+            {/* 수정 모드 — Tiptap 에디터 */}
+            <TiptapEditor
+              value={editContent}
+              onChange={setEditContent}
+              placeholder="내용을 수정하세요..."
+            />
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 10 }}>
               <button onClick={() => setEditMode(false)} style={s.btnSecondary}>취소</button>
               <button onClick={saveEdit} style={s.btnPrimary}>저장</button>
@@ -159,7 +172,6 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
               style={{ lineHeight: 1.8, margin: "0 0 16px", fontSize: 14, wordBreak: "break-word" }}
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
-            {/* ── 이미지 */}
             {post.image_url && (
               <div style={s.imgWrap}>
                 <img
@@ -300,7 +312,6 @@ const s = {
   deleteBtn:       { background: "none", border: "none", cursor: "pointer", fontSize: 12, color: "#94a3b8", padding: 0 },
   body:            { padding: "24px 0", borderBottom: "1.5px solid #f1f5f9" },
   editInput:       { width: "100%", padding: "8px 12px", borderRadius: 8, border: "1.5px solid #6366f1", outline: "none", boxSizing: "border-box" },
-  editTextarea:    { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #6366f1", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", lineHeight: 1.8 },
   imgWrap:         { marginTop: 8 },
   postImg:         { maxWidth: "100%", maxHeight: 400, borderRadius: 10, cursor: "zoom-in", objectFit: "contain", display: "block" },
   postImgExpanded: { maxHeight: "none", cursor: "zoom-out" },
