@@ -92,8 +92,6 @@
     font-family: var(--font-sans);
   }
 }
-/* 현재 코드 끝 */
-}
 
 /* ↓ 여기부터 추가 */
 .tiptap-content h1 { font-size: 1.6em; font-weight: 800; margin: 16px 0 8px; }
