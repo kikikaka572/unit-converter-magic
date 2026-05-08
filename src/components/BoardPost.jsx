@@ -1,8 +1,10 @@
-// BoardPost.jsx — 공유 URL을 /community/{postId} 로 변경
+// BoardPost.jsx — 게시글 상세 + 이미지 렌더링
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 
-export default function BoardPost({ postId, adminPw, onBack }) {
+const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
+
+export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
   const [post,        setPost]        = useState(null);
   const [comments,    setComments]    = useState([]);
   const [loading,     setLoading]     = useState(true);
@@ -19,6 +21,7 @@ export default function BoardPost({ postId, adminPw, onBack }) {
   const [deleteModal, setDeleteModal] = useState(null);
   const [pwInput,     setPwInput]     = useState("");
   const [pwError,     setPwError]     = useState("");
+  const [imgExpanded, setImgExpanded] = useState(false);
 
   const fetchPost = useCallback(async () => {
     const { data } = await supabase
@@ -41,16 +44,11 @@ export default function BoardPost({ postId, adminPw, onBack }) {
     Promise.all([fetchPost(), fetchComments()]).then(() => setLoading(false));
   }, [fetchPost, fetchComments]);
 
-  // ── 공유 — /community/{postId} 고정 URL
   const handleShare = async () => {
     const url = `https://unit-converter-magic.vercel.app/community/${postId}`;
     try {
-      if (navigator.share) {
-        await navigator.share({ title: post?.title, url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        showToast("링크가 복사되었습니다! 🔗");
-      }
+      if (navigator.share) { await navigator.share({ title: post?.title, url }); }
+      else { await navigator.clipboard.writeText(url); showToast("링크가 복사되었습니다! 🔗"); }
     } catch {
       const el = document.createElement("textarea");
       el.value = url; document.body.appendChild(el); el.select();
@@ -117,7 +115,6 @@ export default function BoardPost({ postId, adminPw, onBack }) {
   return (
     <div style={s.wrap}>
       {toast && <div style={s.toast}>{toast}</div>}
-
       <button onClick={onBack} style={s.backBtn}>← 목록으로</button>
 
       <div style={s.postHeader}>
@@ -144,6 +141,7 @@ export default function BoardPost({ postId, adminPw, onBack }) {
         </div>
       </div>
 
+      {/* ── 본문 */}
       <div style={s.body}>
         {editMode ? (
           <>
@@ -155,7 +153,21 @@ export default function BoardPost({ postId, adminPw, onBack }) {
             </div>
           </>
         ) : (
-          <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, margin: 0 }}>{post.content}</p>
+          <>
+            <p style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, margin: "0 0 16px" }}>{post.content}</p>
+            {/* ── 이미지 */}
+            {post.image_url && (
+              <div style={s.imgWrap}>
+                <img
+                  src={post.image_url}
+                  alt="첨부 이미지"
+                  style={{ ...s.postImg, ...(imgExpanded ? s.postImgExpanded : {}) }}
+                  onClick={() => setImgExpanded(v => !v)}
+                />
+                <p style={s.imgHint}>{imgExpanded ? "클릭하여 축소" : "클릭하여 확대"}</p>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -285,6 +297,10 @@ const s = {
   body:            { padding: "24px 0", borderBottom: "1.5px solid #f1f5f9" },
   editInput:       { width: "100%", padding: "8px 12px", borderRadius: 8, border: "1.5px solid #6366f1", outline: "none", boxSizing: "border-box" },
   editTextarea:    { width: "100%", padding: "10px 12px", borderRadius: 8, border: "1.5px solid #6366f1", fontSize: 14, resize: "vertical", outline: "none", boxSizing: "border-box", lineHeight: 1.8 },
+  imgWrap:         { marginTop: 8 },
+  postImg:         { maxWidth: "100%", maxHeight: 400, borderRadius: 10, cursor: "zoom-in", objectFit: "contain", display: "block" },
+  postImgExpanded: { maxHeight: "none", cursor: "zoom-out" },
+  imgHint:         { fontSize: 11, color: "#94a3b8", margin: "4px 0 0" },
   actionRow:       { display: "flex", justifyContent: "center", alignItems: "center", gap: 12, padding: "20px 0" },
   likeBtn:         { padding: "10px 28px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#94a3b8" },
   shareBtn:        { padding: "10px 24px", borderRadius: 24, border: "2px solid #e2e8f0", background: "#fff", cursor: "pointer", fontSize: 15, fontWeight: 700, color: "#6366f1" },
