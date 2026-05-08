@@ -20,6 +20,7 @@ const PAGE_SIZE = 15;
 
 export default function Board() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [posts,          setPosts]          = useState([]);
   const [totalCount,     setTotalCount]     = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
