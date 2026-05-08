@@ -92,3 +92,19 @@
     font-family: var(--font-sans);
   }
 }
+/* 현재 코드 끝 */
+}
+
+/* ↓ 여기부터 추가 */
+.tiptap-content h1 { font-size: 1.6em; font-weight: 800; margin: 16px 0 8px; }
+.tiptap-content h2 { font-size: 1.3em; font-weight: 700; margin: 14px 0 6px; }
+.tiptap-content h3 { font-size: 1.1em; font-weight: 700; margin: 12px 0 4px; }
+.tiptap-content ul { padding-left: 20px; list-style: disc; }
+.tiptap-content ol { padding-left: 20px; list-style: decimal; }
+.tiptap-content blockquote { border-left: 3px solid #6366f1; padding-left: 12px; color: #64748b; margin: 8px 0; }
+.tiptap-content code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+.tiptap-content pre { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; overflow-x: auto; }
+.tiptap-content img { max-width: 100%; border-radius: 8px; margin: 8px 0; }
+.tiptap-content a { color: #6366f1; text-decoration: underline; }
+.ProseMirror { outline: none; }
+.ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: #94a3b8; pointer-events: none; float: left; height: 0; }
