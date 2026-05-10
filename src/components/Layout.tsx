@@ -1,19 +1,8 @@
 import { ReactNode } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
 import { useLanguage } from "@/i18n/LanguageContext";
-
-type SecondaryLink = {
-  to: string;
-  emoji: string;
-  labelKey: "tab.hotdeals" | "tab.community";
-};
-
-const SECONDARY_LINKS: SecondaryLink[] = [
-  { to: "/hotdeals", emoji: "🔥", labelKey: "tab.hotdeals" },
-  { to: "/community", emoji: "💬", labelKey: "tab.community" },
-];
 
 interface Props {
   children: ReactNode;
@@ -22,10 +11,8 @@ interface Props {
 }
 
 export default function Layout({ children, title, description }: Props) {
-  const { t, lang } = useLanguage();
+  const { lang } = useLanguage();
   const location = useLocation();
-  const isActive = (to: string) =>
-    location.pathname === to || location.pathname.startsWith(to + "/");
   const isHome = location.pathname === "/";
 
   return (
