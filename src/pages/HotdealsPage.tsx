@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import HotdealsList from "@/components/HotdealsList";
+import TopBanner from "@/components/TopBanner";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useSeo, SITE_URL } from "@/lib/seo";
 
