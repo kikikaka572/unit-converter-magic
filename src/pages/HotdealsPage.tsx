@@ -20,6 +20,7 @@ export default function HotdealsPage() {
   });
   return (
     <Layout title={t("hotdeals.title")} description={t("hotdeals.desc")}>
+      <TopBanner slot="hotdeals-top" />
       <HotdealsList />
     </Layout>
   );
