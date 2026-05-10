@@ -51,25 +51,6 @@ export default function Layout({ children, title, description }: Props) {
                 Lifetool
               </span>
             </Link>
-            <div className="flex items-center gap-1.5 shrink-0">
-              {SECONDARY_LINKS.map((link) => {
-                const active = isActive(link.to);
-                return (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors ${
-                      active
-                        ? "bg-accent/20 border-accent/40 text-foreground"
-                        : "bg-card border-border text-muted-foreground hover:text-foreground hover:border-accent/40"
-                    }`}
-                  >
-                    <span>{link.emoji}</span>
-                    <span className="hidden xs:inline sm:inline">{t(link.labelKey)}</span>
-                  </NavLink>
-                );
-              })}
-            </div>
           </div>
 
           {/* Back to home (sub-pages only) */}
