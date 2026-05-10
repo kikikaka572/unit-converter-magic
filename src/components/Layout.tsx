@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function Layout({ children, title, description }: Props) {
-  const { lang } = useLanguage();
+  const { t, lang } = useLanguage();
   const location = useLocation();
   const isHome = location.pathname === "/";
 
