@@ -48,7 +48,7 @@ export default function TopBanner({
       <ins
         className="kakao_ad_area sm:hidden"
         style={{ display: "none" }}
-        data-ad-unit={DAN-9oftv3L6uNEyDwk7}
+        data-ad-unit="DAN-9oftv3L6uNEyDwk7"
         data-ad-width="320"
         data-ad-height="100"
       />
@@ -56,7 +56,7 @@ export default function TopBanner({
       <ins
         className="kakao_ad_area hidden sm:inline-block"
         style={{ display: "none" }}
-        data-ad-unit={DAN-ThNhcPcQHx51NNLd}
+        data-ad-unit="DAN-ThNhcPcQHx51NNLd"
         data-ad-width="728"
         data-ad-height="90"
       />
