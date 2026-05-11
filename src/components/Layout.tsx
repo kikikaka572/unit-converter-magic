@@ -2,19 +2,17 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
+import TopBanner from "@/components/TopBanner";
 import { useLanguage } from "@/i18n/LanguageContext";
-
 interface Props {
   children: ReactNode;
   title?: string;
   description?: string;
 }
-
 export default function Layout({ children, title, description }: Props) {
   const { t, lang } = useLanguage();
   const location = useLocation();
   const isHome = location.pathname === "/";
-
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
@@ -24,7 +22,6 @@ export default function Layout({ children, title, description }: Props) {
             <LanguageSwitcher />
             <ShareButton />
           </div>
-
           {/* Logo / brand area (supports optional image at /logo.png) */}
           <div className="flex items-center justify-between gap-3 mb-5">
             <Link to="/" className="flex items-center gap-3 min-w-0">
@@ -39,7 +36,6 @@ export default function Layout({ children, title, description }: Props) {
               </span>
             </Link>
           </div>
-
           {/* Back to home (sub-pages only) */}
           {!isHome && (
             <Link
@@ -49,7 +45,6 @@ export default function Layout({ children, title, description }: Props) {
               ← 홈으로
             </Link>
           )}
-
           {/* Per-page header */}
           {(title || description) && (
             <div className="mb-6 sm:mb-8">
@@ -63,9 +58,9 @@ export default function Layout({ children, title, description }: Props) {
               )}
             </div>
           )}
-
+          {/* 상단 띠배너 광고 */}
+          <TopBanner slot="top" />
           {children}
-
           {lang === "en" && (
             <p className="mt-10 text-center text-xs text-muted-foreground">
               {t("footer.foreignNotice")}
@@ -73,7 +68,6 @@ export default function Layout({ children, title, description }: Props) {
           )}
         </div>
       </main>
-
       {/* Side ad slot - PC only */}
       <aside
         className="hidden xl:block fixed top-1/2 -translate-y-1/2 z-40"
@@ -88,7 +82,6 @@ export default function Layout({ children, title, description }: Props) {
           data-ad-height="600"
         />
       </aside>
-
       {/* Bottom ad slot */}
       <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
         <div
