@@ -9,8 +9,8 @@
  *    <ins
  *      className="kakao_ad_area"
  *      style={{ display: "none" }}
- *      data-ad-unit="DAN-XXXXXXXXXXXX"   // 애드핏에서 발급받은 광고단위 ID
- *      data-ad-width="320"               // 모바일: 320x50 / PC: 728x90
+ *      data-ad-unit="DAN-DAN-9oftv3L6uNEyDwk7"   
+ *      data-ad-width="320"             
  *      data-ad-height="50"
  *    />
  *
