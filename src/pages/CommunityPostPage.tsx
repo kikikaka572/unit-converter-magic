@@ -14,6 +14,7 @@ export default function CommunityPostPage() {
 
   return (
     <Layout>
+      <TopBanner slot="community-post-top" />
       <BoardPost
         postId={id}
         adminPw={ADMIN_PW}
