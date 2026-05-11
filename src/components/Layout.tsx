@@ -1,19 +1,8 @@
 import { ReactNode } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
 import { useLanguage } from "@/i18n/LanguageContext";
-
-type SecondaryLink = {
-  to: string;
-  emoji: string;
-  labelKey: "tab.hotdeals" | "tab.community";
-};
-
-const SECONDARY_LINKS: SecondaryLink[] = [
-  { to: "/hotdeals", emoji: "🔥", labelKey: "tab.hotdeals" },
-  { to: "/community", emoji: "💬", labelKey: "tab.community" },
-];
 
 interface Props {
   children: ReactNode;
@@ -24,8 +13,6 @@ interface Props {
 export default function Layout({ children, title, description }: Props) {
   const { t, lang } = useLanguage();
   const location = useLocation();
-  const isActive = (to: string) =>
-    location.pathname === to || location.pathname.startsWith(to + "/");
   const isHome = location.pathname === "/";
 
   return (
@@ -51,25 +38,6 @@ export default function Layout({ children, title, description }: Props) {
                 Lifetool
               </span>
             </Link>
-            <div className="flex items-center gap-1.5 shrink-0">
-              {SECONDARY_LINKS.map((link) => {
-                const active = isActive(link.to);
-                return (
-                  <NavLink
-                    key={link.to}
-                    to={link.to}
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium border transition-colors ${
-                      active
-                        ? "bg-accent/20 border-accent/40 text-foreground"
-                        : "bg-card border-border text-muted-foreground hover:text-foreground hover:border-accent/40"
-                    }`}
-                  >
-                    <span>{link.emoji}</span>
-                    <span className="hidden xs:inline sm:inline">{t(link.labelKey)}</span>
-                  </NavLink>
-                );
-              })}
-            </div>
           </div>
 
           {/* Back to home (sub-pages only) */}

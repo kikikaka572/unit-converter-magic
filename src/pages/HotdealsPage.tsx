@@ -1,5 +1,6 @@
 import Layout from "@/components/Layout";
 import HotdealsList from "@/components/HotdealsList";
+import TopBanner from "@/components/TopBanner";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useSeo, SITE_URL } from "@/lib/seo";
 
@@ -19,6 +20,7 @@ export default function HotdealsPage() {
   });
   return (
     <Layout title={t("hotdeals.title")} description={t("hotdeals.desc")}>
+      <TopBanner slot="hotdeals-top" />
       <HotdealsList />
     </Layout>
   );
