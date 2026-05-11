@@ -1,0 +1,34 @@
+name: Fetch Community Hot Daily
+
+on:
+  schedule:
+    # 3시간마다
+    - cron: "30 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run RSS fetcher
+        run: node scripts/fetch-community-hot.mjs
+
+      - name: Commit updated community-hot.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/community-hot.json
+          if git diff --staged --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore(community-hot): auto update [skip ci]"
+            git push
+          fi
