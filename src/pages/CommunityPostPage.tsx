@@ -2,6 +2,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import BoardPost from "@/components/BoardPost";
+import TopBanner from "@/components/TopBanner";
 
 const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
