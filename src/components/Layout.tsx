@@ -1,18 +1,50 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
 import TopBanner from "@/components/TopBanner";
+import KakaoAdFit from "@/components/KakaoAdFit";
 import { useLanguage } from "@/i18n/LanguageContext";
+
 interface Props {
   children: ReactNode;
   title?: string;
   description?: string;
 }
+
+function BottomAdSlot() {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  if (isMobile === null) return null;
+
+  return (
+    <div
+      id="ad-slot-bottom"
+      className="mx-auto max-w-3xl flex items-center justify-center pointer-events-auto"
+      aria-label="ad"
+    >
+      {isMobile ? (
+        <KakaoAdFit adUnit="DAN-6tTcPC6UlHze0Mjr" adWidth={320} adHeight={50} />
+      ) : (
+        <KakaoAdFit adUnit="DAN-rZBdEeZIqgjpI6x9" adWidth={728} adHeight={90} />
+      )}
+    </div>
+  );
+}
+
 export default function Layout({ children, title, description }: Props) {
   const { t, lang } = useLanguage();
   const location = useLocation();
   const isHome = location.pathname === "/";
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
@@ -22,7 +54,7 @@ export default function Layout({ children, title, description }: Props) {
             <LanguageSwitcher />
             <ShareButton />
           </div>
-          {/* Logo / brand area (supports optional image at /logo.png) */}
+          {/* Logo / brand area */}
           <div className="flex items-center justify-between gap-3 mb-5">
             <Link to="/" className="flex items-center gap-3 min-w-0">
               <img
@@ -68,42 +100,19 @@ export default function Layout({ children, title, description }: Props) {
           )}
         </div>
       </main>
-      {/* Side ad slot - PC only */}
+
+      {/* Side ad slot - PC only (xl 이상) */}
       <aside
         className="hidden xl:block fixed top-1/2 -translate-y-1/2 z-40"
         style={{ right: "max(1rem, calc((100vw - 42rem) / 2 - 180px))" }}
         aria-label="ad"
       >
-        <ins
-          className="kakao_ad_area"
-          style={{ display: "none" }}
-          data-ad-unit="DAN-T9XQ5UbtP5nbv77q"
-          data-ad-width="160"
-          data-ad-height="600"
-        />
+        <KakaoAdFit adUnit="DAN-T9XQ5UbtP5nbv77q" adWidth={160} adHeight={600} />
       </aside>
-      {/* Bottom ad slot */}
+
+      {/* Bottom sticky ad slot */}
       <div className="fixed bottom-0 left-0 right-0 z-40 pointer-events-none">
-        <div
-          id="ad-slot-bottom"
-          className="mx-auto max-w-3xl h-[60px] sm:h-[100px] flex items-center justify-center pointer-events-none"
-          aria-label="ad"
-        >
-          <ins
-            className="kakao_ad_area sm:hidden pointer-events-auto"
-            style={{ display: "none" }}
-            data-ad-unit="DAN-6tTcPC6UlHze0Mjr"
-            data-ad-width="320"
-            data-ad-height="50"
-          />
-          <ins
-            className="kakao_ad_area hidden sm:inline-block pointer-events-auto"
-            style={{ display: "none" }}
-            data-ad-unit="DAN-rZBdEeZIqgjpI6x9"
-            data-ad-width="728"
-            data-ad-height="90"
-          />
-        </div>
+        <BottomAdSlot />
       </div>
     </div>
   );
