@@ -91,7 +91,7 @@ export default function Layout({ children, title, description }: Props) {
             </div>
           )}
           {/* 상단 띠배너 광고 */}
-          <TopBanner slot="top" />
+          {!isHome && <TopBanner slot="top" />}
           {children}
           {lang === "en" && (
             <p className="mt-10 text-center text-xs text-muted-foreground">
