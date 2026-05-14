@@ -66,8 +66,8 @@ export default function TiptapEditor({ value, onChange, placeholder = "내용을
     try {
       const url = await uploadImage(file);
       editor.chain().focus().setImage({ src: url, alt: file.name }).run();
-    } catch {
-      alert("이미지 업로드 실패. 다시 시도해주세요.");
+    } catch (err) {
+      alert("이미지 업로드 실패: " + (err?.message || err));
     } finally {
       setImgUploading(false);
       e.target.value = "";
