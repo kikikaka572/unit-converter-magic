@@ -27,7 +27,14 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm install --no-package-lock
-      - run: npm run build
+      - name: Build
+        run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_ADMIN_PW: ${{ secrets.VITE_ADMIN_PW }}
+          VITE_CLOUDINARY_CLOUD_NAME: ${{ secrets.VITE_CLOUDINARY_CLOUD_NAME }}
+          VITE_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.VITE_CLOUDINARY_UPLOAD_PRESET }}
       - name: Prepare SPA files for GitHub Pages
         run: |
           cp dist/index.html dist/404.html
