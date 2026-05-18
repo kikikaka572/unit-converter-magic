@@ -176,7 +176,8 @@ function WriteForm({ onCreated, onCancel }) {
   const handleSubmit = async () => {
     if (!form.title.trim())    { setError("제목을 입력해주세요."); return; }
     const plainText = content.replace(/<[^>]*>/g, "").trim();
-    if (!plainText)            { setError("내용을 입력해주세요."); return; }
+    const hasImage = content.includes("<img");
+    if (!plainText && !hasImage) { setError("내용을 입력해주세요."); return; }
     if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
     setSubmitting(true); setError("");
 
