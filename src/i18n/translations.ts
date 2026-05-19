@@ -33,7 +33,7 @@ const dict = {
   "header.converter.title": { ko: "단위 환산 계산기", en: "Unit Converter" },
   "header.converter.desc": { ko: "간편하고 정확한 단위 변환", en: "Simple and accurate unit conversion" },
   "header.prompt.title": { ko: "AI 프롬프트 생성기", en: "AI Prompt Generator" },
-  "header.prompt.desc": { ko: "ChatGPT·Claude에 바로 쓸 수 있는 구조화된 프롬프트", en: "Structured prompts ready for ChatGPT, Claude & more" },
+  "header.prompt.desc": { ko: "구조화된 프롬프트를 간편하게 생성", en: "Structured prompts ready for ChatGPT, Claude & more" },
 
   // Share
   "share.button": { ko: "공유하기", en: "Share" },
