@@ -14,6 +14,18 @@ type Tool = {
   descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc";
 };
 
+type AiTool = {
+  to: string;
+  emoji: string;
+  titleKey: "header.prompt.title" | "header.videoprompt.title";
+  descKey: "header.prompt.desc" | "header.videoprompt.desc";
+};
+
+const AI_TOOLS: AiTool[] = [
+  { to: "/prompt-generator", emoji: "✨", titleKey: "header.prompt.title",      descKey: "header.prompt.desc" },
+  { to: "/video-prompt",     emoji: "🎬", titleKey: "header.videoprompt.title", descKey: "header.videoprompt.desc" },
+];
+
 const TOOLS: Tool[] = [
   { to: "/salary", emoji: "💼", titleKey: "header.salary.title", descKey: "header.salary.desc" },
   { to: "/life", emoji: "🧮", titleKey: "header.life.title", descKey: "header.life.desc" },
@@ -146,23 +158,26 @@ export default function HomePage() {
             <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">AI</h2>
           </div>
           <div className="grid gap-3">
-            <Link
-              to="/prompt-generator"
-              className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
-            >
-              <div className="text-3xl">✨</div>
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-foreground text-base sm:text-lg truncate">
-                  {t("header.prompt.title")}
+            {AI_TOOLS.map((tool) => (
+              <Link
+                key={tool.to}
+                to={tool.to}
+                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
+              >
+                <div className="text-3xl">{tool.emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-foreground text-base sm:text-lg truncate">
+                    {t(tool.titleKey)}
+                  </div>
+                  <div className="text-xs sm:text-sm text-muted-foreground truncate">
+                    {t(tool.descKey)}
+                  </div>
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground truncate">
-                  {t("header.prompt.desc")}
+                <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                  →
                 </div>
-              </div>
-              <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                →
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
         </section>
 
