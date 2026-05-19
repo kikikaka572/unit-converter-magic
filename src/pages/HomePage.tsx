@@ -148,7 +148,7 @@ export default function HomePage() {
           <div className="grid gap-3">
             <Link
               to="/prompt-generator"
-              className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all"
+              className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
             >
               <div className="text-3xl">✨</div>
               <div className="flex-1 min-w-0">
@@ -176,7 +176,7 @@ export default function HomePage() {
               <Link
                 key={tool.to}
                 to={tool.to}
-                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all"
+                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
               >
                 <div className="text-3xl">{tool.emoji}</div>
                 <div className="flex-1 min-w-0">
