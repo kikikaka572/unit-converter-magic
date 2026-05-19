@@ -35,7 +35,7 @@ const dict = {
   "header.prompt.title": { ko: "AI 프롬프트 생성기", en: "AI Prompt Generator" },
   "header.prompt.desc": { ko: "구조화된 프롬프트를 간편하게 생성", en: "Structured prompts ready for ChatGPT, Claude & more" },
   "header.videoprompt.title": { ko: "AI 영상 프롬프트 생성기", en: "Video Prompt Generator" },
-  "header.videoprompt.desc": { ko: "Sora·Runway·Kling·Pika·Veo용 영문 프롬프트 자동 생성", en: "Auto-generate prompts for Sora, Runway, Kling, Pika & Veo" },
+  "header.videoprompt.desc": { ko: "AI영상 제작용 영문 프롬프트 생성기", en: "Auto-generate prompts for Sora, Runway, Kling, Pika & Veo" },
 
   // Share
   "share.button": { ko: "공유하기", en: "Share" },
