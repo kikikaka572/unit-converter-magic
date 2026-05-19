@@ -10,15 +10,14 @@ import { supabase } from "@/lib/supabase";
 type Tool = {
   to: string;
   emoji: string;
-  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title" | "header.prompt.title";
-  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc" | "header.prompt.desc";
+  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title";
+  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc";
 };
 
 const TOOLS: Tool[] = [
   { to: "/salary", emoji: "💼", titleKey: "header.salary.title", descKey: "header.salary.desc" },
   { to: "/life", emoji: "🧮", titleKey: "header.life.title", descKey: "header.life.desc" },
   { to: "/converter", emoji: "📐", titleKey: "header.converter.title", descKey: "header.converter.desc" },
-  { to: "/prompt-generator", emoji: "✨", titleKey: "header.prompt.title", descKey: "header.prompt.desc" },
 ];
 
 type CommunityPost = {
@@ -139,6 +138,32 @@ export default function HomePage() {
               ))}
             </div>
           )}
+        </section>
+
+        {/* AI */}
+        <section>
+          <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">AI</h2>
+          </div>
+          <div className="grid gap-3">
+            <Link
+              to="/prompt-generator"
+              className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all"
+            >
+              <div className="text-3xl">✨</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold text-foreground text-base sm:text-lg truncate">
+                  {t("header.prompt.title")}
+                </div>
+                <div className="text-xs sm:text-sm text-muted-foreground truncate">
+                  {t("header.prompt.desc")}
+                </div>
+              </div>
+              <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                →
+              </div>
+            </Link>
+          </div>
         </section>
 
         {/* 계산기 */}
