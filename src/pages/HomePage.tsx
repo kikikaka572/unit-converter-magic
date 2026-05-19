@@ -10,14 +10,15 @@ import { supabase } from "@/lib/supabase";
 type Tool = {
   to: string;
   emoji: string;
-  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title";
-  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc";
+  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title" | "header.prompt.title";
+  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc" | "header.prompt.desc";
 };
 
 const TOOLS: Tool[] = [
   { to: "/salary", emoji: "💼", titleKey: "header.salary.title", descKey: "header.salary.desc" },
   { to: "/life", emoji: "🧮", titleKey: "header.life.title", descKey: "header.life.desc" },
   { to: "/converter", emoji: "📐", titleKey: "header.converter.title", descKey: "header.converter.desc" },
+  { to: "/prompt-generator", emoji: "✨", titleKey: "header.prompt.title", descKey: "header.prompt.desc" },
 ];
 
 type CommunityPost = {

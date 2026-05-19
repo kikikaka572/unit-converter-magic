@@ -14,6 +14,7 @@ import CommunityPage from "./pages/CommunityPage";
 import CommunityPostPage from "./pages/CommunityPostPage";
 import CommunityHotPage from "./pages/CommunityHotPage";
 import HomePage from "./pages/HomePage";
+import PromptGeneratorPage from "./pages/PromptGeneratorPage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/:id" element={<CommunityPostPage />} />
             <Route path="/community-hot" element={<CommunityHotPage />} />
+            <Route path="/prompt-generator" element={<PromptGeneratorPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
