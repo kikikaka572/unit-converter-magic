@@ -1,7 +1,33 @@
 {
-  "generated_at": "2026-05-19T17:32:46.667Z",
+  "generated_at": "2026-05-19T19:41:17.386Z",
   "count": 300,
   "deals": [
+    {
+      "id": "df065bb55e4a355f",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=705523",
+      "source": "ppomppu",
+      "title": "[11번가] 자연산 여수 새조개 200g (11,800원 / 무료배송)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=705523",
+      "thumbnail_url": null,
+      "description": "여수산 손질 새조개입니다. 카카오페이로 결제하면 11,800원 나옵니다. 내장 제거된 순살 새조개라 샤브용으로 먹기 좋고&n...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-19T18:43:32.000Z",
+      "fetched_at": "2026-05-19T19:41:17.383Z"
+    },
+    {
+      "id": "66e2a934399b7e77",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104233",
+      "source": "ruliweb",
+      "title": "[카카오페이]이디아 커피 50%할인 (5,000원/무료)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/104233",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/05/20/19e417a764854fce7.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-19T18:24:23.000Z",
+      "fetched_at": "2026-05-19T19:41:16.856Z"
+    },
     {
       "id": "eeae2faaa8ee9e84",
       "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=705522",
@@ -13,7 +39,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T16:50:53.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "8715d3d9aad65548",
@@ -26,7 +52,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T16:28:28.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "e3254954fddef8a7",
@@ -39,7 +65,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T16:27:13.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "21036bc84e57e5e1",
@@ -52,7 +78,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T16:07:08.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "cf00fea9260d2791",
@@ -65,7 +91,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T16:01:21.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "1a2e07c2f84492f3",
@@ -78,7 +104,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:36:05.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "228f0bd7a40f80e9",
@@ -91,7 +117,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:33:59.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "8d01c69a44f18990",
@@ -104,7 +130,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:28:34.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "a09ce305596ab7ad",
@@ -117,7 +143,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:26:22.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "0c29baa6362f866a",
@@ -130,7 +156,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:26:12.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "3fe7c43f90f61014",
@@ -143,7 +169,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:26:01.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "3af1dc0343c7fc70",
@@ -156,7 +182,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:24:34.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "462ca58de570d67e",
@@ -169,7 +195,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:23:57.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "001cc55f9ea55130",
@@ -182,7 +208,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:21:27.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "33173486dbd6065b",
@@ -195,7 +221,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:20:37.000Z",
-      "fetched_at": "2026-05-19T17:32:46.664Z"
+      "fetched_at": "2026-05-19T19:41:17.383Z"
     },
     {
       "id": "37ebc4f5f887aeba",
@@ -208,7 +234,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:18:23.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "e96715c4a79e79ef",
@@ -234,7 +260,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T15:08:00.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "e411518810af0d5e",
@@ -637,7 +663,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T10:14:48.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "308948baa00800c5",
@@ -650,7 +676,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T09:11:17.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "2c2fbfaff30c1a2e",
@@ -663,7 +689,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T07:32:43.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "0cd43e5d9f56415f",
@@ -676,7 +702,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T07:29:06.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "bb518650605a04e3",
@@ -884,7 +910,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T05:10:57.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "e7fe73e67e5dc051",
@@ -897,7 +923,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T03:30:16.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "4fcdc621016b8a9d",
@@ -910,7 +936,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T03:00:00.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "fcefb195407b2e8b",
@@ -923,7 +949,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T02:12:37.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "a2541fe677adbaee",
@@ -988,7 +1014,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-19T01:36:27.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "1230d8f2477455c7",
@@ -1144,7 +1170,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T23:54:26.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "c53d3167603962eb",
@@ -1157,7 +1183,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T23:54:00.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "a9dd1fdb40f13380",
@@ -1170,7 +1196,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T23:24:35.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "f143158d0f683646",
@@ -1196,7 +1222,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T17:05:03.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "18af213b8fc597a3",
@@ -1404,7 +1430,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T15:15:04.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "bad3cf4f185fe9ce",
@@ -1417,7 +1443,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T15:01:28.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "99fead4ded4770e9",
@@ -1625,7 +1651,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T11:04:19.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "ac19eb6a476d023d",
@@ -1638,7 +1664,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T11:02:31.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "057ced6024546d60",
@@ -1651,7 +1677,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T10:42:29.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "d926a3dedeeb829b",
@@ -1664,7 +1690,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T08:37:10.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "d6f44d8962f6c320",
@@ -1677,7 +1703,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T08:13:04.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "c20f0670197e1c3a",
@@ -1690,7 +1716,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T07:00:00.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "a82e663ef9a89b3d",
@@ -1703,7 +1729,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T06:42:40.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "6226f6195d355c63",
@@ -1794,7 +1820,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T06:17:57.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "cef21f02e3f34c33",
@@ -1924,7 +1950,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-18T05:41:13.000Z",
-      "fetched_at": "2026-05-19T17:32:46.432Z"
+      "fetched_at": "2026-05-19T19:41:16.856Z"
     },
     {
       "id": "7ab66f48a3fc57db",
@@ -3875,32 +3901,6 @@
       "category": null,
       "posted_at": "2026-05-16T15:05:06.000Z",
       "fetched_at": "2026-05-16T15:45:54.774Z"
-    },
-    {
-      "id": "b71d67f630835d38",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104169",
-      "source": "ruliweb",
-      "title": "[오늘의집] 질레트 프로쉴드 옐로우 면도날 12입 외 (33,747원~/무료)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/104169",
-      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/05/17/19e31501cbd4fa273.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-16T15:03:55.000Z",
-      "fetched_at": "2026-05-18T02:05:01.248Z"
-    },
-    {
-      "id": "a1751ef0aa0ec756",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=704632",
-      "source": "ppomppu",
-      "title": "[카카오 라이브] 그린비아 당케어 호두맛 48팩+손풍기(50,900원/무료 배송)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=704632",
-      "thumbnail_url": null,
-      "description": "시골에 계신 부모님께 그린비아 당케어를 종종 보내드리고 있는데\r\n카카오 라이브할 때 사면 저렴하게 사는 거 같더라구요.\r\n이번에는 호두맛으로 보내드리려고 합니다. (가격은 당케어랑...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-16T12:43:22.000Z",
-      "fetched_at": "2026-05-16T12:54:41.256Z"
     }
   ]
 }
