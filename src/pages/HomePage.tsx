@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import Layout from "@/components/Layout";
+import GoogleAd from "@/components/GoogleAd";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useSeo, SITE_URL } from "@/lib/seo";
 import { loadHotdeals, type Hotdeal } from "@/lib/hotdeals";
@@ -139,6 +140,9 @@ export default function HomePage() {
           )}
         </section>
 
+        {/* 광고 */}
+        <GoogleAd slot="REPLACE_WITH_SLOT_ID" className="w-full" />
+
         {/* 커뮤니티 */}
         <section>
           <SectionHeader
@@ -174,6 +178,9 @@ export default function HomePage() {
             </div>
           )}
         </section>
+
+        {/* 광고 */}
+        <GoogleAd slot="REPLACE_WITH_SLOT_ID" className="w-full" />
 
         {/* AI */}
         <section>
