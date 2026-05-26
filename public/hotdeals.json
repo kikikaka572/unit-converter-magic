@@ -1,7 +1,59 @@
 {
-  "generated_at": "2026-05-26T19:53:12.662Z",
+  "generated_at": "2026-05-26T22:14:35.583Z",
   "count": 300,
   "deals": [
+    {
+      "id": "0368f6e91ba2c8a5",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=707058",
+      "source": "ppomppu",
+      "title": "[토스] 숯불 매콤 닭목살 300g x 4팩 (16,900원 / 무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=707058",
+      "thumbnail_url": null,
+      "description": "매콤한 닭목살입니다. 숯불에서 해서 숯불향 나고 300g 4팩 16,900원이라 가격 좋습니다.",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-26T21:55:58.000Z",
+      "fetched_at": "2026-05-26T22:14:35.580Z"
+    },
+    {
+      "id": "151fe470a67b7364",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104365",
+      "source": "ruliweb",
+      "title": "[대형마트] 홈플러스&amp;롯데마트&amp;이마트 이번주 전단행사 (5/28~6/3)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/104365",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/05/27/19e663378ef1874ce.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-26T21:32:47.000Z",
+      "fetched_at": "2026-05-26T22:14:35.368Z"
+    },
+    {
+      "id": "b3b923f182757b7b",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104364",
+      "source": "ruliweb",
+      "title": "[네이버] scuf omega ps5 컨트롤러(249,000원)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/104364",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/05/27/19e65eb1d344cd7b.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-26T20:17:40.000Z",
+      "fetched_at": "2026-05-26T22:14:35.368Z"
+    },
+    {
+      "id": "7c95e4141447c8ee",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104363",
+      "source": "ruliweb",
+      "title": "(크림)PS5 PRO 2TB 1,138,200원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/104363",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/05/27/19e65e77e554cb504.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-05-26T20:11:53.000Z",
+      "fetched_at": "2026-05-26T22:14:35.368Z"
+    },
     {
       "id": "1a8037b48fa6f70e",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104362",
@@ -13,7 +65,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T19:30:00.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "916b9f622e44d517",
@@ -22,11 +74,11 @@
       "title": "[CJ더마켓]햇반 36개+24개 총 60개,스팸200g 20개(41,117원/무료)",
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=707057",
       "thumbnail_url": null,
-      "description": "토스페이 25프로 딜 햇반 36개 + 24개 총 60개  히든쿠폰 4만 이상 12,000원 할인 적용(쿠폰함에 들어와있는데 타겟일수도)&nbs...",
+      "description": "토스페이 25프로 딜 최대 15,000원 할인 최소결제금액 3만원 이상 적용가능 횟수 5번 아래 품목외에도 장보실것들 골고루 득템하시길 바랍니...",
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T18:50:08.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "ffc93f120d77250a",
@@ -39,7 +91,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T18:35:20.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "a548203c9e3c794b",
@@ -52,7 +104,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T16:30:57.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "cc0fcfdeb1256fac",
@@ -65,7 +117,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T16:25:07.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "7b4b20a3fdc9d51f",
@@ -78,7 +130,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T16:08:02.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "273f91624c9b19c6",
@@ -91,7 +143,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T16:07:20.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "f0e19a7c995a1b1e",
@@ -104,7 +156,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:59:32.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "061eb101b851b0e4",
@@ -117,7 +169,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:59:13.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "1542bdf68cdc51e6",
@@ -130,7 +182,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:34:16.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "1545812b8509a8a8",
@@ -143,7 +195,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:34:13.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "5c24befd9b772666",
@@ -156,7 +208,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:31:17.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "d41dda4879fc53f7",
@@ -169,7 +221,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:26:10.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "d03dcf774d953a52",
@@ -182,7 +234,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:24:59.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "2088f6b3e1b20157",
@@ -195,7 +247,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:20:51.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "6125ce04b0363c2e",
@@ -208,7 +260,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:20:16.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "bd37519f3e4acb18",
@@ -221,7 +273,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:15:25.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "758a6201d7bc4afb",
@@ -234,7 +286,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:11:52.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "9e6898f661b0fe5d",
@@ -247,7 +299,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:10:07.000Z",
-      "fetched_at": "2026-05-26T19:53:12.659Z"
+      "fetched_at": "2026-05-26T22:14:35.580Z"
     },
     {
       "id": "ba33ba965781a4c0",
@@ -260,7 +312,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T15:09:11.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "fa451f4eca9cc458",
@@ -494,7 +546,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T12:03:36.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "732d106353bd50b9",
@@ -507,7 +559,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T10:11:24.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "1c2974633c18c0bc",
@@ -520,7 +572,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T09:49:07.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "4523ef6f30275ce4",
@@ -533,7 +585,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T09:10:00.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "16220a12cbce148f",
@@ -546,7 +598,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T09:06:26.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "340de26026f8ba5b",
@@ -559,7 +611,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T07:54:47.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.368Z"
     },
     {
       "id": "b928078942d749b5",
@@ -572,7 +624,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T06:53:05.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "fbd75336f0df8b3d",
@@ -585,7 +637,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T06:49:18.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "c6176389f22ceba8",
@@ -611,7 +663,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T06:33:28.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "e36da0dab74000d2",
@@ -806,7 +858,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T02:52:39.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "c4b5647401841f4d",
@@ -858,7 +910,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T01:42:54.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "5ef898c6e13bf025",
@@ -884,7 +936,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T01:31:16.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "e7256b41b4bc3751",
@@ -975,7 +1027,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T01:18:20.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "3a15ed2c36e8adb6",
@@ -1053,7 +1105,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-26T00:57:52.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "8ace0bdd534f0e2a",
@@ -1066,7 +1118,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-25T22:58:59.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "8ec84484e78e18ab",
@@ -1092,7 +1144,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-25T18:47:22.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "8a3d10ffbacc5aa5",
@@ -1196,7 +1248,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-25T15:36:32.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "048b8cfff1c27539",
@@ -1339,7 +1391,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-25T15:12:55.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "8224b7075d68c4a0",
@@ -1352,7 +1404,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-05-25T15:10:57.000Z",
-      "fetched_at": "2026-05-26T19:53:12.407Z"
+      "fetched_at": "2026-05-26T22:14:35.369Z"
     },
     {
       "id": "ba23146efa0320d9",
@@ -3849,58 +3901,6 @@
       "category": null,
       "posted_at": "2026-05-23T09:03:42.000Z",
       "fetched_at": "2026-05-23T10:20:04.656Z"
-    },
-    {
-      "id": "4b01a53b055535fe",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706365",
-      "source": "ppomppu",
-      "title": "[지마켓] 하루 한줌 견과 파란하루N 50봉 (25,980원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706365",
-      "thumbnail_url": null,
-      "description": "건과일 없는 구성입니다   우리카드 할인 받으시면 봉당 520원 꼴이네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-23T09:03:29.000Z",
-      "fetched_at": "2026-05-23T10:20:04.656Z"
-    },
-    {
-      "id": "1d5b2fc2daabfb48",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706364",
-      "source": "ppomppu",
-      "title": "[롯데온] 강강술래 영양갈비탕 1kg 4팩 (39,120원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706364",
-      "thumbnail_url": null,
-      "description": "매장에서 먹는거랑 맛 똑같습니다건더기도 넉넉하니 괜찮더라구요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-23T08:51:19.000Z",
-      "fetched_at": "2026-05-23T10:20:04.656Z"
-    },
-    {
-      "id": "7aeb1045958344b6",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706356",
-      "source": "ppomppu",
-      "title": "[톡딜] 1+1 유리 진공 밀폐용기 정사각 500ml 핑크샌드 2개 (12,300원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706356",
-      "thumbnail_url": null,
-      "description": "구매 금액대별 사은품도 있어서 5만원 이상 구매하면 생활공작소 압축팩 2P + 고무장갑까지 추가 증정 있네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-23T08:02:56.000Z",
-      "fetched_at": "2026-05-23T08:10:25.378Z"
-    },
-    {
-      "id": "77ceb40ee083edd7",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706355",
-      "source": "ppomppu",
-      "title": "[카카오톡딜] [더삭스/시슬리/아디다스/네파 외] 데일리 스니커즈/단목/중목/장목 인기 양말 기획전 (가격다양/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=706355",
-      "thumbnail_url": null,
-      "description": "여러 브랜드들 톡딜 기획전 떳네요.사이즈도 스니커즈, 중장단목 다 있고 색상도 다양.입맛 맞춰 골라 사시면 될 것 같아요.      &nbsp...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-05-23T08:01:50.000Z",
-      "fetched_at": "2026-05-23T08:10:25.378Z"
     }
   ]
 }
