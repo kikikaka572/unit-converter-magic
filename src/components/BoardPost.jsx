@@ -2,10 +2,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import TiptapEditor from "@/components/TiptapEditor";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const ADMIN_PW = import.meta.env.VITE_ADMIN_PW || "800329";
 
+function formatDate(iso, ko) {
+  const d = new Date(iso);
+  const locale = ko ? "ko-KR" : "en-US";
+  return d.toLocaleDateString(locale, { year: "numeric", month: "2-digit", day: "2-digit" }) + " " +
+         d.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+}
+
 export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
+  const { lang } = useLanguage();
+  const ko = lang === "ko";
+
   const [post,        setPost]        = useState(null);
   const [comments,    setComments]    = useState([]);
   const [loading,     setLoading]     = useState(true);
@@ -48,14 +59,15 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
 
   const handleShare = async () => {
     const url = `https://unit-converter-magic.vercel.app/community/${postId}`;
+    const msg = ko ? "링크가 복사되었습니다! 🔗" : "Link copied! 🔗";
     try {
       if (navigator.share) { await navigator.share({ title: post?.title, url }); }
-      else { await navigator.clipboard.writeText(url); showToast("링크가 복사되었습니다! 🔗"); }
+      else { await navigator.clipboard.writeText(url); showToast(msg); }
     } catch {
       const el = document.createElement("textarea");
       el.value = url; document.body.appendChild(el); el.select();
       document.execCommand("copy"); document.body.removeChild(el);
-      showToast("링크가 복사되었습니다! 🔗");
+      showToast(msg);
     }
   };
 
@@ -69,7 +81,8 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
   const openEditPwModal = () => { setEditPwModal(true); setEditPwInput(""); setEditPwError(""); };
   const confirmEditPw = () => {
     if (editPwInput !== post.post_password && editPwInput !== adminPw) {
-      setEditPwError("비밀번호가 올바르지 않습니다."); return;
+      setEditPwError(ko ? "비밀번호가 올바르지 않습니다." : "Incorrect password.");
+      return;
     }
     setEditPwModal(false);
     setEditTitle(post.title);
@@ -84,12 +97,19 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
     const { error } = await supabase.from("posts")
       .update({ title: editTitle.trim(), content: editContent })
       .eq("id", postId);
-    if (!error) { await fetchPost(); setEditMode(false); showToast("수정이 완료되었습니다 ✅"); }
+    if (!error) {
+      await fetchPost();
+      setEditMode(false);
+      showToast(ko ? "수정이 완료되었습니다 ✅" : "Post updated ✅");
+    }
   };
 
   const openDeleteModal = (type, id) => { setDeleteModal({ type, id }); setPwInput(""); setPwError(""); };
   const executeDelete = async () => {
-    if (pwInput !== adminPw) { setPwError("비밀번호가 올바르지 않습니다."); return; }
+    if (pwInput !== adminPw) {
+      setPwError(ko ? "비밀번호가 올바르지 않습니다." : "Incorrect password.");
+      return;
+    }
     if (deleteModal.type === "post") {
       await supabase.from("posts").delete().eq("id", deleteModal.id);
       setDeleteModal(null); onBack();
@@ -104,14 +124,15 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
     setSubmitting(true);
     await supabase.from("comments").insert({
       post_id: postId, parent_id: replyTo?.id || null,
-      author_name: authorName.trim() || "익명", content: commentText.trim(),
+      author_name: authorName.trim() || (ko ? "익명" : "Anonymous"),
+      content: commentText.trim(),
     });
     setCommentText(""); setReplyTo(null);
     await fetchComments(); setSubmitting(false);
   };
 
-  if (loading) return <div style={s.loading}>불러오는 중...</div>;
-  if (!post)   return <div style={s.loading}>게시글을 찾을 수 없습니다.</div>;
+  if (loading) return <div style={s.loading}>{ko ? "불러오는 중..." : "Loading..."}</div>;
+  if (!post)   return <div style={s.loading}>{ko ? "게시글을 찾을 수 없습니다." : "Post not found."}</div>;
 
   const cat = post.categories;
   const rootComments = comments.filter(c => !c.parent_id);
@@ -120,19 +141,23 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
   return (
     <div style={s.wrap}>
       {toast && <div style={s.toast}>{toast}</div>}
-      <button onClick={onBack} style={s.backBtn}>← 목록으로</button>
+      <button onClick={onBack} style={s.backBtn}>
+        {ko ? "← 목록으로" : "← Back to list"}
+      </button>
 
       <div style={s.postHeader}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, flexWrap: "wrap" }}>
           {cat && <span style={{ ...s.catBadge, background: cat.color + "22", color: cat.color }}>{cat.icon} {cat.name_ko}</span>}
-          {post.is_pinned && <span style={s.pinBadge}>📌 공지</span>}
+          {post.is_pinned && (
+            <span style={s.pinBadge}>📌 {ko ? "공지" : "Notice"}</span>
+          )}
         </div>
         {editMode ? (
           <input
             value={editTitle}
             onChange={e => setEditTitle(e.target.value)}
             style={{ ...s.editInput, fontSize: 20, fontWeight: 800, marginBottom: 12 }}
-            placeholder="제목"
+            placeholder={ko ? "제목" : "Title"}
           />
         ) : (
           <h2 style={s.postTitle}>{post.title}</h2>
@@ -140,13 +165,21 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
         <div style={s.meta}>
           <span style={s.metaText}>{post.author_name}</span>
           <span style={s.metaDot}>·</span>
-          <span style={s.metaText}>{formatDate(post.created_at)}</span>
+          <span style={s.metaText}>{formatDate(post.created_at, ko)}</span>
           <span style={s.metaDot}>·</span>
-          <span style={s.metaText}>조회 {post.view_count.toLocaleString()}</span>
+          <span style={s.metaText}>
+            {ko ? `조회 ${post.view_count.toLocaleString()}` : `${post.view_count.toLocaleString()} views`}
+          </span>
           <span style={s.metaDot}>·</span>
-          {!editMode && <button onClick={openEditPwModal} style={s.editBtn}>✏️ 수정</button>}
+          {!editMode && (
+            <button onClick={openEditPwModal} style={s.editBtn}>
+              {ko ? "✏️ 수정" : "✏️ Edit"}
+            </button>
+          )}
           <span style={s.metaDot}>·</span>
-          <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>🗑 관리자 삭제</button>
+          <button onClick={() => openDeleteModal("post", post.id)} style={s.deleteBtn}>
+            {ko ? "🗑 관리자 삭제" : "🗑 Delete"}
+          </button>
         </div>
       </div>
 
@@ -154,15 +187,18 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
       <div style={s.body}>
         {editMode ? (
           <>
-            {/* 수정 모드 — Tiptap 에디터 */}
             <TiptapEditor
               value={editContent}
               onChange={setEditContent}
-              placeholder="내용을 수정하세요..."
+              placeholder={ko ? "내용을 수정하세요..." : "Edit your post..."}
             />
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 10 }}>
-              <button onClick={() => setEditMode(false)} style={s.btnSecondary}>취소</button>
-              <button onClick={saveEdit} style={s.btnPrimary}>저장</button>
+              <button onClick={() => setEditMode(false)} style={s.btnSecondary}>
+                {ko ? "취소" : "Cancel"}
+              </button>
+              <button onClick={saveEdit} style={s.btnPrimary}>
+                {ko ? "저장" : "Save"}
+              </button>
             </div>
           </>
         ) : (
@@ -176,11 +212,15 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
               <div style={s.imgWrap}>
                 <img
                   src={post.image_url}
-                  alt="첨부 이미지"
+                  alt={ko ? "첨부 이미지" : "Attached image"}
                   style={{ ...s.postImg, ...(imgExpanded ? s.postImgExpanded : {}) }}
                   onClick={() => setImgExpanded(v => !v)}
                 />
-                <p style={s.imgHint}>{imgExpanded ? "클릭하여 축소" : "클릭하여 확대"}</p>
+                <p style={s.imgHint}>
+                  {imgExpanded
+                    ? (ko ? "클릭하여 축소" : "Click to shrink")
+                    : (ko ? "클릭하여 확대" : "Click to expand")}
+                </p>
               </div>
             )}
           </>
@@ -189,41 +229,69 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
 
       {!editMode && (
         <div style={s.actionRow}>
-          <button onClick={handleLike} style={s.likeBtn}>♥ 추천 {post.like_count}</button>
-          <button onClick={handleShare} style={s.shareBtn}>🔗 공유하기</button>
+          <button onClick={handleLike} style={s.likeBtn}>♥ {ko ? "추천" : "Like"} {post.like_count}</button>
+          <button onClick={handleShare} style={s.shareBtn}>🔗 {ko ? "공유하기" : "Share"}</button>
         </div>
       )}
 
       <div style={s.commentSection}>
-        <h3 style={s.commentTitle}>댓글 {post.comment_count}</h3>
+        <h3 style={s.commentTitle}>
+          {ko ? `댓글 ${post.comment_count}` : `Comments (${post.comment_count})`}
+        </h3>
         {rootComments.length === 0 ? (
-          <p style={{ color: "#94a3b8", fontSize: 14, textAlign: "center", padding: "20px 0" }}>첫 댓글을 남겨보세요 💬</p>
+          <p style={{ color: "#94a3b8", fontSize: 14, textAlign: "center", padding: "20px 0" }}>
+            {ko ? "첫 댓글을 남겨보세요 💬" : "Be the first to comment 💬"}
+          </p>
         ) : (
           rootComments.map(c => (
-            <CommentItem key={c.id} comment={c} replies={getReplies(c.id)}
+            <CommentItem
+              key={c.id}
+              comment={c}
+              replies={getReplies(c.id)}
+              ko={ko}
               onReply={() => setReplyTo({ id: c.id, author_name: c.author_name })}
-              onDelete={() => openDeleteModal("comment", c.id)} />
+              onDelete={() => openDeleteModal("comment", c.id)}
+            />
           ))
         )}
         <div style={s.commentForm}>
           {replyTo && (
             <div style={s.replyBanner}>
-              💬 <strong>{replyTo.author_name}</strong>에게 답글 작성 중
+              💬 <strong>{replyTo.author_name}</strong>
+              {ko ? "에게 답글 작성 중" : " — writing a reply"}
               <button onClick={() => setReplyTo(null)} style={s.replyClose}>✕</button>
             </div>
           )}
           <div style={s.commentInputRow}>
-            <input value={authorName} onChange={e => setAuthorName(e.target.value)}
-              placeholder="닉네임 (미입력 시 익명)" style={{ ...s.inputSm, width: 160 }} />
+            <input
+              value={authorName}
+              onChange={e => setAuthorName(e.target.value)}
+              placeholder={ko ? "닉네임 (미입력 시 익명)" : "Nickname (optional)"}
+              style={{ ...s.inputSm, width: 160 }}
+            />
           </div>
-          <textarea value={commentText} onChange={e => setCommentText(e.target.value)}
-            placeholder={replyTo ? `@${replyTo.author_name}에게 답글...` : "댓글을 입력하세요..."}
-            rows={3} style={s.textarea}
-            onKeyDown={e => { if (e.key === "Enter" && e.ctrlKey) submitComment(); }} />
+          <textarea
+            value={commentText}
+            onChange={e => setCommentText(e.target.value)}
+            placeholder={
+              replyTo
+                ? (ko ? `@${replyTo.author_name}에게 답글...` : `Reply to @${replyTo.author_name}...`)
+                : (ko ? "댓글을 입력하세요..." : "Write a comment...")
+            }
+            rows={3}
+            style={s.textarea}
+            onKeyDown={e => { if (e.key === "Enter" && e.ctrlKey) submitComment(); }}
+          />
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 8 }}>
-            <span style={{ fontSize: 12, color: "#94a3b8" }}>Ctrl+Enter로 빠른 등록</span>
+            <span style={{ fontSize: 12, color: "#94a3b8" }}>
+              {ko ? "Ctrl+Enter로 빠른 등록" : "Ctrl+Enter to submit"}
+            </span>
             <button onClick={submitComment} disabled={submitting} style={s.btnPrimary}>
-              {submitting ? "등록 중..." : replyTo ? "답글 등록" : "댓글 등록"}
+              {submitting
+                ? (ko ? "등록 중..." : "Posting...")
+                : replyTo
+                  ? (ko ? "답글 등록" : "Post Reply")
+                  : (ko ? "댓글 등록" : "Post Comment")}
             </button>
           </div>
         </div>
@@ -232,16 +300,29 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
       {editPwModal && (
         <div style={s.modalOverlay}>
           <div style={s.modal}>
-            <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>게시글 수정</h3>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>작성 시 입력한 비밀번호를 입력하세요.</p>
-            <input type="password" value={editPwInput}
+            <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>
+              {ko ? "게시글 수정" : "Edit Post"}
+            </h3>
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>
+              {ko ? "작성 시 입력한 비밀번호를 입력하세요." : "Enter the password you set when posting."}
+            </p>
+            <input
+              type="password"
+              value={editPwInput}
               onChange={e => { setEditPwInput(e.target.value); setEditPwError(""); }}
               onKeyDown={e => { if (e.key === "Enter") confirmEditPw(); }}
-              placeholder="비밀번호" autoFocus style={s.pwInput} />
+              placeholder={ko ? "비밀번호" : "Password"}
+              autoFocus
+              style={s.pwInput}
+            />
             {editPwError && <p style={{ color: "#ef4444", fontSize: 13, margin: "6px 0 0" }}>{editPwError}</p>}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
-              <button onClick={() => setEditPwModal(false)} style={s.btnSecondary}>취소</button>
-              <button onClick={confirmEditPw} style={s.btnPrimary}>확인</button>
+              <button onClick={() => setEditPwModal(false)} style={s.btnSecondary}>
+                {ko ? "취소" : "Cancel"}
+              </button>
+              <button onClick={confirmEditPw} style={s.btnPrimary}>
+                {ko ? "확인" : "Confirm"}
+              </button>
             </div>
           </div>
         </div>
@@ -251,17 +332,30 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
         <div style={s.modalOverlay}>
           <div style={s.modal}>
             <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700 }}>
-              {deleteModal.type === "post" ? "게시글 삭제" : "댓글 삭제"}
+              {deleteModal.type === "post"
+                ? (ko ? "게시글 삭제" : "Delete Post")
+                : (ko ? "댓글 삭제" : "Delete Comment")}
             </h3>
-            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>관리자 비밀번호를 입력하세요.</p>
-            <input type="password" value={pwInput}
+            <p style={{ margin: "0 0 16px", fontSize: 13, color: "#64748b" }}>
+              {ko ? "관리자 비밀번호를 입력하세요." : "Enter the admin password."}
+            </p>
+            <input
+              type="password"
+              value={pwInput}
               onChange={e => { setPwInput(e.target.value); setPwError(""); }}
               onKeyDown={e => { if (e.key === "Enter") executeDelete(); }}
-              placeholder="비밀번호" autoFocus style={s.pwInput} />
+              placeholder={ko ? "비밀번호" : "Password"}
+              autoFocus
+              style={s.pwInput}
+            />
             {pwError && <p style={{ color: "#ef4444", fontSize: 13, margin: "6px 0 0" }}>{pwError}</p>}
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
-              <button onClick={() => setDeleteModal(null)} style={s.btnSecondary}>취소</button>
-              <button onClick={executeDelete} style={s.btnDanger}>삭제</button>
+              <button onClick={() => setDeleteModal(null)} style={s.btnSecondary}>
+                {ko ? "취소" : "Cancel"}
+              </button>
+              <button onClick={executeDelete} style={s.btnDanger}>
+                {ko ? "삭제" : "Delete"}
+              </button>
             </div>
           </div>
         </div>
@@ -270,31 +364,29 @@ export default function BoardPost({ postId, adminPw = ADMIN_PW, onBack }) {
   );
 }
 
-function CommentItem({ comment, replies, onReply, onDelete }) {
+function CommentItem({ comment, replies, ko, onReply, onDelete }) {
   return (
     <div style={s.commentItem}>
       <div style={s.commentHead}>
         <span style={s.commentAuthor}>{comment.author_name}</span>
-        <span style={s.commentDate}>{formatDate(comment.created_at)}</span>
+        <span style={s.commentDate}>{formatDate(comment.created_at, ko)}</span>
         <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
-          <button onClick={onReply} style={s.textBtn}>답글</button>
-          <button onClick={onDelete} style={{ ...s.textBtn, color: "#ef4444" }}>🗑 삭제</button>
+          <button onClick={onReply} style={s.textBtn}>{ko ? "답글" : "Reply"}</button>
+          <button onClick={onDelete} style={{ ...s.textBtn, color: "#ef4444" }}>
+            🗑 {ko ? "삭제" : "Delete"}
+          </button>
         </div>
       </div>
       <p style={{ whiteSpace: "pre-wrap", margin: "6px 0 0", lineHeight: 1.7, fontSize: 14 }}>{comment.content}</p>
       {replies.length > 0 && (
         <div style={s.replies}>
-          {replies.map(r => <CommentItem key={r.id} comment={r} replies={[]} onReply={onReply} onDelete={onDelete} />)}
+          {replies.map(r => (
+            <CommentItem key={r.id} comment={r} replies={[]} ko={ko} onReply={onReply} onDelete={onDelete} />
+          ))}
         </div>
       )}
     </div>
   );
-}
-
-function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }) + " " +
-         d.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" });
 }
 
 const s = {

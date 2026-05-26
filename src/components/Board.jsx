@@ -4,12 +4,25 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabase";
 import TiptapEditor from "@/components/TiptapEditor";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const PAGE_SIZE = 15;
+
+function formatDate(created_at, ko) {
+  const date = new Date(created_at);
+  const isToday = new Date().toDateString() === date.toDateString();
+  const locale = ko ? "ko-KR" : "en-US";
+  return isToday
+    ? date.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })
+    : date.toLocaleDateString(locale, { month: "2-digit", day: "2-digit" });
+}
 
 export default function Board() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const { lang } = useLanguage();
+  const ko = lang === "ko";
+
   const [posts,       setPosts]       = useState([]);
   const [totalCount,  setTotalCount]  = useState(0);
   const [page,        setPage]        = useState(1);
@@ -44,38 +57,57 @@ export default function Board() {
     <div style={s.wrap}>
       <div style={s.header}>
         <div>
-          <h1 style={s.title}>커뮤니티</h1>
-          <p style={s.subtitle}>단위 변환 팁, 질문, 자유로운 이야기를 나눠보세요</p>
+          <h1 style={s.title}>{ko ? "커뮤니티" : "Community"}</h1>
+          <p style={s.subtitle}>
+            {ko
+              ? "단위 변환 팁, 질문, 자유로운 이야기를 나눠보세요"
+              : "Share tips, ask questions, and chat freely"}
+          </p>
         </div>
         <button onClick={() => setShowWrite(v => !v)} style={s.btnPrimary}>
-          {showWrite ? "✕ 닫기" : "✏️ 글쓰기"}
+          {showWrite ? (ko ? "✕ 닫기" : "✕ Close") : (ko ? "✏️ 글쓰기" : "✏️ Write")}
         </button>
       </div>
 
       {showWrite && (
         <WriteForm
+          ko={ko}
           onCreated={() => { setShowWrite(false); setPage(1); fetchPosts(); }}
           onCancel={() => setShowWrite(false)}
         />
       )}
 
       <div style={s.searchRow}>
-        <input value={searchInput} onChange={e => setSearchInput(e.target.value)}
+        <input
+          value={searchInput}
+          onChange={e => setSearchInput(e.target.value)}
           onKeyDown={e => { if (e.key === "Enter") { setSearchQuery(searchInput); setPage(1); } }}
-          placeholder="제목 검색..." style={s.searchInput} />
-        <button onClick={() => { setSearchQuery(searchInput); setPage(1); }} style={s.btnSearch}>검색</button>
-        {searchQuery && <button onClick={() => { setSearchQuery(""); setSearchInput(""); setPage(1); }} style={s.btnClear}>✕ 초기화</button>}
-        <span style={s.countLabel}>총 {totalCount.toLocaleString()}개</span>
+          placeholder={ko ? "제목 검색..." : "Search by title..."}
+          style={s.searchInput}
+        />
+        <button onClick={() => { setSearchQuery(searchInput); setPage(1); }} style={s.btnSearch}>
+          {ko ? "검색" : "Search"}
+        </button>
+        {searchQuery && (
+          <button onClick={() => { setSearchQuery(""); setSearchInput(""); setPage(1); }} style={s.btnClear}>
+            {ko ? "✕ 초기화" : "✕ Clear"}
+          </button>
+        )}
+        <span style={s.countLabel}>
+          {ko ? `총 ${totalCount.toLocaleString()}개` : `${totalCount.toLocaleString()} posts`}
+        </span>
       </div>
 
       {loading ? (
-        <div style={s.emptyBox}>불러오는 중...</div>
+        <div style={s.emptyBox}>{ko ? "불러오는 중..." : "Loading..."}</div>
       ) : posts.length === 0 ? (
-        <div style={s.emptyBox}>게시글이 없습니다. 첫 글을 남겨보세요! 🙌</div>
+        <div style={s.emptyBox}>
+          {ko ? "게시글이 없습니다. 첫 글을 남겨보세요! 🙌" : "No posts yet. Be the first to write! 🙌"}
+        </div>
       ) : isMobile ? (
         <div style={s.mList}>
           {posts.map(post => (
-            <MobilePostCard key={post.id} post={post} onClick={() => handlePostClick(post.id)} />
+            <MobilePostCard key={post.id} post={post} ko={ko} onClick={() => handlePostClick(post.id)} />
           ))}
         </div>
       ) : (
@@ -89,16 +121,16 @@ export default function Board() {
           </colgroup>
           <thead>
             <tr style={s.thead}>
-              <th style={{ ...s.th, textAlign: "left" }}>제목</th>
-              <th style={{ ...s.th, textAlign: "center" }}>작성자</th>
-              <th style={{ ...s.th, textAlign: "center" }}>조회</th>
-              <th style={{ ...s.th, textAlign: "center" }}>추천</th>
-              <th style={{ ...s.th, textAlign: "center" }}>날짜</th>
+              <th style={{ ...s.th, textAlign: "left" }}>{ko ? "제목" : "Title"}</th>
+              <th style={{ ...s.th, textAlign: "center" }}>{ko ? "작성자" : "Author"}</th>
+              <th style={{ ...s.th, textAlign: "center" }}>{ko ? "조회" : "Views"}</th>
+              <th style={{ ...s.th, textAlign: "center" }}>{ko ? "추천" : "Likes"}</th>
+              <th style={{ ...s.th, textAlign: "center" }}>{ko ? "날짜" : "Date"}</th>
             </tr>
           </thead>
           <tbody>
             {posts.map(post => (
-              <PostRow key={post.id} post={post} onClick={() => handlePostClick(post.id)} />
+              <PostRow key={post.id} post={post} ko={ko} onClick={() => handlePostClick(post.id)} />
             ))}
           </tbody>
         </table>
@@ -119,15 +151,7 @@ export default function Board() {
   );
 }
 
-function formatDate(created_at) {
-  const date = new Date(created_at);
-  const isToday = new Date().toDateString() === date.toDateString();
-  return isToday
-    ? date.toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })
-    : date.toLocaleDateString("ko-KR", { month: "2-digit", day: "2-digit" });
-}
-
-function PostRow({ post, onClick }) {
+function PostRow({ post, ko, onClick }) {
   return (
     <tr style={s.row} onClick={onClick}>
       <td style={s.tdTitle}>
@@ -139,17 +163,17 @@ function PostRow({ post, onClick }) {
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#64748b" }}>{post.author_name}</td>
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#94a3b8" }}>{post.view_count}</td>
       <td style={{ ...s.td, textAlign: "center", fontSize: 13, color: "#f59e0b" }}>{post.like_count > 0 ? `♥ ${post.like_count}` : ""}</td>
-      <td style={{ ...s.td, textAlign: "center", fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>{formatDate(post.created_at)}</td>
+      <td style={{ ...s.td, textAlign: "center", fontSize: 12, color: "#94a3b8", whiteSpace: "nowrap" }}>{formatDate(post.created_at, ko)}</td>
     </tr>
   );
 }
 
-function MobilePostCard({ post, onClick }) {
+function MobilePostCard({ post, ko, onClick }) {
   return (
     <div style={s.mCard} onClick={onClick}>
       <div style={s.mTopRow}>
         {post.is_pinned && <span style={s.pinBadge}>📌</span>}
-        <span style={s.mDate}>{formatDate(post.created_at)}</span>
+        <span style={s.mDate}>{formatDate(post.created_at, ko)}</span>
       </div>
       <div style={s.mTitle}>
         {post.title}
@@ -159,30 +183,38 @@ function MobilePostCard({ post, onClick }) {
       <div style={s.mMeta}>
         <span>{post.author_name}</span>
         <span>·</span>
-        <span>조회 {post.view_count}</span>
+        <span>{ko ? `조회 ${post.view_count}` : `${post.view_count} views`}</span>
         {post.like_count > 0 && <><span>·</span><span style={{ color: "#f59e0b" }}>♥ {post.like_count}</span></>}
       </div>
     </div>
   );
 }
 
-// ── 글쓰기 폼 (Tiptap 적용)
-function WriteForm({ onCreated, onCancel }) {
+function WriteForm({ ko, onCreated, onCancel }) {
   const [form,       setForm]       = useState({ title: "", author_name: "", password: "" });
   const [content,    setContent]    = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error,      setError]      = useState("");
 
   const handleSubmit = async () => {
-    if (!form.title.trim())    { setError("제목을 입력해주세요."); return; }
+    if (!form.title.trim()) {
+      setError(ko ? "제목을 입력해주세요." : "Please enter a title.");
+      return;
+    }
     const plainText = content.replace(/<[^>]*>/g, "").trim();
     const hasImage = content.includes("<img");
-    if (!plainText && !hasImage) { setError("내용을 입력해주세요."); return; }
-    if (!form.password.trim()) { setError("수정/삭제용 비밀번호를 입력해주세요."); return; }
+    if (!plainText && !hasImage) {
+      setError(ko ? "내용을 입력해주세요." : "Please enter some content.");
+      return;
+    }
+    if (!form.password.trim()) {
+      setError(ko ? "수정/삭제용 비밀번호를 입력해주세요." : "Please enter a password for editing/deleting.");
+      return;
+    }
     setSubmitting(true); setError("");
 
     const { error: err } = await supabase.from("posts").insert({
-      author_name:   form.author_name.trim() || "익명",
+      author_name:   form.author_name.trim() || (ko ? "익명" : "Anonymous"),
       title:         form.title.trim(),
       content,
       post_password: form.password.trim(),
@@ -193,32 +225,45 @@ function WriteForm({ onCreated, onCancel }) {
 
   return (
     <div style={s.writeBox}>
-      <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>새 글 작성</h3>
+      <h3 style={{ margin: "0 0 16px", fontSize: 16, fontWeight: 700 }}>
+        {ko ? "새 글 작성" : "New Post"}
+      </h3>
       <div style={s.formRow}>
-        <input value={form.author_name} onChange={e => setForm(f => ({ ...f, author_name: e.target.value }))}
-          placeholder="닉네임 (미입력 시 익명)" style={{ ...s.input, width: 160 }} />
-        <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-          placeholder="제목" style={{ ...s.input, flex: 1, minWidth: 200 }} />
+        <input
+          value={form.author_name}
+          onChange={e => setForm(f => ({ ...f, author_name: e.target.value }))}
+          placeholder={ko ? "닉네임 (미입력 시 익명)" : "Nickname (optional)"}
+          style={{ ...s.input, width: 160 }}
+        />
+        <input
+          value={form.title}
+          onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+          placeholder={ko ? "제목" : "Title"}
+          style={{ ...s.input, flex: 1, minWidth: 200 }}
+        />
       </div>
       <div style={s.pwRow}>
-        <span style={s.pwLabel}>🔒 수정·삭제 비밀번호</span>
-        <input type="password" value={form.password}
+        <span style={s.pwLabel}>🔒 {ko ? "수정·삭제 비밀번호" : "Edit/Delete password"}</span>
+        <input
+          type="password"
+          value={form.password}
           onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
-          placeholder="나중에 수정/삭제 시 필요합니다"
-          style={{ ...s.input, flex: 1, minWidth: 160 }} />
+          placeholder={ko ? "나중에 수정/삭제 시 필요합니다" : "Required to edit or delete later"}
+          style={{ ...s.input, flex: 1, minWidth: 160 }}
+        />
       </div>
 
       <TiptapEditor
         value={content}
         onChange={setContent}
-        placeholder="내용을 입력하세요... (이미지는 툴바의 🖼 버튼으로 삽입)"
+        placeholder={ko ? "내용을 입력하세요... (이미지는 툴바의 🖼 버튼으로 삽입)" : "Write your post... (use 🖼 in toolbar to insert images)"}
       />
 
       {error && <p style={{ color: "#ef4444", fontSize: 13, margin: "4px 0" }}>{error}</p>}
       <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-        <button onClick={onCancel} style={s.btnSecondary}>취소</button>
+        <button onClick={onCancel} style={s.btnSecondary}>{ko ? "취소" : "Cancel"}</button>
         <button onClick={handleSubmit} disabled={submitting} style={s.btnPrimary}>
-          {submitting ? "등록 중..." : "등록"}
+          {submitting ? (ko ? "등록 중..." : "Posting...") : (ko ? "등록" : "Post")}
         </button>
       </div>
     </div>
@@ -238,7 +283,6 @@ const s = {
   btnClear:     { padding: "8px 12px", borderRadius: 8, border: "1.5px solid #fca5a5", background: "#fff", color: "#ef4444", cursor: "pointer", fontSize: 13, whiteSpace: "nowrap" },
   countLabel:   { marginLeft: "auto", fontSize: 13, color: "#94a3b8", whiteSpace: "nowrap" },
 
-  // Desktop table
   table:        { width: "100%", tableLayout: "fixed", borderCollapse: "collapse", background: "#fff", borderRadius: 12, overflow: "hidden", boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
   thead:        { background: "#f8fafc" },
   th:           { padding: "12px 12px", fontSize: 13, fontWeight: 700, color: "#64748b", borderBottom: "1.5px solid #e2e8f0", whiteSpace: "nowrap" },
@@ -250,7 +294,6 @@ const s = {
   commentCount: { marginLeft: 6, color: "#6366f1", fontSize: 13, fontWeight: 700 },
   pinBadge:     { marginRight: 6 },
 
-  // Mobile cards
   mList:        { display: "flex", flexDirection: "column", gap: 8 },
   mCard:        { background: "#fff", borderRadius: 10, padding: "12px 14px", boxShadow: "0 1px 4px rgba(0,0,0,.05)", border: "1px solid #f1f5f9", cursor: "pointer" },
   mTopRow:      { display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 },
