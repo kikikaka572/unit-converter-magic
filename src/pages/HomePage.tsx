@@ -27,8 +27,8 @@ const AI_TOOLS: AiTool[] = [
 ];
 
 const TOOLS: Tool[] = [
-  { to: "/salary", emoji: "💼", titleKey: "header.salary.title", descKey: "header.salary.desc" },
-  { to: "/life", emoji: "🧮", titleKey: "header.life.title", descKey: "header.life.desc" },
+  { to: "/salary",    emoji: "💼", titleKey: "header.salary.title",    descKey: "header.salary.desc" },
+  { to: "/life",      emoji: "🧮", titleKey: "header.life.title",      descKey: "header.life.desc" },
   { to: "/converter", emoji: "📐", titleKey: "header.converter.title", descKey: "header.converter.desc" },
 ];
 
@@ -40,28 +40,39 @@ type CommunityPost = {
   comment_count: number | null;
 };
 
-function timeAgo(iso: string) {
+function timeAgo(iso: string, ko: boolean) {
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;
-  if (diff < 60) return "방금 전";
-  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-  return `${Math.floor(diff / 86400)}일 전`;
+  if (ko) {
+    if (diff < 60) return "방금 전";
+    if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+    return `${Math.floor(diff / 86400)}일 전`;
+  } else {
+    if (diff < 60) return "just now";
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return `${Math.floor(diff / 86400)}d ago`;
+  }
 }
 
-function SectionHeader({ title, to }: { title: string; to: string }) {
+function SectionHeader({ title, to, moreLabel }: { title: string; to: string; moreLabel: string }) {
   return (
     <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
       <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{title}</h2>
-      <Link to={to} className="text-xs text-muted-foreground hover:text-primary">더보기 →</Link>
+      <Link to={to} className="text-xs text-muted-foreground hover:text-primary">{moreLabel} →</Link>
     </div>
   );
 }
 
 export default function HomePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const ko = lang === "ko";
+
   useSeo({
-    title: "Lifetool — 연봉·실생활·단위 계산기",
-    description: "연봉 실수령액, 실생활 계산, 단위 환산을 한 곳에서.",
+    title: ko ? "Lifetool — 연봉·실생활·단위 계산기" : "Lifetool — Salary, Life & Unit Calculators",
+    description: ko
+      ? "연봉 실수령액, 실생활 계산, 단위 환산을 한 곳에서."
+      : "Salary, life, and unit calculators all in one place.",
     canonical: `${SITE_URL}/`,
   });
 
@@ -88,9 +99,15 @@ export default function HomePage() {
       <div className="space-y-8">
         {/* 핫딜 */}
         <section>
-          <SectionHeader title="핫딜" to="/hotdeals" />
+          <SectionHeader
+            title={ko ? "핫딜" : "Hot Deals"}
+            to="/hotdeals"
+            moreLabel={ko ? "더보기" : "More"}
+          />
           {deals.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4">표시할 핫딜이 없습니다.</p>
+            <p className="text-sm text-muted-foreground py-4">
+              {ko ? "표시할 핫딜이 없습니다." : "No deals available."}
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {deals.map((d) => (
@@ -103,7 +120,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
                     <span className="capitalize font-medium">{d.source}</span>
                     <span>·</span>
-                    <span>{timeAgo(d.posted_at)}</span>
+                    <span>{timeAgo(d.posted_at, ko)}</span>
                   </div>
                   <div className="mt-2">
                     <a
@@ -113,7 +130,7 @@ export default function HomePage() {
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary text-primary-foreground text-xs font-semibold hover:bg-primary/90"
                     >
                       <ExternalLink className="w-3 h-3" />
-                      원본 보기
+                      {ko ? "원본 보기" : "View original"}
                     </a>
                   </div>
                 </div>
@@ -124,9 +141,15 @@ export default function HomePage() {
 
         {/* 커뮤니티 */}
         <section>
-          <SectionHeader title="커뮤니티" to="/community" />
+          <SectionHeader
+            title={ko ? "커뮤니티" : "Community"}
+            to="/community"
+            moreLabel={ko ? "더보기" : "More"}
+          />
           {posts.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4">게시글이 없습니다.</p>
+            <p className="text-sm text-muted-foreground py-4">
+              {ko ? "게시글이 없습니다." : "No posts yet."}
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {posts.map((p) => (
@@ -142,9 +165,9 @@ export default function HomePage() {
                     ) : null}
                   </h3>
                   <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
-                    <span>{p.author_name || "익명"}</span>
+                    <span>{p.author_name || (ko ? "익명" : "Anonymous")}</span>
                     <span>·</span>
-                    <span>{timeAgo(p.created_at)}</span>
+                    <span>{timeAgo(p.created_at, ko)}</span>
                   </div>
                 </Link>
               ))}
@@ -184,7 +207,9 @@ export default function HomePage() {
         {/* 계산기 */}
         <section>
           <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">계산기</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+              {ko ? "계산기" : "Calculators"}
+            </h2>
           </div>
           <div className="grid gap-3">
             {TOOLS.map((tool) => (
