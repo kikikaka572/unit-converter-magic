@@ -14,8 +14,10 @@ interface Props {
 
 export default function GoogleAd({ slot, format = "auto", className = "" }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const isPlaceholder = slot === "REPLACE_WITH_SLOT_ID";
 
   useEffect(() => {
+    if (isPlaceholder) return;
     const el = ref.current;
     if (!el) return;
 
@@ -23,7 +25,6 @@ export default function GoogleAd({ slot, format = "auto", className = "" }: Prop
 
     const ins = document.createElement("ins");
     ins.className = "adsbygoogle";
-    ins.style.display = "block";
     ins.setAttribute("data-ad-client", "ca-pub-9613545366726961");
     ins.setAttribute("data-ad-slot", slot);
     ins.setAttribute("data-ad-format", format);
@@ -37,7 +38,9 @@ export default function GoogleAd({ slot, format = "auto", className = "" }: Prop
     return () => {
       el.innerHTML = "";
     };
-  }, [slot, format]);
+  }, [slot, format, isPlaceholder]);
+
+  if (isPlaceholder) return null;
 
   return <div ref={ref} className={className} />;
 }
