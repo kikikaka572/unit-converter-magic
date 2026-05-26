@@ -11,15 +11,18 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(undefine
 
 const STORAGE_KEY = "app-lang";
 
+function detectLang(): Lang {
+  if (typeof window === "undefined") return "ko";
+  const saved = localStorage.getItem(STORAGE_KEY) as Lang | null;
+  if (saved === "ko" || saved === "en" || saved === "fr") return saved;
+  const browser = navigator.language.toLowerCase();
+  if (browser.startsWith("ko")) return "ko";
+  if (browser.startsWith("fr")) return "fr";
+  return "en";
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "ko";
-    const saved = localStorage.getItem(STORAGE_KEY) as Lang | null;
-    if (saved === "ko" || saved === "en") return saved;
-    // 브라우저 언어 자동 감지
-    const browser = navigator.language.toLowerCase();
-    return browser.startsWith("ko") ? "ko" : "en";
-  });
+  const [lang, setLangState] = useState<Lang>(detectLang);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, lang);

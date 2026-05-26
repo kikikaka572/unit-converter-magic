@@ -27,6 +27,20 @@ const AI_TOOLS: AiTool[] = [
   { to: "/video-prompt",     emoji: "🎬", titleKey: "header.videoprompt.title", descKey: "header.videoprompt.desc" },
 ];
 
+type FrTool = {
+  to: string;
+  emoji: string;
+  titleKey: "header.tva.title" | "header.frsalary.title" | "header.currency.title" | "header.size.title";
+  descKey: "header.tva.desc" | "header.frsalary.desc" | "header.currency.desc" | "header.size.desc";
+};
+
+const FR_TOOLS: FrTool[] = [
+  { to: "/tva",        emoji: "🧾", titleKey: "header.tva.title",      descKey: "header.tva.desc"      },
+  { to: "/fr-salary",  emoji: "🇫🇷", titleKey: "header.frsalary.title", descKey: "header.frsalary.desc" },
+  { to: "/currency",   emoji: "💱", titleKey: "header.currency.title", descKey: "header.currency.desc" },
+  { to: "/size",       emoji: "👟", titleKey: "header.size.title",     descKey: "header.size.desc"     },
+];
+
 const TOOLS: Tool[] = [
   { to: "/salary",    emoji: "💼", titleKey: "header.salary.title",    descKey: "header.salary.desc" },
   { to: "/life",      emoji: "🧮", titleKey: "header.life.title",      descKey: "header.life.desc" },
@@ -189,6 +203,37 @@ export default function HomePage() {
           </div>
           <div className="grid gap-3">
             {AI_TOOLS.map((tool) => (
+              <Link
+                key={tool.to}
+                to={tool.to}
+                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
+              >
+                <div className="text-3xl">{tool.emoji}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-foreground text-base sm:text-lg truncate">
+                    {t(tool.titleKey)}
+                  </div>
+                  <div className="text-xs sm:text-sm text-muted-foreground truncate">
+                    {t(tool.descKey)}
+                  </div>
+                </div>
+                <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                  →
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* France */}
+        <section>
+          <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
+              🇫🇷 France
+            </h2>
+          </div>
+          <div className="grid gap-3">
+            {FR_TOOLS.map((tool) => (
               <Link
                 key={tool.to}
                 to={tool.to}

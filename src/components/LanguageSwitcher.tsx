@@ -1,5 +1,12 @@
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import type { Lang } from "@/i18n/translations";
+
+const LANGS: { code: Lang; label: string }[] = [
+  { code: "ko", label: "KO" },
+  { code: "en", label: "EN" },
+  { code: "fr", label: "FR" },
+];
 
 export default function LanguageSwitcher() {
   const { lang, setLang } = useLanguage();
@@ -11,30 +18,21 @@ export default function LanguageSwitcher() {
       aria-label="Language selector"
     >
       <Globe className="w-4 h-4 text-muted-foreground ml-2" aria-hidden />
-      <button
-        type="button"
-        onClick={() => setLang("ko")}
-        aria-pressed={lang === "ko"}
-        className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${
-          lang === "ko"
-            ? "bg-card text-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground"
-        }`}
-      >
-        KO
-      </button>
-      <button
-        type="button"
-        onClick={() => setLang("en")}
-        aria-pressed={lang === "en"}
-        className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${
-          lang === "en"
-            ? "bg-card text-foreground shadow-sm"
-            : "text-muted-foreground hover:text-foreground"
-        }`}
-      >
-        EN
-      </button>
+      {LANGS.map(({ code, label }) => (
+        <button
+          key={code}
+          type="button"
+          onClick={() => setLang(code)}
+          aria-pressed={lang === code}
+          className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-colors ${
+            lang === code
+              ? "bg-card text-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   );
 }

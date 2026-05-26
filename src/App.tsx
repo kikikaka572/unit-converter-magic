@@ -16,6 +16,10 @@ import CommunityHotPage from "./pages/CommunityHotPage";
 import HomePage from "./pages/HomePage";
 import PromptGeneratorPage from "./pages/PromptGeneratorPage";
 import VideoPromptGeneratorPage from "./pages/VideoPromptGeneratorPage";
+import TVAPage from "./pages/TVAPage";
+import FrSalaryPage from "./pages/FrSalaryPage";
+import CurrencyPage from "./pages/CurrencyPage";
+import SizePage from "./pages/SizePage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -50,6 +54,10 @@ const App = () => (
             <Route path="/community-hot" element={<CommunityHotPage />} />
             <Route path="/prompt-generator" element={<PromptGeneratorPage />} />
             <Route path="/video-prompt" element={<VideoPromptGeneratorPage />} />
+            <Route path="/tva" element={<TVAPage />} />
+            <Route path="/fr-salary" element={<FrSalaryPage />} />
+            <Route path="/currency" element={<CurrencyPage />} />
+            <Route path="/size" element={<SizePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
