@@ -11,8 +11,8 @@ import { supabase } from "@/lib/supabase";
 type Tool = {
   to: string;
   emoji: string;
-  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title";
-  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc";
+  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title" | "header.ruler.title";
+  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc" | "header.ruler.desc";
 };
 
 type AiTool = {
@@ -45,6 +45,7 @@ const TOOLS: Tool[] = [
   { to: "/salary",    emoji: "💼", titleKey: "header.salary.title",    descKey: "header.salary.desc" },
   { to: "/life",      emoji: "🧮", titleKey: "header.life.title",      descKey: "header.life.desc" },
   { to: "/converter", emoji: "📐", titleKey: "header.converter.title", descKey: "header.converter.desc" },
+  { to: "/ruler",     emoji: "📏", titleKey: "header.ruler.title",     descKey: "header.ruler.desc" },
 ];
 
 type CommunityPost = {

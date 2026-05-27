@@ -363,6 +363,14 @@ const dict = {
     fr: "※ Peut varier selon la marque et la coupe.",
   },
 
+  // Screen Ruler
+  "header.ruler.title": { ko: "화면 자", en: "Screen Ruler", fr: "Règle d'écran" },
+  "header.ruler.desc": {
+    ko: "모니터에 맞춘 실제 크기 자 (신용카드로 캘리브레이션)",
+    en: "Real-size ruler calibrated to your monitor",
+    fr: "Règle à taille réelle calibrée pour votre écran",
+  },
+
   // Footer
   "footer.foreignNotice": {
     ko: "한국에 거주하는 외국인을 위한 사이트입니다.",

@@ -20,6 +20,7 @@ import TVAPage from "./pages/TVAPage";
 import FrSalaryPage from "./pages/FrSalaryPage";
 import CurrencyPage from "./pages/CurrencyPage";
 import SizePage from "./pages/SizePage";
+import RulerPage from "./pages/RulerPage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -58,6 +59,7 @@ const App = () => (
             <Route path="/fr-salary" element={<FrSalaryPage />} />
             <Route path="/currency" element={<CurrencyPage />} />
             <Route path="/size" element={<SizePage />} />
+            <Route path="/ruler" element={<RulerPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
