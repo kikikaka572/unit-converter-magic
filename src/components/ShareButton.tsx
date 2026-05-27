@@ -10,14 +10,19 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const ShareButton = () => {
+interface ShareButtonProps {
+  title?: string;
+  variant?: "icon" | "label";
+}
+
+const ShareButton = ({ title, variant = "icon" }: ShareButtonProps) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const shareTitle = t("header.salary.title");
+  const shareTitle = title ?? t("header.salary.title");
   const shareText = t("share.shareText");
 
   const handleCopy = async () => {
@@ -46,15 +51,27 @@ const ShareButton = () => {
     }
   };
 
+  const shareLabel = lang === "ko" ? "공유하기" : lang === "fr" ? "Partager" : "Share";
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button
-          aria-label={t("share.button")}
-          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-muted text-foreground transition-colors"
-        >
-          <Share2 className="w-5 h-5" />
-        </button>
+        {variant === "label" ? (
+          <button
+            aria-label={t("share.button")}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-muted-foreground text-xs font-medium hover:bg-muted hover:text-foreground transition-colors shrink-0"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            {shareLabel}
+          </button>
+        ) : (
+          <button
+            aria-label={t("share.button")}
+            className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-secondary hover:bg-muted text-foreground transition-colors"
+          >
+            <Share2 className="w-5 h-5" />
+          </button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-md">

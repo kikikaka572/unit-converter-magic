@@ -49,10 +49,9 @@ export default function Layout({ children, title, description }: Props) {
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
-          {/* Top thin utility row — Language / Share */}
+          {/* Top thin utility row — Language */}
           <div className="flex items-center justify-end gap-2 mb-3">
             <LanguageSwitcher />
-            <ShareButton />
           </div>
           {/* Logo / brand area */}
           <div className="flex items-center justify-between gap-3 mb-5">
@@ -81,9 +80,12 @@ export default function Layout({ children, title, description }: Props) {
           {(title || description) && (
             <div className="mb-6 sm:mb-8">
               {title && (
-                <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
-                  {title}
-                </h1>
+                <div className="flex items-center justify-between gap-3">
+                  <h1 className="text-xl sm:text-2xl font-bold text-foreground tracking-tight">
+                    {title}
+                  </h1>
+                  <ShareButton title={title} variant="label" />
+                </div>
               )}
               {description && (
                 <p className="text-muted-foreground text-sm mt-1">{description}</p>
