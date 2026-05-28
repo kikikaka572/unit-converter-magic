@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const CREDIT_CARD_MM = 85.6;
@@ -233,6 +234,7 @@ export default function ScreenRuler() {
   const { lang } = useLanguage();
   const ko = lang === "ko";
   const fr = lang === "fr";
+  const { resolvedTheme } = useTheme();
 
   const [dpi, setDpi] = useState<number>(savedDpi() ?? 96);
   const [calibrating, setCalibrating] = useState(!savedDpi());
@@ -257,7 +259,7 @@ export default function ScreenRuler() {
     canvas.style.height = `${logH}px`;
 
     drawRuler(canvas, logW, logH, dpi, unit, dir);
-  }, [dpi, unit, dir, calibrating]);
+  }, [dpi, unit, dir, calibrating, resolvedTheme]);
 
   useEffect(() => {
     redraw();

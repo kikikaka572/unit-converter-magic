@@ -24,14 +24,14 @@ const AI_TOOLS: ToolCard[] = [
     emoji: "✨",
     titleKey: "header.prompt.title",
     descKey: "header.prompt.desc",
-    gradient: "bg-gradient-to-br from-violet-100 via-purple-100 to-fuchsia-200",
+    gradient: "bg-gradient-to-br from-violet-100 via-purple-100 to-fuchsia-200 dark:from-violet-950 dark:via-purple-900 dark:to-fuchsia-950",
   },
   {
     to: "/video-prompt",
     emoji: "🎬",
     titleKey: "header.videoprompt.title",
     descKey: "header.videoprompt.desc",
-    gradient: "bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-200",
+    gradient: "bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-200 dark:from-sky-950 dark:via-blue-900 dark:to-indigo-950",
   },
 ];
 
@@ -41,28 +41,28 @@ const FR_TOOLS: ToolCard[] = [
     emoji: "🧾",
     titleKey: "header.tva.title",
     descKey: "header.tva.desc",
-    gradient: "bg-gradient-to-br from-blue-50 via-blue-100 to-sky-200",
+    gradient: "bg-gradient-to-br from-blue-50 via-blue-100 to-sky-200 dark:from-blue-950 dark:via-blue-900 dark:to-sky-950",
   },
   {
     to: "/fr-salary",
     emoji: "🇫🇷",
     titleKey: "header.frsalary.title",
     descKey: "header.frsalary.desc",
-    gradient: "bg-gradient-to-br from-blue-100 via-indigo-50 to-red-100",
+    gradient: "bg-gradient-to-br from-blue-100 via-indigo-50 to-red-100 dark:from-blue-950 dark:via-slate-900 dark:to-red-950",
   },
   {
     to: "/currency",
     emoji: "💱",
     titleKey: "header.currency.title",
     descKey: "header.currency.desc",
-    gradient: "bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100",
+    gradient: "bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100 dark:from-amber-950 dark:via-yellow-900 dark:to-orange-950",
   },
   {
     to: "/size",
     emoji: "👟",
     titleKey: "header.size.title",
     descKey: "header.size.desc",
-    gradient: "bg-gradient-to-br from-emerald-100 via-green-100 to-teal-200",
+    gradient: "bg-gradient-to-br from-emerald-100 via-green-100 to-teal-200 dark:from-emerald-950 dark:via-green-900 dark:to-teal-950",
   },
 ];
 
@@ -72,28 +72,28 @@ const CALC_TOOLS: ToolCard[] = [
     emoji: "💼",
     titleKey: "header.salary.title",
     descKey: "header.salary.desc",
-    gradient: "bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-200",
+    gradient: "bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-200 dark:from-indigo-950 dark:via-blue-900 dark:to-cyan-950",
   },
   {
     to: "/life",
     emoji: "🧮",
     titleKey: "header.life.title",
     descKey: "header.life.desc",
-    gradient: "bg-gradient-to-br from-teal-100 via-cyan-100 to-sky-200",
+    gradient: "bg-gradient-to-br from-teal-100 via-cyan-100 to-sky-200 dark:from-teal-950 dark:via-cyan-900 dark:to-sky-950",
   },
   {
     to: "/converter",
     emoji: "📐",
     titleKey: "header.converter.title",
     descKey: "header.converter.desc",
-    gradient: "bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-200",
+    gradient: "bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-200 dark:from-orange-950 dark:via-amber-900 dark:to-yellow-950",
   },
   {
     to: "/ruler",
     emoji: "📏",
     titleKey: "header.ruler.title",
     descKey: "header.ruler.desc",
-    gradient: "bg-gradient-to-br from-slate-100 via-zinc-100 to-gray-200",
+    gradient: "bg-gradient-to-br from-slate-100 via-zinc-100 to-gray-200 dark:from-slate-800 dark:via-zinc-800 dark:to-gray-900",
   },
 ];
 

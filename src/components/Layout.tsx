@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ShareButton from "./ShareButton";
+import ThemeToggle from "./ThemeToggle";
 import TopBanner from "@/components/TopBanner";
 import KakaoAdFit from "@/components/KakaoAdFit";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -49,9 +50,10 @@ export default function Layout({ children, title, description }: Props) {
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex flex-col items-center p-4 sm:p-8 pb-28">
         <div className="w-full max-w-2xl">
-          {/* Top thin utility row — Language */}
+          {/* Top thin utility row — Language / Theme */}
           <div className="flex items-center justify-end gap-2 mb-3">
             <LanguageSwitcher />
+            <ThemeToggle />
           </div>
           {/* Logo / brand area */}
           <div className="flex items-center justify-between gap-3 mb-5">
