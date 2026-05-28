@@ -8,45 +8,96 @@ import { useSeo, SITE_URL } from "@/lib/seo";
 import { loadHotdeals, type Hotdeal } from "@/lib/hotdeals";
 import { supabase } from "@/lib/supabase";
 
-type Tool = {
+// ---- Tool definitions -------------------------------------------------------
+
+type ToolCard = {
   to: string;
   emoji: string;
-  titleKey: "header.salary.title" | "header.life.title" | "header.converter.title" | "header.ruler.title";
-  descKey: "header.salary.desc" | "header.life.desc" | "header.converter.desc" | "header.ruler.desc";
+  titleKey: string;
+  descKey: string;
+  gradient: string;
 };
 
-type AiTool = {
-  to: string;
-  emoji: string;
-  titleKey: "header.prompt.title" | "header.videoprompt.title";
-  descKey: "header.prompt.desc" | "header.videoprompt.desc";
-};
-
-const AI_TOOLS: AiTool[] = [
-  { to: "/prompt-generator", emoji: "✨", titleKey: "header.prompt.title",      descKey: "header.prompt.desc" },
-  { to: "/video-prompt",     emoji: "🎬", titleKey: "header.videoprompt.title", descKey: "header.videoprompt.desc" },
+const AI_TOOLS: ToolCard[] = [
+  {
+    to: "/prompt-generator",
+    emoji: "✨",
+    titleKey: "header.prompt.title",
+    descKey: "header.prompt.desc",
+    gradient: "bg-gradient-to-br from-violet-100 via-purple-100 to-fuchsia-200",
+  },
+  {
+    to: "/video-prompt",
+    emoji: "🎬",
+    titleKey: "header.videoprompt.title",
+    descKey: "header.videoprompt.desc",
+    gradient: "bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-200",
+  },
 ];
 
-type FrTool = {
-  to: string;
-  emoji: string;
-  titleKey: "header.tva.title" | "header.frsalary.title" | "header.currency.title" | "header.size.title";
-  descKey: "header.tva.desc" | "header.frsalary.desc" | "header.currency.desc" | "header.size.desc";
-};
-
-const FR_TOOLS: FrTool[] = [
-  { to: "/tva",        emoji: "🧾", titleKey: "header.tva.title",      descKey: "header.tva.desc"      },
-  { to: "/fr-salary",  emoji: "🇫🇷", titleKey: "header.frsalary.title", descKey: "header.frsalary.desc" },
-  { to: "/currency",   emoji: "💱", titleKey: "header.currency.title", descKey: "header.currency.desc" },
-  { to: "/size",       emoji: "👟", titleKey: "header.size.title",     descKey: "header.size.desc"     },
+const FR_TOOLS: ToolCard[] = [
+  {
+    to: "/tva",
+    emoji: "🧾",
+    titleKey: "header.tva.title",
+    descKey: "header.tva.desc",
+    gradient: "bg-gradient-to-br from-blue-50 via-blue-100 to-sky-200",
+  },
+  {
+    to: "/fr-salary",
+    emoji: "🇫🇷",
+    titleKey: "header.frsalary.title",
+    descKey: "header.frsalary.desc",
+    gradient: "bg-gradient-to-br from-blue-100 via-indigo-50 to-red-100",
+  },
+  {
+    to: "/currency",
+    emoji: "💱",
+    titleKey: "header.currency.title",
+    descKey: "header.currency.desc",
+    gradient: "bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100",
+  },
+  {
+    to: "/size",
+    emoji: "👟",
+    titleKey: "header.size.title",
+    descKey: "header.size.desc",
+    gradient: "bg-gradient-to-br from-emerald-100 via-green-100 to-teal-200",
+  },
 ];
 
-const TOOLS: Tool[] = [
-  { to: "/salary",    emoji: "💼", titleKey: "header.salary.title",    descKey: "header.salary.desc" },
-  { to: "/life",      emoji: "🧮", titleKey: "header.life.title",      descKey: "header.life.desc" },
-  { to: "/converter", emoji: "📐", titleKey: "header.converter.title", descKey: "header.converter.desc" },
-  { to: "/ruler",     emoji: "📏", titleKey: "header.ruler.title",     descKey: "header.ruler.desc" },
+const CALC_TOOLS: ToolCard[] = [
+  {
+    to: "/salary",
+    emoji: "💼",
+    titleKey: "header.salary.title",
+    descKey: "header.salary.desc",
+    gradient: "bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-200",
+  },
+  {
+    to: "/life",
+    emoji: "🧮",
+    titleKey: "header.life.title",
+    descKey: "header.life.desc",
+    gradient: "bg-gradient-to-br from-teal-100 via-cyan-100 to-sky-200",
+  },
+  {
+    to: "/converter",
+    emoji: "📐",
+    titleKey: "header.converter.title",
+    descKey: "header.converter.desc",
+    gradient: "bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-200",
+  },
+  {
+    to: "/ruler",
+    emoji: "📏",
+    titleKey: "header.ruler.title",
+    descKey: "header.ruler.desc",
+    gradient: "bg-gradient-to-br from-slate-100 via-zinc-100 to-gray-200",
+  },
 ];
+
+// ---- Shared types -----------------------------------------------------------
 
 type CommunityPost = {
   id: string;
@@ -56,6 +107,8 @@ type CommunityPost = {
   comment_count: number | null;
 };
 
+// ---- Helpers ----------------------------------------------------------------
+
 function timeAgo(iso: string, ko: boolean) {
   const diff = (Date.now() - new Date(iso).getTime()) / 1000;
   if (ko) {
@@ -63,29 +116,93 @@ function timeAgo(iso: string, ko: boolean) {
     if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
     if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
     return `${Math.floor(diff / 86400)}일 전`;
-  } else {
-    if (diff < 60) return "just now";
-    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
-    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
-    return `${Math.floor(diff / 86400)}d ago`;
   }
+  if (diff < 60) return "just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+  return `${Math.floor(diff / 86400)}d ago`;
 }
 
-function SectionHeader({ title, to, moreLabel }: { title: string; to: string; moreLabel: string }) {
+// ---- UI components ----------------------------------------------------------
+
+function SectionHeader({
+  title,
+  to,
+  moreLabel,
+}: {
+  title: string;
+  to: string;
+  moreLabel: string;
+}) {
   return (
     <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-      <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">{title}</h2>
-      <Link to={to} className="text-xs text-muted-foreground hover:text-primary">{moreLabel} →</Link>
+      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+        {title}
+      </h2>
+      <Link to={to} className="text-xs text-muted-foreground hover:text-primary">
+        {moreLabel} →
+      </Link>
     </div>
   );
 }
+
+function PlainSectionHeader({ title }: { title: string }) {
+  return (
+    <div className="mb-3 border-b border-border pb-2">
+      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+function ToolCardItem({
+  to,
+  emoji,
+  title,
+  desc,
+  gradient,
+}: {
+  to: string;
+  emoji: string;
+  title: string;
+  desc: string;
+  gradient: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="group block rounded-2xl overflow-hidden border border-border hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
+    >
+      <div
+        className={`${gradient} flex items-center justify-center h-28 sm:h-32`}
+      >
+        <span className="text-5xl sm:text-6xl drop-shadow-sm group-hover:scale-110 transition-transform duration-200">
+          {emoji}
+        </span>
+      </div>
+      <div className="px-3 py-2.5 bg-card">
+        <div className="font-semibold text-foreground text-sm leading-tight truncate">
+          {title}
+        </div>
+        <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2 leading-snug">
+          {desc}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+// ---- Page ------------------------------------------------------------------
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
   const ko = lang === "ko";
 
   useSeo({
-    title: ko ? "Lifetool — 연봉·실생활·단위 계산기" : "Lifetool — Salary, Life & Unit Calculators",
+    title: ko
+      ? "Lifetool — 연봉·실생활·단위 계산기"
+      : "Lifetool — Salary, Life & Unit Calculators",
     description: ko
       ? "연봉 실수령액, 실생활 계산, 단위 환산을 한 곳에서."
       : "Salary, life, and unit calculators all in one place.",
@@ -110,15 +227,18 @@ export default function HomePage() {
       .then(({ data }) => setPosts((data as CommunityPost[]) || []));
   }, []);
 
+  const moreLabel = ko ? "더보기" : lang === "fr" ? "Plus" : "More";
+
   return (
     <Layout>
       <div className="space-y-8">
+
         {/* 핫딜 */}
         <section>
           <SectionHeader
             title={ko ? "핫딜" : "Hot Deals"}
             to="/hotdeals"
-            moreLabel={ko ? "더보기" : "More"}
+            moreLabel={moreLabel}
           />
           {deals.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">
@@ -127,7 +247,10 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {deals.map((d) => (
-                <div key={d.id} className="p-3 rounded-xl border border-border bg-card">
+                <div
+                  key={d.id}
+                  className="p-3 rounded-xl border border-border bg-card"
+                >
                   <Link to={`/hotdeals/${d.id}`} className="block">
                     <h3 className="text-sm font-semibold text-foreground line-clamp-2 leading-snug">
                       {d.title}
@@ -155,7 +278,6 @@ export default function HomePage() {
           )}
         </section>
 
-        {/* 광고 */}
         <GoogleAd slot="REPLACE_WITH_SLOT_ID" className="w-full" />
 
         {/* 커뮤니티 */}
@@ -163,7 +285,7 @@ export default function HomePage() {
           <SectionHeader
             title={ko ? "커뮤니티" : "Community"}
             to="/community"
-            moreLabel={ko ? "더보기" : "More"}
+            moreLabel={moreLabel}
           />
           {posts.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">
@@ -180,7 +302,9 @@ export default function HomePage() {
                   <h3 className="text-sm font-semibold text-foreground line-clamp-1">
                     {p.title}
                     {p.comment_count ? (
-                      <span className="ml-1.5 text-xs text-primary font-bold">[{p.comment_count}]</span>
+                      <span className="ml-1.5 text-xs text-primary font-bold">
+                        [{p.comment_count}]
+                      </span>
                     ) : null}
                   </h3>
                   <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
@@ -194,99 +318,59 @@ export default function HomePage() {
           )}
         </section>
 
-        {/* 광고 */}
         <GoogleAd slot="REPLACE_WITH_SLOT_ID" className="w-full" />
 
-        {/* AI */}
+        {/* AI 도구 */}
         <section>
-          <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">AI</h2>
-          </div>
-          <div className="grid gap-3">
+          <PlainSectionHeader title="AI" />
+          <div className="grid grid-cols-2 gap-3">
             {AI_TOOLS.map((tool) => (
-              <Link
+              <ToolCardItem
                 key={tool.to}
                 to={tool.to}
-                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
-              >
-                <div className="text-3xl">{tool.emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-bold text-foreground text-base sm:text-lg truncate">
-                    {t(tool.titleKey)}
-                  </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground truncate">
-                    {t(tool.descKey)}
-                  </div>
-                </div>
-                <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                  →
-                </div>
-              </Link>
+                emoji={tool.emoji}
+                title={t(tool.titleKey as Parameters<typeof t>[0])}
+                desc={t(tool.descKey as Parameters<typeof t>[0])}
+                gradient={tool.gradient}
+              />
             ))}
           </div>
         </section>
 
         {/* France */}
         <section>
-          <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-              🇫🇷 France
-            </h2>
-          </div>
-          <div className="grid gap-3">
+          <PlainSectionHeader title="🇫🇷 France" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {FR_TOOLS.map((tool) => (
-              <Link
+              <ToolCardItem
                 key={tool.to}
                 to={tool.to}
-                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
-              >
-                <div className="text-3xl">{tool.emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-bold text-foreground text-base sm:text-lg truncate">
-                    {t(tool.titleKey)}
-                  </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground truncate">
-                    {t(tool.descKey)}
-                  </div>
-                </div>
-                <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                  →
-                </div>
-              </Link>
+                emoji={tool.emoji}
+                title={t(tool.titleKey as Parameters<typeof t>[0])}
+                desc={t(tool.descKey as Parameters<typeof t>[0])}
+                gradient={tool.gradient}
+              />
             ))}
           </div>
         </section>
 
         {/* 계산기 */}
         <section>
-          <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-            <h2 className="text-lg sm:text-xl font-bold text-foreground tracking-tight">
-              {ko ? "계산기" : "Calculators"}
-            </h2>
-          </div>
-          <div className="grid gap-3">
-            {TOOLS.map((tool) => (
-              <Link
+          <PlainSectionHeader title={ko ? "계산기" : lang === "fr" ? "Calculateurs" : "Calculators"} />
+          <div className="grid grid-cols-2 gap-3">
+            {CALC_TOOLS.map((tool) => (
+              <ToolCardItem
                 key={tool.to}
                 to={tool.to}
-                className="group flex items-center gap-4 p-5 rounded-xl bg-card border border-border hover:border-primary/50 hover:shadow-md transition-all overflow-hidden"
-              >
-                <div className="text-3xl">{tool.emoji}</div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-bold text-foreground text-base sm:text-lg truncate">
-                    {t(tool.titleKey)}
-                  </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground truncate">
-                    {t(tool.descKey)}
-                  </div>
-                </div>
-                <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                  →
-                </div>
-              </Link>
+                emoji={tool.emoji}
+                title={t(tool.titleKey as Parameters<typeof t>[0])}
+                desc={t(tool.descKey as Parameters<typeof t>[0])}
+                gradient={tool.gradient}
+              />
             ))}
           </div>
         </section>
+
       </div>
     </Layout>
   );
