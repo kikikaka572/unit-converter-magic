@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Star } from "lucide-react";
 import Layout from "@/components/Layout";
 import GoogleAd from "@/components/GoogleAd";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { useSeo, SITE_URL } from "@/lib/seo";
 import { loadHotdeals, type Hotdeal } from "@/lib/hotdeals";
 import { supabase } from "@/lib/supabase";
+import { useFavorites } from "@/hooks/useFavorites";
 
 // ---- Tool definitions -------------------------------------------------------
 
@@ -97,6 +98,8 @@ const CALC_TOOLS: ToolCard[] = [
   },
 ];
 
+const ALL_TOOLS: ToolCard[] = [...AI_TOOLS, ...FR_TOOLS, ...CALC_TOOLS];
+
 // ---- Shared types -----------------------------------------------------------
 
 type CommunityPost = {
@@ -162,34 +165,55 @@ function ToolCardItem({
   title,
   desc,
   gradient,
+  isFav = false,
+  onToggleFav,
 }: {
   to: string;
   emoji: string;
   title: string;
   desc: string;
   gradient: string;
+  isFav?: boolean;
+  onToggleFav?: () => void;
 }) {
   return (
-    <Link
-      to={to}
-      className="group block rounded-2xl overflow-hidden border border-border hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
-    >
-      <div
-        className={`${gradient} flex items-center justify-center h-28 sm:h-32`}
+    <div className="relative group">
+      <Link
+        to={to}
+        className="block rounded-2xl overflow-hidden border border-border hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
       >
-        <span className="text-5xl sm:text-6xl drop-shadow-sm group-hover:scale-110 transition-transform duration-200">
-          {emoji}
-        </span>
-      </div>
-      <div className="px-3 py-2.5 bg-card">
-        <div className="font-semibold text-foreground text-sm leading-tight truncate">
-          {title}
+        <div className={`${gradient} flex items-center justify-center h-28 sm:h-32`}>
+          <span className="text-5xl sm:text-6xl drop-shadow-sm group-hover:scale-110 transition-transform duration-200">
+            {emoji}
+          </span>
         </div>
-        <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2 leading-snug">
-          {desc}
+        <div className="px-3 py-2.5 bg-card">
+          <div className="font-semibold text-foreground text-sm leading-tight truncate">
+            {title}
+          </div>
+          <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2 leading-snug">
+            {desc}
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {/* Favorite toggle */}
+      <button
+        onClick={() => onToggleFav?.()}
+        aria-label={isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}
+        className={`absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-150
+          ${isFav
+            ? "opacity-100 bg-black/30"
+            : "opacity-0 group-hover:opacity-100 bg-black/20 hover:bg-black/40"
+          }`}
+      >
+        <Star
+          className={`w-3.5 h-3.5 transition-all duration-150 ${
+            isFav ? "fill-yellow-400 text-yellow-400 scale-110" : "text-white"
+          }`}
+        />
+      </button>
+    </div>
   );
 }
 
@@ -198,6 +222,7 @@ function ToolCardItem({
 export default function HomePage() {
   const { t, lang } = useLanguage();
   const ko = lang === "ko";
+  const { toggle, isFav, favorites } = useFavorites();
 
   useSeo({
     title: ko
@@ -228,10 +253,38 @@ export default function HomePage() {
   }, []);
 
   const moreLabel = ko ? "더보기" : lang === "fr" ? "Plus" : "More";
+  const favTools = ALL_TOOLS.filter((tool) => favorites.includes(tool.to));
+
+  const renderToolCard = (tool: ToolCard) => (
+    <ToolCardItem
+      key={tool.to}
+      to={tool.to}
+      emoji={tool.emoji}
+      title={t(tool.titleKey as Parameters<typeof t>[0])}
+      desc={t(tool.descKey as Parameters<typeof t>[0])}
+      gradient={tool.gradient}
+      isFav={isFav(tool.to)}
+      onToggleFav={() => toggle(tool.to)}
+    />
+  );
 
   return (
     <Layout>
       <div className="space-y-8">
+
+        {/* 즐겨찾기 */}
+        {favTools.length > 0 && (
+          <section>
+            <PlainSectionHeader
+              title={
+                ko ? "⭐ 즐겨찾기" : lang === "fr" ? "⭐ Favoris" : "⭐ Favorites"
+              }
+            />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {favTools.map(renderToolCard)}
+            </div>
+          </section>
+        )}
 
         {/* 핫딜 */}
         <section>
@@ -324,16 +377,7 @@ export default function HomePage() {
         <section>
           <PlainSectionHeader title="AI" />
           <div className="grid grid-cols-2 gap-3">
-            {AI_TOOLS.map((tool) => (
-              <ToolCardItem
-                key={tool.to}
-                to={tool.to}
-                emoji={tool.emoji}
-                title={t(tool.titleKey as Parameters<typeof t>[0])}
-                desc={t(tool.descKey as Parameters<typeof t>[0])}
-                gradient={tool.gradient}
-              />
-            ))}
+            {AI_TOOLS.map(renderToolCard)}
           </div>
         </section>
 
@@ -341,33 +385,17 @@ export default function HomePage() {
         <section>
           <PlainSectionHeader title="🇫🇷 France" />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {FR_TOOLS.map((tool) => (
-              <ToolCardItem
-                key={tool.to}
-                to={tool.to}
-                emoji={tool.emoji}
-                title={t(tool.titleKey as Parameters<typeof t>[0])}
-                desc={t(tool.descKey as Parameters<typeof t>[0])}
-                gradient={tool.gradient}
-              />
-            ))}
+            {FR_TOOLS.map(renderToolCard)}
           </div>
         </section>
 
         {/* 계산기 */}
         <section>
-          <PlainSectionHeader title={ko ? "계산기" : lang === "fr" ? "Calculateurs" : "Calculators"} />
+          <PlainSectionHeader
+            title={ko ? "계산기" : lang === "fr" ? "Calculateurs" : "Calculators"}
+          />
           <div className="grid grid-cols-2 gap-3">
-            {CALC_TOOLS.map((tool) => (
-              <ToolCardItem
-                key={tool.to}
-                to={tool.to}
-                emoji={tool.emoji}
-                title={t(tool.titleKey as Parameters<typeof t>[0])}
-                desc={t(tool.descKey as Parameters<typeof t>[0])}
-                gradient={tool.gradient}
-              />
-            ))}
+            {CALC_TOOLS.map(renderToolCard)}
           </div>
         </section>
 
