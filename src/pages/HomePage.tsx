@@ -197,19 +197,19 @@ function ToolCardItem({
         </div>
       </Link>
 
-      {/* Favorite toggle */}
+      {/* Favorite toggle — always visible on mobile, hover-only on desktop */}
       <button
         onClick={() => onToggleFav?.()}
         aria-label={isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}
-        className={`absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-150
+        className={`absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-150
           ${isFav
             ? "opacity-100 bg-black/30"
-            : "opacity-0 group-hover:opacity-100 bg-black/20 hover:bg-black/40"
+            : "opacity-100 sm:opacity-0 sm:group-hover:opacity-100 bg-black/20 active:bg-black/40 sm:hover:bg-black/40"
           }`}
       >
         <Star
-          className={`w-3.5 h-3.5 transition-all duration-150 ${
-            isFav ? "fill-yellow-400 text-yellow-400 scale-110" : "text-white"
+          className={`w-4 h-4 transition-all duration-150 ${
+            isFav ? "fill-yellow-400 text-yellow-400" : "text-white/80"
           }`}
         />
       </button>
