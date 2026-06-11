@@ -165,6 +165,7 @@ export default function SpinPage() {
               soundEnabled={soundEnabled}
               onSpinComplete={handleSpinCompleteWithRoom}
               onSpinStart={role === "host" ? handleWheelSpinStart : undefined}
+              disabled={isViewer}
             />
             <p className="mt-2 text-xs text-center text-muted-foreground">
               {isViewer

@@ -37,10 +37,12 @@ interface Props {
   onSpinComplete: (winner: string) => void;
   /** Host callback fired just before animation — use for room broadcast. */
   onSpinStart?: (targetAngle: number, durationMs: number) => void;
+  /** When true, clicking the wheel does nothing (viewer mode). */
+  disabled?: boolean;
 }
 
 const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
-  { items, soundEnabled, onSpinComplete, onSpinStart },
+  { items, soundEnabled, onSpinComplete, onSpinStart, disabled },
   ref,
 ) {
   const wheelRef = useRef<HTMLCanvasElement>(null);
@@ -337,9 +339,9 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
         ref={wheelRef}
         width={WHEEL_SIZE}
         height={WHEEL_SIZE}
-        className={`block select-none ${spinning ? "cursor-not-allowed" : "cursor-pointer"}`}
+        className={`block select-none ${disabled ? "cursor-default" : spinning ? "cursor-not-allowed" : "cursor-pointer"}`}
         style={{ width: "100%", height: "auto" }}
-        onClick={spin}
+        onClick={disabled ? undefined : spin}
         aria-label="Spin wheel"
       />
       <canvas
