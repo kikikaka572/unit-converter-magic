@@ -29,7 +29,7 @@ function noResults(lang: Lang) {
   return "No results found.";
 }
 
-const CATEGORIES: ToolCategory[] = ["ai", "fr", "finance", "life", "unit", "etc"];
+const CATEGORIES: ToolCategory[] = ["ai", "fr", "finance", "life", "unit", "etc", "entertainment"];
 
 export default function SearchDialog({ open, onOpenChange }: Props) {
   const navigate = useNavigate();

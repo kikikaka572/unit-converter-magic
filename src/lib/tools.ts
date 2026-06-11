@@ -1,4 +1,4 @@
-export type ToolCategory = "ai" | "fr" | "finance" | "life" | "unit" | "etc";
+export type ToolCategory = "ai" | "fr" | "finance" | "life" | "unit" | "etc" | "entertainment";
 
 export type Tool = {
   id: string;
@@ -254,7 +254,7 @@ export const TOOLS: Tool[] = [
   {
     id: "spin",
     path: "/spin",
-    category: "etc",
+    category: "entertainment",
     emoji: "🎡",
     titleKey: "header.spin.title",
     descKey: "header.spin.desc",
@@ -271,7 +271,8 @@ export const CATEGORY_LABELS: Record<ToolCategory, { ko: string; en: string; fr:
   finance: { ko: "재무",     en: "Finance",         fr: "Finance"   },
   life:    { ko: "실생활",   en: "Life",            fr: "Quotidien" },
   unit:    { ko: "단위환산", en: "Unit Converter",  fr: "Unités"    },
-  etc:     { ko: "기타",     en: "Tools",           fr: "Outils"    },
+  etc:          { ko: "기타",           en: "Tools",          fr: "Outils"          },
+  entertainment: { ko: "엔터테인먼트", en: "Entertainment",  fr: "Divertissement"  },
 };
 
 export const toolsByCategory = (category: ToolCategory): Tool[] =>

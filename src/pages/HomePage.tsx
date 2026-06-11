@@ -155,6 +155,7 @@ function RecentChip({ tool }: { tool: Tool }) {
 const AI_TOOLS = TOOLS.filter((t) => t.category === "ai");
 const FR_TOOLS = TOOLS.filter((t) => t.category === "fr");
 const CALC_TOOLS = TOOLS.filter((t) => ["finance", "life", "unit", "etc"].includes(t.category) && !t.isSubTool);
+const ENTERTAINMENT_TOOLS = TOOLS.filter((t) => t.category === "entertainment" && !t.isSubTool);
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
@@ -335,6 +336,16 @@ export default function HomePage() {
           />
           <div className="grid grid-cols-2 gap-3">{CALC_TOOLS.map(renderCard)}</div>
         </section>
+
+        {/* 엔터테인먼트 */}
+        {ENTERTAINMENT_TOOLS.length > 0 && (
+          <section>
+            <PlainSectionHeader
+              title={ko ? "엔터테인먼트" : lang === "fr" ? "Divertissement" : "Entertainment"}
+            />
+            <div className="grid grid-cols-2 gap-3">{ENTERTAINMENT_TOOLS.map(renderCard)}</div>
+          </section>
+        )}
 
       </div>
     </Layout>
