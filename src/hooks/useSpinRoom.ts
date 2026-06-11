@@ -49,22 +49,25 @@ export function useSpinRoom(callbacks: Callbacks) {
     if (channelRef.current) supabase.removeChannel(channelRef.current);
 
     channelRef.current = supabase
-      .channel(`spin:${roomId}`)
+      .channel(`spin:${roomId}`, { config: { broadcast: { self: false } } })
       .on(
+        // postgres_changes: persistent state only (items, viewer_count)
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "spin_rooms", filter: `id=eq.${roomId}` },
         (payload) => {
-          const updated = payload.new as SpinRoom;
-          setRoom(updated);
-          if (updated.is_spinning && updated.spin_target_angle != null && updated.spin_duration_ms != null && updated.spin_started_at) {
-            const startedAtMs = new Date(updated.spin_started_at).getTime();
-            callbacksRef.current.onSpinStart(updated.spin_target_angle, updated.spin_duration_ms, startedAtMs, roleRef.current);
-          }
-          if (!updated.is_spinning && updated.last_result) {
-            callbacksRef.current.onSpinEnd(updated.last_result, roleRef.current);
-          }
+          setRoom(payload.new as SpinRoom);
         },
       )
+      // Broadcast: low-latency spin events (~50ms, no DB roundtrip)
+      .on("broadcast", { event: "spin_start" }, (payload) => {
+        const p = payload.payload as { targetAngle: number; durationMs: number; startedAt: string };
+        const startedAtMs = new Date(p.startedAt).getTime();
+        callbacksRef.current.onSpinStart(p.targetAngle, p.durationMs, startedAtMs, roleRef.current);
+      })
+      .on("broadcast", { event: "spin_end" }, (payload) => {
+        const p = payload.payload as { result: string };
+        callbacksRef.current.onSpinEnd(p.result, roleRef.current);
+      })
       .on("broadcast", { event: "react" }, (payload) => {
         const emoji = (payload.payload as { emoji?: string }).emoji;
         if (emoji) addFloating(emoji);
@@ -86,7 +89,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     subscribeToRoom(r.id);
     setLoading(false);
     return r;
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const joinRoom = useCallback(async (code: string) => {
     setLoading(true);
@@ -103,7 +106,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     subscribeToRoom(r.id);
     setLoading(false);
     return r;
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const leaveRoom = useCallback(async () => {
     if (!room) return;
@@ -124,13 +127,25 @@ export function useSpinRoom(callbacks: Callbacks) {
   }, [room]);
 
   const notifySpinStart = useCallback(async (targetAngle: number, durationMs: number, startedAt: string) => {
-    if (!room || roleRef.current !== "host") return;
-    await broadcastSpinStart(room.id, targetAngle, durationMs, startedAt);
+    if (!channelRef.current || roleRef.current !== "host") return;
+    // Broadcast directly through channel — arrives in ~50ms without DB roundtrip
+    channelRef.current.send({
+      type: "broadcast",
+      event: "spin_start",
+      payload: { targetAngle, durationMs, startedAt },
+    });
+    // Also persist to DB so late joiners can sync on connect
+    if (room) await broadcastSpinStart(room.id, targetAngle, durationMs, startedAt);
   }, [room]);
 
   const notifySpinEnd = useCallback(async (result: string, finalAngle: number) => {
-    if (!room || roleRef.current !== "host") return;
-    await broadcastSpinEnd(room.id, result, finalAngle);
+    if (!channelRef.current || roleRef.current !== "host") return;
+    channelRef.current.send({
+      type: "broadcast",
+      event: "spin_end",
+      payload: { result },
+    });
+    if (room) await broadcastSpinEnd(room.id, result, finalAngle);
   }, [room]);
 
   const sendReaction = useCallback((emoji: string) => {

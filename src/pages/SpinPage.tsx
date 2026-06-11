@@ -63,10 +63,9 @@ export default function SpinPage() {
         wheelRef.current?.spinTo(targetAngle, durationMs, startedAtMs);
       }
     },
-    onSpinEnd: (result, role) => {
-      if (role === "viewer") {
-        handleSpinComplete(result);
-      }
+    onSpinEnd: (_result, _role) => {
+      // Viewer result is handled by spinTo() completing locally.
+      // spin_end broadcast is only used by the host to persist to DB.
     },
   });
 
