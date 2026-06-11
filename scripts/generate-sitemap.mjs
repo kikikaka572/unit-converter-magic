@@ -29,6 +29,7 @@ const TOOL_PATHS = [
   "/life/dday",
   "/converter",
   "/ruler",
+  "/spin",
 ];
 
 const STATIC_PAGES = [

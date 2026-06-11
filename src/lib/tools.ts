@@ -251,6 +251,18 @@ export const TOOLS: Tool[] = [
       "bg-gradient-to-br from-slate-100 via-zinc-100 to-gray-200 dark:from-slate-800 dark:via-zinc-800 dark:to-gray-900",
     badge: "new",
   },
+  {
+    id: "spin",
+    path: "/spin",
+    category: "etc",
+    emoji: "🎡",
+    titleKey: "header.spin.title",
+    descKey: "header.spin.desc",
+    keywords: ["돌림판", "랜덤", "뽑기", "제비뽑기", "spin wheel", "random picker", "roulette"],
+    gradient:
+      "bg-gradient-to-br from-fuchsia-100 via-pink-100 to-rose-200 dark:from-fuchsia-950 dark:via-pink-900 dark:to-rose-950",
+    badge: "new",
+  },
 ];
 
 export const CATEGORY_LABELS: Record<ToolCategory, { ko: string; en: string; fr: string }> = {

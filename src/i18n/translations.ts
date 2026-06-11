@@ -377,6 +377,42 @@ const dict = {
     en: "A site for foreigners living in Korea.",
     fr: "Un site pour les étrangers en Corée et les Coréens en France.",
   },
+
+  // Spin the Wheel
+  "header.spin.title": { ko: "돌림판", en: "Spin the Wheel", fr: "Roue aléatoire" },
+  "header.spin.desc": {
+    ko: "랜덤으로 결과를 정해보세요",
+    en: "Let the wheel decide",
+    fr: "Laissez la roue décider",
+  },
+  "spin.soundOn":  { ko: "소리 켜기",  en: "Sound On",  fr: "Son activé"  },
+  "spin.soundOff": { ko: "소리 끄기",  en: "Sound Off", fr: "Son coupé"   },
+  "spin.result.title": { ko: "당첨! 🎉", en: "Winner! 🎉", fr: "Gagnant ! 🎉" },
+  "spin.result.again": { ko: "다시 돌리기", en: "Spin Again", fr: "Rejouer" },
+  "spin.result.close": { ko: "닫기", en: "Close", fr: "Fermer" },
+  "spin.editor.title": { ko: "항목 편집", en: "Edit Items", fr: "Modifier" },
+  "spin.editor.add": { ko: "+ 항목 추가", en: "+ Add Item", fr: "+ Ajouter" },
+  "spin.editor.reset": { ko: "초기화", en: "Reset", fr: "Réinitialiser" },
+  "spin.editor.minWarn": {
+    ko: "최소 2개 항목이 필요합니다",
+    en: "Minimum 2 items required",
+    fr: "2 éléments minimum requis",
+  },
+  "spin.editor.maxWarn": {
+    ko: "최대 12개 항목까지 추가할 수 있습니다",
+    en: "Maximum 12 items allowed",
+    fr: "12 éléments maximum",
+  },
+  "spin.editor.placeholder": { ko: "항목명 입력", en: "Enter item", fr: "Saisir un élément" },
+  "spin.preset.title": { ko: "프리셋", en: "Presets", fr: "Modèles" },
+  "spin.history.title": { ko: "최근 결과", en: "Recent Results", fr: "Résultats récents" },
+  "spin.history.clear": { ko: "전체 삭제", en: "Clear All", fr: "Tout effacer" },
+  "spin.history.empty": {
+    ko: "아직 결과가 없습니다",
+    en: "No results yet",
+    fr: "Pas encore de résultats",
+  },
+  "spin.history.ago": { ko: "분 전", en: "m ago", fr: "min" },
 } as const;
 
 export type TranslationKey = keyof typeof dict;
