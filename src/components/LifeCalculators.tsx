@@ -62,7 +62,7 @@ function ResultBox({ label, value, unit }: { label: string; value: string; unit:
   );
 }
 
-function SalaryCalc() {
+export function SalaryCalc() {
   const { t } = useLanguage();
   const [salary, setSalary] = useState("3000000");
   const [hours, setHours] = useState("40");
@@ -83,7 +83,7 @@ function SalaryCalc() {
   );
 }
 
-function FuelCalc() {
+export function FuelCalc() {
   const { t } = useLanguage();
   const [distance, setDistance] = useState("100");
   const [efficiency, setEfficiency] = useState("12");
@@ -112,7 +112,7 @@ function FuelCalc() {
   );
 }
 
-function ParcelCalc() {
+export function ParcelCalc() {
   const { t, lang } = useLanguage();
   const [w, setW] = useState("30");
   const [h, setH] = useState("20");
@@ -201,7 +201,7 @@ function ParcelCalc() {
   );
 }
 
-function InteriorCalc() {
+export function InteriorCalc() {
   const { t } = useLanguage();
   const [pyeong, setPyeong] = useState("25");
   const [grade, setGrade] = useState("standard");
@@ -255,7 +255,7 @@ const foodNameEn: Record<string, { name: string; serving: string }> = {
   soju: { name: "Soju", serving: "1 bottle (360ml)" },
 };
 
-function ServingCalc() {
+export function ServingCalc() {
   const { t, lang } = useLanguage();
   const [servings, setServings] = useState("1");
   const [food, setFood] = useState("rice");
@@ -294,7 +294,7 @@ function ServingCalc() {
   );
 }
 
-function ElectricityCalc() {
+export function ElectricityCalc() {
   const { t } = useLanguage();
   const [kwh, setKwh] = useState("300");
   const r = calcElectricityBill(parseFloat(kwh) || 0);
@@ -323,7 +323,7 @@ function ElectricityCalc() {
   );
 }
 
-function WaterCalc() {
+export function WaterCalc() {
   const { t } = useLanguage();
   const [m3, setM3] = useState("20");
   const r = calcWaterBill(parseFloat(m3) || 0);
@@ -342,7 +342,7 @@ function WaterCalc() {
   );
 }
 
-function GasCalc() {
+export function GasCalc() {
   const { t } = useLanguage();
   const [m3, setM3] = useState("50");
   const [unit, setUnit] = useState("1100");
@@ -368,7 +368,7 @@ function GasCalc() {
   );
 }
 
-function MovingCalc() {
+export function MovingCalc() {
   const { t } = useLanguage();
   const [distance, setDistance] = useState("30");
   const [pyeong, setPyeong] = useState("20");
@@ -403,7 +403,7 @@ function MovingCalc() {
   );
 }
 
-function DdayCalc() {
+export function DdayCalc() {
   const { t } = useLanguage();
   const today = new Date().toISOString().slice(0, 10);
   const [date, setDate] = useState(today);

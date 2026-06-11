@@ -22,6 +22,16 @@ import FrSalaryPage from "./pages/FrSalaryPage";
 import CurrencyPage from "./pages/CurrencyPage";
 import SizePage from "./pages/SizePage";
 import RulerPage from "./pages/RulerPage";
+import LifeHourlyWagePage from "./pages/LifeHourlyWagePage";
+import LifeFuelPage from "./pages/LifeFuelPage";
+import LifeParcelPage from "./pages/LifeParcelPage";
+import LifeInteriorPage from "./pages/LifeInteriorPage";
+import LifeCaloriePage from "./pages/LifeCaloriePage";
+import LifeElectricityPage from "./pages/LifeElectricityPage";
+import LifeWaterPage from "./pages/LifeWaterPage";
+import LifeGasPage from "./pages/LifeGasPage";
+import LifeMovingPage from "./pages/LifeMovingPage";
+import LifeDdayPage from "./pages/LifeDdayPage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -49,6 +59,16 @@ const App = () => (
             <Route path="/" element={<LegacyRedirect />} />
             <Route path="/salary" element={<SalaryPage />} />
             <Route path="/life" element={<LifePage />} />
+            <Route path="/life/hourly-wage" element={<LifeHourlyWagePage />} />
+            <Route path="/life/fuel" element={<LifeFuelPage />} />
+            <Route path="/life/parcel" element={<LifeParcelPage />} />
+            <Route path="/life/interior" element={<LifeInteriorPage />} />
+            <Route path="/life/calorie" element={<LifeCaloriePage />} />
+            <Route path="/life/electricity" element={<LifeElectricityPage />} />
+            <Route path="/life/water" element={<LifeWaterPage />} />
+            <Route path="/life/gas" element={<LifeGasPage />} />
+            <Route path="/life/moving" element={<LifeMovingPage />} />
+            <Route path="/life/dday" element={<LifeDdayPage />} />
             <Route path="/converter" element={<ConverterPage />} />
             <Route path="/hotdeals" element={<HotdealsPage />} />
             <Route path="/hotdeals/:id" element={<HotdealDetailPage />} />

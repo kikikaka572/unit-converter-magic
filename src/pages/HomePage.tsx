@@ -154,7 +154,7 @@ function RecentChip({ tool }: { tool: Tool }) {
 
 const AI_TOOLS = TOOLS.filter((t) => t.category === "ai");
 const FR_TOOLS = TOOLS.filter((t) => t.category === "fr");
-const CALC_TOOLS = TOOLS.filter((t) => ["finance", "life", "unit", "etc"].includes(t.category));
+const CALC_TOOLS = TOOLS.filter((t) => ["finance", "life", "unit", "etc"].includes(t.category) && !t.isSubTool);
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
