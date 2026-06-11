@@ -1,10 +1,14 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Volume2, VolumeX } from "lucide-react";
 import ToolPageLayout from "@/components/ToolPageLayout";
 import SpinWheel, { type SpinWheelHandle } from "@/components/SpinWheel";
 import SpinEditor from "@/components/SpinEditor";
 import SpinResult from "@/components/SpinResult";
+import MultiWatchPanel from "@/components/MultiWatchPanel";
+import SpinReactions from "@/components/SpinReactions";
 import { useSpinWheel } from "@/hooks/useSpinWheel";
+import { useSpinRoom, type RoomRole } from "@/hooks/useSpinRoom";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 function relativeTime(timestamp: number, agoLabel: string): string {
@@ -16,6 +20,10 @@ function relativeTime(timestamp: number, agoLabel: string): string {
 export default function SpinPage() {
   const { t, lang } = useLanguage();
   const wheelRef = useRef<SpinWheelHandle>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const roleRef = useRef<RoomRole | null>(null);
+  const syncTimeout = useRef<ReturnType<typeof setTimeout>>();
+
   const {
     items,
     winner,
@@ -36,14 +44,104 @@ export default function SpinPage() {
     deleteHistoryItem,
   } = useSpinWheel();
 
+  const {
+    room,
+    role,
+    loading,
+    error,
+    floatingReactions,
+    createRoom,
+    joinRoom,
+    leaveRoom,
+    syncItems,
+    notifySpinStart,
+    notifySpinEnd,
+    sendReaction,
+  } = useSpinRoom({
+    onSpinStart: (targetAngle, durationMs, startedAtMs, role) => {
+      if (role === "viewer") {
+        wheelRef.current?.spinTo(targetAngle, durationMs, startedAtMs);
+      }
+    },
+    onSpinEnd: (result, role) => {
+      if (role === "viewer") {
+        handleSpinComplete(result);
+      }
+    },
+  });
+
+  useEffect(() => { roleRef.current = role; }, [role]);
+
+  // Auto-join from URL ?room=CODE
+  useEffect(() => {
+    const code = searchParams.get("room");
+    if (!code || room) return;
+    joinRoom(code).then((r) => {
+      if (!r) return;
+      setSearchParams({}, { replace: true });
+      wheelRef.current?.setRotation(r.current_angle ?? 0);
+      if (r.is_spinning && r.spin_target_angle != null && r.spin_duration_ms != null && r.spin_started_at) {
+        const startedAtMs = new Date(r.spin_started_at).getTime();
+        wheelRef.current?.spinTo(r.spin_target_angle, r.spin_duration_ms, startedAtMs);
+      }
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handleJoinRoom(code: string) {
+    joinRoom(code).then((r) => {
+      if (!r) return;
+      wheelRef.current?.setRotation(r.current_angle ?? 0);
+      if (r.is_spinning && r.spin_target_angle != null && r.spin_duration_ms != null && r.spin_started_at) {
+        const startedAtMs = new Date(r.spin_started_at).getTime();
+        wheelRef.current?.spinTo(r.spin_target_angle, r.spin_duration_ms, startedAtMs);
+      }
+    });
+  }
+
+  function handleCreateRoom() {
+    createRoom(items, 0);
+  }
+
+  function handleWheelSpinStart(targetAngle: number, durationMs: number) {
+    if (roleRef.current !== "host" || !room) return;
+    notifySpinStart(targetAngle, durationMs, new Date().toISOString());
+  }
+
+  async function handleSpinCompleteWithRoom(result: string) {
+    handleSpinComplete(result);
+    if (roleRef.current === "host" && room) {
+      await notifySpinEnd(result, 0);
+    }
+  }
+
+  // Debounce-sync items to room when host edits them
+  useEffect(() => {
+    if (role !== "host" || !room) return;
+    clearTimeout(syncTimeout.current);
+    syncTimeout.current = setTimeout(() => syncItems(items), 800);
+  }, [items, role]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isViewer = role === "viewer";
+  const displayItems = isViewer && room ? (room.items as string[]) : items;
+
   function handleSpinAgain() {
-    // small delay so the modal closes before the spin starts
     setTimeout(() => wheelRef.current?.spin(), 120);
   }
 
   return (
     <ToolPageLayout toolId="spin">
-      <div className="space-y-6">
+      <div className="space-y-5">
+        {/* Multi-watch */}
+        <MultiWatchPanel
+          room={room}
+          role={role}
+          loading={loading}
+          error={error}
+          onCreateRoom={handleCreateRoom}
+          onJoinRoom={handleJoinRoom}
+          onLeaveRoom={leaveRoom}
+        />
+
         {/* Sound toggle */}
         <div className="flex justify-end">
           <button
@@ -51,50 +149,71 @@ export default function SpinPage() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground hover:bg-muted transition-colors"
           >
             {soundEnabled ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5" />
-                {t("spin.soundOn")}
-              </>
+              <><Volume2 className="w-3.5 h-3.5" />{t("spin.soundOn")}</>
             ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                {t("spin.soundOff")}
-              </>
+              <><VolumeX className="w-3.5 h-3.5" />{t("spin.soundOff")}</>
             )}
           </button>
         </div>
 
-        {/* Main: wheel + editor */}
+        {/* Wheel + editor */}
         <div className="flex flex-col lg:flex-row gap-8 items-start justify-center">
-          {/* Wheel */}
-          <div className="mx-auto lg:mx-0 w-full" style={{ maxWidth: 380 }}>
+          <div className="w-full lg:flex-shrink-0" style={{ maxWidth: 380 }}>
             <SpinWheel
               ref={wheelRef}
-              items={items}
+              items={displayItems}
               soundEnabled={soundEnabled}
-              onSpinComplete={handleSpinComplete}
+              onSpinComplete={handleSpinCompleteWithRoom}
+              onSpinStart={role === "host" ? handleWheelSpinStart : undefined}
             />
             <p className="mt-2 text-xs text-center text-muted-foreground">
-              {lang === "ko" ? "클릭하거나 탭해서 돌리세요" :
-               lang === "fr" ? "Cliquez pour tourner" :
-               "Click or tap to spin"}
+              {isViewer
+                ? (lang === "ko" ? "시청 중 🎥" : lang === "fr" ? "En cours..." : "Watching...")
+                : (lang === "ko" ? "클릭하거나 탭해서 돌리세요"
+                  : lang === "fr" ? "Cliquez pour tourner"
+                  : "Click or tap to spin")}
             </p>
           </div>
 
-          {/* Editor */}
           <div className="w-full lg:w-auto">
-            <SpinEditor
-              items={items}
-              canAdd={canAdd}
-              canRemove={canRemove}
-              onUpdateItem={updateItem}
-              onAddItem={addItem}
-              onRemoveItem={removeItem}
-              onReset={resetItems}
-              onLoadPreset={loadPreset}
-            />
+            {isViewer ? (
+              <div className="flex flex-col gap-2 w-full max-w-xs">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                  {lang === "ko" ? "항목" : lang === "fr" ? "Éléments" : "Items"}
+                </p>
+                <ul className="space-y-1.5">
+                  {displayItems.map((item, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm">
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{ background: `hsl(${(i * 30) % 360}, 65%, 55%)` }}
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <SpinEditor
+                items={items}
+                canAdd={canAdd}
+                canRemove={canRemove}
+                onUpdateItem={updateItem}
+                onAddItem={addItem}
+                onRemoveItem={removeItem}
+                onReset={resetItems}
+                onLoadPreset={loadPreset}
+              />
+            )}
           </div>
         </div>
+
+        {/* Reactions (room mode only) */}
+        {room && (
+          <section className="pt-2">
+            <SpinReactions floating={floatingReactions} onSend={sendReaction} />
+          </section>
+        )}
 
         {/* History */}
         {history.length > 0 && (

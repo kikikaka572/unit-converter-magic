@@ -11,6 +11,7 @@ import { WHEEL_COLORS } from "./SpinEditor";
 const WHEEL_SIZE = 380;
 const RADIUS = WHEEL_SIZE / 2 - 12;
 const CENTER_R = 40;
+const BASE_DURATION = 13200;
 
 const CONFETTI_COLORS = ["#f97316", "#3b82f6", "#22c55e", "#ec4899", "#8b5cf6", "#f59e0b"];
 
@@ -24,17 +25,23 @@ function truncate(s: string, max: number) {
 
 export interface SpinWheelHandle {
   spin: () => void;
+  /** Viewer sync: animate wheel continuing host's easing from startedAtMs. */
+  spinTo: (targetAngle: number, durationMs: number, startedAtMs: number) => void;
+  /** Snap rotation without animation (for room join sync). */
+  setRotation: (angle: number) => void;
 }
 
 interface Props {
   items: string[];
   soundEnabled: boolean;
   onSpinComplete: (winner: string) => void;
+  /** Host callback fired just before animation — use for room broadcast. */
+  onSpinStart?: (targetAngle: number, durationMs: number) => void;
 }
 
 const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
-  { items, soundEnabled, onSpinComplete },
-  ref
+  { items, soundEnabled, onSpinComplete, onSpinStart },
+  ref,
 ) {
   const wheelRef = useRef<HTMLCanvasElement>(null);
   const confettiRef = useRef<HTMLCanvasElement>(null);
@@ -43,12 +50,14 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
   const itemsRef = useRef(items);
   const soundRef = useRef(soundEnabled);
   const onCompleteRef = useRef(onSpinComplete);
+  const onSpinStartRef = useRef(onSpinStart);
   const audioRef = useRef<AudioContext | null>(null);
   const [spinning, setSpinning] = useState(false);
 
   useEffect(() => { itemsRef.current = items; }, [items]);
   useEffect(() => { soundRef.current = soundEnabled; }, [soundEnabled]);
   useEffect(() => { onCompleteRef.current = onSpinComplete; }, [onSpinComplete]);
+  useEffect(() => { onSpinStartRef.current = onSpinStart; }, [onSpinStart]);
 
   const getAudio = useCallback(() => {
     if (!audioRef.current) audioRef.current = new AudioContext();
@@ -101,7 +110,6 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
 
     ctx.clearRect(0, 0, WHEEL_SIZE, WHEEL_SIZE);
 
-    // Slices
     for (let i = 0; i < n; i++) {
       const sa = i * sliceAngle - Math.PI / 2 + rotation;
       const ea = sa + sliceAngle;
@@ -115,7 +123,6 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // Label
       ctx.save();
       ctx.translate(cx, cy);
       ctx.rotate(sa + sliceAngle / 2);
@@ -128,14 +135,12 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
       ctx.restore();
     }
 
-    // Outer border
     ctx.beginPath();
     ctx.arc(cx, cy, RADIUS, 0, 2 * Math.PI);
     ctx.strokeStyle = "rgba(255,255,255,0.5)";
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // Center button
     ctx.beginPath();
     ctx.arc(cx, cy, CENTER_R, 0, 2 * Math.PI);
     ctx.fillStyle = isSpinning ? "#475569" : "#1e293b";
@@ -151,7 +156,6 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
     ctx.shadowBlur = 0;
     ctx.fillText(isSpinning ? "···" : "SPIN", cx, cy);
 
-    // Pointer ▼
     const px = cx;
     const py = cy - RADIUS - 6;
     ctx.beginPath();
@@ -205,6 +209,20 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
     requestAnimationFrame(frame);
   }, []);
 
+  const finishSpin = useCallback((targetRot: number) => {
+    const n = itemsRef.current.length;
+    const sliceAngle = (2 * Math.PI) / n;
+    rotRef.current = targetRot;
+    spinningRef.current = false;
+    setSpinning(false);
+    const finalNorm = ((-targetRot % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const winIdx = Math.floor(finalNorm / sliceAngle) % n;
+    drawWheel(targetRot, false);
+    playWin();
+    spawnConfetti();
+    onCompleteRef.current(itemsRef.current[winIdx] ?? "");
+  }, [drawWheel, playWin, spawnConfetti]);
+
   const spin = useCallback(() => {
     if (spinningRef.current) return;
     const its = itemsRef.current;
@@ -220,12 +238,15 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
     const angleInSlice = sliceAngle * (0.15 + Math.random() * 0.7);
     const targetDelta = 2 * Math.PI * extraRotations + targetSlice * sliceAngle + angleInSlice;
     const targetRot = rotRef.current + targetDelta;
-    const duration = 3200 + Math.min(n - 2, 10) * 120;
+    const duration = BASE_DURATION + Math.min(n - 2, 10) * 120;
+
+    onSpinStartRef.current?.(targetRot, duration);
+
     const t0 = performance.now();
     const r0 = rotRef.current;
 
     let lastSlice = Math.floor(
-      (((-rotRef.current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) / sliceAngle
+      (((-rotRef.current % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) / sliceAngle,
     );
 
     function frame(now: number) {
@@ -234,7 +255,6 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
       const cur = r0 + targetDelta * eased;
       rotRef.current = cur;
 
-      // Tick when crossing slice boundary
       const norm = ((-cur % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
       const curSlice = Math.floor(norm / sliceAngle) % n;
       if (curSlice !== lastSlice) { playTick(); lastSlice = curSlice; }
@@ -244,33 +264,75 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
       if (prog < 1) {
         requestAnimationFrame(frame);
       } else {
-        rotRef.current = targetRot;
-        spinningRef.current = false;
-        setSpinning(false);
-
-        const finalNorm = ((-targetRot % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
-        const winIdx = Math.floor(finalNorm / sliceAngle) % n;
-        drawWheel(targetRot, false);
-        playWin();
-        spawnConfetti();
-        onCompleteRef.current(its[winIdx] ?? "");
+        finishSpin(targetRot);
       }
     }
     requestAnimationFrame(frame);
-  }, [drawWheel, playTick, playWin, spawnConfetti]);
+  }, [drawWheel, playTick, finishSpin]);
 
-  useImperativeHandle(ref, () => ({ spin }), [spin]);
+  const spinTo = useCallback((targetAngle: number, durationMs: number, startedAtMs: number) => {
+    if (spinningRef.current) return;
 
-  // Redraw on items change (not during spin)
+    const elapsed = Date.now() - startedAtMs;
+    if (elapsed >= durationMs) {
+      finishSpin(targetAngle);
+      return;
+    }
+
+    spinningRef.current = true;
+    setSpinning(true);
+
+    const n = itemsRef.current.length;
+    const sliceAngle = (2 * Math.PI) / n;
+    const r0 = rotRef.current;
+    const totalDelta = targetAngle - r0;
+
+    // Set virtual t0 so normT = elapsed/durationMs on the very first frame
+    const t0 = performance.now() - elapsed;
+
+    let lastSlice = Math.floor(
+      (((-r0 % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) / sliceAngle,
+    );
+
+    function frame(now: number) {
+      const normT = Math.min((now - t0) / durationMs, 1);
+      const eased = easeOutCubic(normT);
+      const cur = r0 + totalDelta * eased;
+      rotRef.current = cur;
+
+      const norm = ((-cur % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      const curSlice = Math.floor(norm / sliceAngle) % n;
+      if (curSlice !== lastSlice) { playTick(); lastSlice = curSlice; }
+
+      drawWheel(cur, normT < 1);
+
+      if (normT < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        finishSpin(targetAngle);
+      }
+    }
+    requestAnimationFrame(frame);
+  }, [drawWheel, playTick, finishSpin]);
+
+  const setRotation = useCallback((angle: number) => {
+    rotRef.current = angle;
+    if (!spinningRef.current) drawWheel(angle, false);
+  }, [drawWheel]);
+
+  useImperativeHandle(ref, () => ({ spin, spinTo, setRotation }), [spin, spinTo, setRotation]);
+
   useEffect(() => {
     if (!spinningRef.current) drawWheel(rotRef.current, false);
   }, [items, drawWheel]);
 
-  // Initial draw
   useEffect(() => { drawWheel(0, false); }, [drawWheel]);
 
   return (
-    <div className="relative" style={{ width: WHEEL_SIZE, height: WHEEL_SIZE }}>
+    <div
+      className="relative w-full mx-auto"
+      style={{ maxWidth: WHEEL_SIZE, aspectRatio: "1 / 1" }}
+    >
       <canvas
         ref={wheelRef}
         width={WHEEL_SIZE}
@@ -284,8 +346,8 @@ const SpinWheel = forwardRef<SpinWheelHandle, Props>(function SpinWheel(
         ref={confettiRef}
         width={WHEEL_SIZE}
         height={WHEEL_SIZE}
-        className="absolute inset-0 pointer-events-none"
-        style={{ width: "100%", height: "auto" }}
+        className="absolute top-0 left-0 pointer-events-none"
+        style={{ width: "100%", height: "100%" }}
       />
     </div>
   );
