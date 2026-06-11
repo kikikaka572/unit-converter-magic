@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Users, Copy, Check, X, LogIn } from "lucide-react";
+import { Users, Copy, Check, X, LogIn, Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 import type { SpinRoom } from "@/lib/spinRoom";
@@ -17,16 +17,25 @@ interface Props {
 
 export default function MultiWatchPanel({ room, role, loading, error, onCreateRoom, onJoinRoom, onLeaveRoom }: Props) {
   const [code, setCode] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [showJoin, setShowJoin] = useState(false);
   const { lang } = useLanguage();
   const ko = lang === "ko";
 
-  function handleCopy() {
+  function handleCopyCode() {
     if (!room) return;
     navigator.clipboard.writeText(room.id).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  }
+
+  function handleCopyLink() {
+    if (!room) return;
+    const url = `${window.location.origin}${window.location.pathname}?room=${room.id}`;
+    navigator.clipboard.writeText(url).catch(() => {});
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
   }
 
   function handleJoin(e: React.FormEvent) {
@@ -48,11 +57,18 @@ export default function MultiWatchPanel({ room, role, loading, error, onCreateRo
           {room.id}
         </span>
         <button
-          onClick={handleCopy}
+          onClick={handleCopyCode}
           className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
-          {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
-          {copied ? (ko ? "복사됨" : "Copied") : (ko ? "복사" : "Copy")}
+          {copiedCode ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+          {copiedCode ? (ko ? "복사됨" : "Copied") : (ko ? "코드 복사" : "Copy code")}
+        </button>
+        <button
+          onClick={handleCopyLink}
+          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          {copiedLink ? <Check className="w-3 h-3 text-green-500" /> : <Link className="w-3 h-3" />}
+          {copiedLink ? (ko ? "복사됨" : "Copied") : (ko ? "링크 복사" : "Copy link")}
         </button>
         <div className="flex items-center gap-1 text-muted-foreground text-xs ml-1">
           <Users className="w-3 h-3" />
