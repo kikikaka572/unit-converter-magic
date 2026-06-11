@@ -54,6 +54,7 @@ export default function SpinPage() {
     joinRoom,
     leaveRoom,
     syncItems,
+    notifyItemsUpdate,
     notifySpinStart,
     notifySpinEnd,
     sendReaction,
@@ -113,9 +114,12 @@ export default function SpinPage() {
     }
   }
 
-  // Debounce-sync items to room when host edits them
+  // Sync items to viewers when host edits them
   useEffect(() => {
     if (role !== "host" || !room) return;
+    // Broadcast immediately for real-time viewer sync
+    notifyItemsUpdate(items);
+    // Debounced DB write for late joiners
     clearTimeout(syncTimeout.current);
     syncTimeout.current = setTimeout(() => syncItems(items), 800);
   }, [items, role]); // eslint-disable-line react-hooks/exhaustive-deps

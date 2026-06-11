@@ -68,6 +68,10 @@ export function useSpinRoom(callbacks: Callbacks) {
         const p = payload.payload as { result: string };
         callbacksRef.current.onSpinEnd(p.result, roleRef.current);
       })
+      .on("broadcast", { event: "items_update" }, (payload) => {
+        const p = payload.payload as { items: string[] };
+        setRoom((prev) => prev ? { ...prev, items: p.items } : prev);
+      })
       .on("broadcast", { event: "react" }, (payload) => {
         const emoji = (payload.payload as { emoji?: string }).emoji;
         if (emoji) addFloating(emoji);
@@ -126,6 +130,15 @@ export function useSpinRoom(callbacks: Callbacks) {
     await updateRoomItems(room.id, items);
   }, [room]);
 
+  const notifyItemsUpdate = useCallback((items: string[]) => {
+    if (!channelRef.current || roleRef.current !== "host") return;
+    channelRef.current.send({
+      type: "broadcast",
+      event: "items_update",
+      payload: { items },
+    });
+  }, []);
+
   const notifySpinStart = useCallback(async (targetAngle: number, durationMs: number, startedAt: string) => {
     if (!channelRef.current || roleRef.current !== "host") return;
     // Broadcast directly through channel — arrives in ~50ms without DB roundtrip
@@ -168,6 +181,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     joinRoom,
     leaveRoom,
     syncItems,
+    notifyItemsUpdate,
     notifySpinStart,
     notifySpinEnd,
     sendReaction,
