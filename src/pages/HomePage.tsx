@@ -8,97 +8,9 @@ import { useSeo, SITE_URL } from "@/lib/seo";
 import { loadHotdeals, type Hotdeal } from "@/lib/hotdeals";
 import { supabase } from "@/lib/supabase";
 import { useFavorites } from "@/hooks/useFavorites";
-
-// ---- Tool definitions -------------------------------------------------------
-
-type ToolCard = {
-  to: string;
-  emoji: string;
-  titleKey: string;
-  descKey: string;
-  gradient: string;
-};
-
-const AI_TOOLS: ToolCard[] = [
-  {
-    to: "/prompt-generator",
-    emoji: "✨",
-    titleKey: "header.prompt.title",
-    descKey: "header.prompt.desc",
-    gradient: "bg-gradient-to-br from-violet-100 via-purple-100 to-fuchsia-200 dark:from-violet-950 dark:via-purple-900 dark:to-fuchsia-950",
-  },
-  {
-    to: "/video-prompt",
-    emoji: "🎬",
-    titleKey: "header.videoprompt.title",
-    descKey: "header.videoprompt.desc",
-    gradient: "bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-200 dark:from-sky-950 dark:via-blue-900 dark:to-indigo-950",
-  },
-];
-
-const FR_TOOLS: ToolCard[] = [
-  {
-    to: "/tva",
-    emoji: "🧾",
-    titleKey: "header.tva.title",
-    descKey: "header.tva.desc",
-    gradient: "bg-gradient-to-br from-blue-50 via-blue-100 to-sky-200 dark:from-blue-950 dark:via-blue-900 dark:to-sky-950",
-  },
-  {
-    to: "/fr-salary",
-    emoji: "🇫🇷",
-    titleKey: "header.frsalary.title",
-    descKey: "header.frsalary.desc",
-    gradient: "bg-gradient-to-br from-blue-100 via-indigo-50 to-red-100 dark:from-blue-950 dark:via-slate-900 dark:to-red-950",
-  },
-  {
-    to: "/currency",
-    emoji: "💱",
-    titleKey: "header.currency.title",
-    descKey: "header.currency.desc",
-    gradient: "bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100 dark:from-amber-950 dark:via-yellow-900 dark:to-orange-950",
-  },
-  {
-    to: "/size",
-    emoji: "👟",
-    titleKey: "header.size.title",
-    descKey: "header.size.desc",
-    gradient: "bg-gradient-to-br from-emerald-100 via-green-100 to-teal-200 dark:from-emerald-950 dark:via-green-900 dark:to-teal-950",
-  },
-];
-
-const CALC_TOOLS: ToolCard[] = [
-  {
-    to: "/salary",
-    emoji: "💼",
-    titleKey: "header.salary.title",
-    descKey: "header.salary.desc",
-    gradient: "bg-gradient-to-br from-indigo-100 via-blue-100 to-cyan-200 dark:from-indigo-950 dark:via-blue-900 dark:to-cyan-950",
-  },
-  {
-    to: "/life",
-    emoji: "🧮",
-    titleKey: "header.life.title",
-    descKey: "header.life.desc",
-    gradient: "bg-gradient-to-br from-teal-100 via-cyan-100 to-sky-200 dark:from-teal-950 dark:via-cyan-900 dark:to-sky-950",
-  },
-  {
-    to: "/converter",
-    emoji: "📐",
-    titleKey: "header.converter.title",
-    descKey: "header.converter.desc",
-    gradient: "bg-gradient-to-br from-orange-100 via-amber-100 to-yellow-200 dark:from-orange-950 dark:via-amber-900 dark:to-yellow-950",
-  },
-  {
-    to: "/ruler",
-    emoji: "📏",
-    titleKey: "header.ruler.title",
-    descKey: "header.ruler.desc",
-    gradient: "bg-gradient-to-br from-slate-100 via-zinc-100 to-gray-200 dark:from-slate-800 dark:via-zinc-800 dark:to-gray-900",
-  },
-];
-
-const ALL_TOOLS: ToolCard[] = [...AI_TOOLS, ...FR_TOOLS, ...CALC_TOOLS];
+import { useRecentTools } from "@/hooks/useRecentTools";
+import { TOOLS, type Tool } from "@/lib/tools";
+import type { Lang } from "@/i18n/translations";
 
 // ---- Shared types -----------------------------------------------------------
 
@@ -139,9 +51,7 @@ function SectionHeader({
 }) {
   return (
     <div className="flex items-end justify-between mb-3 border-b border-border pb-2">
-      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
-        {title}
-      </h2>
+      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">{title}</h2>
       <Link to={to} className="text-xs text-muted-foreground hover:text-primary">
         {moreLabel} →
       </Link>
@@ -152,44 +62,51 @@ function SectionHeader({
 function PlainSectionHeader({ title }: { title: string }) {
   return (
     <div className="mb-3 border-b border-border pb-2">
-      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
-        {title}
-      </h2>
+      <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">{title}</h2>
     </div>
   );
 }
 
 function ToolCardItem({
-  to,
-  emoji,
-  title,
-  desc,
-  gradient,
-  isFav = false,
+  tool,
+  isFav,
   onToggleFav,
 }: {
-  to: string;
-  emoji: string;
-  title: string;
-  desc: string;
-  gradient: string;
-  isFav?: boolean;
-  onToggleFav?: () => void;
+  tool: Tool;
+  isFav: boolean;
+  onToggleFav: () => void;
 }) {
+  const { t } = useLanguage();
+  const title = t(tool.titleKey as Parameters<typeof t>[0]);
+  const desc = t(tool.descKey as Parameters<typeof t>[0]);
+
   return (
     <div className="relative group">
       <Link
-        to={to}
+        to={tool.path}
         className="block rounded-2xl overflow-hidden border border-border hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
       >
-        <div className={`${gradient} flex items-center justify-center h-28 sm:h-32`}>
+        <div className={`${tool.gradient} flex items-center justify-center h-28 sm:h-32`}>
           <span className="text-5xl sm:text-6xl drop-shadow-sm group-hover:scale-110 transition-transform duration-200">
-            {emoji}
+            {tool.emoji}
           </span>
         </div>
         <div className="px-3 py-2.5 bg-card">
-          <div className="font-semibold text-foreground text-sm leading-tight truncate">
-            {title}
+          <div className="flex items-center gap-1.5">
+            <div className="font-semibold text-foreground text-sm leading-tight truncate">
+              {title}
+            </div>
+            {tool.badge && (
+              <span
+                className={`shrink-0 px-1 py-0.5 text-[10px] font-bold rounded uppercase leading-none ${
+                  tool.badge === "hot"
+                    ? "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300"
+                    : "bg-green-100 text-green-600 dark:bg-green-900 dark:text-green-300"
+                }`}
+              >
+                {tool.badge}
+              </span>
+            )}
           </div>
           <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2 leading-snug">
             {desc}
@@ -199,12 +116,13 @@ function ToolCardItem({
 
       {/* Favorite toggle — always visible on mobile, hover-only on desktop */}
       <button
-        onClick={() => onToggleFav?.()}
+        onClick={onToggleFav}
         aria-label={isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}
         className={`absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-150
-          ${isFav
-            ? "opacity-100 bg-black/30"
-            : "opacity-100 sm:opacity-0 sm:group-hover:opacity-100 bg-black/20 active:bg-black/40 sm:hover:bg-black/40"
+          ${
+            isFav
+              ? "opacity-100 bg-black/30"
+              : "opacity-100 sm:opacity-0 sm:group-hover:opacity-100 bg-black/20 active:bg-black/40 sm:hover:bg-black/40"
           }`}
       >
         <Star
@@ -217,12 +135,32 @@ function ToolCardItem({
   );
 }
 
-// ---- Page ------------------------------------------------------------------
+function RecentChip({ tool }: { tool: Tool }) {
+  const { t } = useLanguage();
+  return (
+    <Link
+      to={tool.path}
+      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-card text-sm hover:border-primary/50 hover:bg-accent transition-colors"
+    >
+      <span className="text-base">{tool.emoji}</span>
+      <span className="text-foreground font-medium text-xs whitespace-nowrap">
+        {t(tool.titleKey as Parameters<typeof t>[0])}
+      </span>
+    </Link>
+  );
+}
+
+// ---- Page -------------------------------------------------------------------
+
+const AI_TOOLS = TOOLS.filter((t) => t.category === "ai");
+const FR_TOOLS = TOOLS.filter((t) => t.category === "fr");
+const CALC_TOOLS = TOOLS.filter((t) => ["finance", "life", "unit", "etc"].includes(t.category));
 
 export default function HomePage() {
   const { t, lang } = useLanguage();
   const ko = lang === "ko";
   const { toggle, isFav, favorites } = useFavorites();
+  const { recents } = useRecentTools();
 
   useSeo({
     title: ko
@@ -253,18 +191,22 @@ export default function HomePage() {
   }, []);
 
   const moreLabel = ko ? "더보기" : lang === "fr" ? "Plus" : "More";
-  const favTools = ALL_TOOLS.filter((tool) => favorites.includes(tool.to));
+  const favTools = TOOLS.filter((tool) => favorites.includes(tool.path));
+  const recentTools = recents
+    .map((path) => TOOLS.find((t) => t.path === path))
+    .filter((t): t is Tool => t !== undefined);
 
-  const renderToolCard = (tool: ToolCard) => (
+  const recentLabel = (l: Lang) =>
+    l === "ko" ? "최근 사용" : l === "fr" ? "Récents" : "Recently Used";
+  const favLabel = (l: Lang) =>
+    l === "ko" ? "⭐ 즐겨찾기" : l === "fr" ? "⭐ Favoris" : "⭐ Favorites";
+
+  const renderCard = (tool: Tool) => (
     <ToolCardItem
-      key={tool.to}
-      to={tool.to}
-      emoji={tool.emoji}
-      title={t(tool.titleKey as Parameters<typeof t>[0])}
-      desc={t(tool.descKey as Parameters<typeof t>[0])}
-      gradient={tool.gradient}
-      isFav={isFav(tool.to)}
-      onToggleFav={() => toggle(tool.to)}
+      key={tool.id}
+      tool={tool}
+      isFav={isFav(tool.path)}
+      onToggleFav={() => toggle(tool.path)}
     />
   );
 
@@ -272,27 +214,31 @@ export default function HomePage() {
     <Layout>
       <div className="space-y-8">
 
+        {/* 최근 사용 */}
+        {recentTools.length > 0 && (
+          <section>
+            <PlainSectionHeader title={recentLabel(lang)} />
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+              {recentTools.map((tool) => (
+                <RecentChip key={tool.id} tool={tool} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* 즐겨찾기 */}
         {favTools.length > 0 && (
           <section>
-            <PlainSectionHeader
-              title={
-                ko ? "⭐ 즐겨찾기" : lang === "fr" ? "⭐ Favoris" : "⭐ Favorites"
-              }
-            />
+            <PlainSectionHeader title={favLabel(lang)} />
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {favTools.map(renderToolCard)}
+              {favTools.map(renderCard)}
             </div>
           </section>
         )}
 
         {/* 핫딜 */}
         <section>
-          <SectionHeader
-            title={ko ? "핫딜" : "Hot Deals"}
-            to="/hotdeals"
-            moreLabel={moreLabel}
-          />
+          <SectionHeader title={ko ? "핫딜" : "Hot Deals"} to="/hotdeals" moreLabel={moreLabel} />
           {deals.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4">
               {ko ? "표시할 핫딜이 없습니다." : "No deals available."}
@@ -300,10 +246,7 @@ export default function HomePage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {deals.map((d) => (
-                <div
-                  key={d.id}
-                  className="p-3 rounded-xl border border-border bg-card"
-                >
+                <div key={d.id} className="p-3 rounded-xl border border-border bg-card">
                   <Link to={`/hotdeals/${d.id}`} className="block">
                     <h3 className="text-sm font-semibold text-foreground line-clamp-2 leading-snug">
                       {d.title}
@@ -376,17 +319,13 @@ export default function HomePage() {
         {/* AI 도구 */}
         <section>
           <PlainSectionHeader title="AI" />
-          <div className="grid grid-cols-2 gap-3">
-            {AI_TOOLS.map(renderToolCard)}
-          </div>
+          <div className="grid grid-cols-2 gap-3">{AI_TOOLS.map(renderCard)}</div>
         </section>
 
         {/* France */}
         <section>
           <PlainSectionHeader title="🇫🇷 France" />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {FR_TOOLS.map(renderToolCard)}
-          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{FR_TOOLS.map(renderCard)}</div>
         </section>
 
         {/* 계산기 */}
@@ -394,9 +333,7 @@ export default function HomePage() {
           <PlainSectionHeader
             title={ko ? "계산기" : lang === "fr" ? "Calculateurs" : "Calculators"}
           />
-          <div className="grid grid-cols-2 gap-3">
-            {CALC_TOOLS.map(renderToolCard)}
-          </div>
+          <div className="grid grid-cols-2 gap-3">{CALC_TOOLS.map(renderCard)}</div>
         </section>
 
       </div>

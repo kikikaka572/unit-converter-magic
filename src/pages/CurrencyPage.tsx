@@ -1,18 +1,10 @@
-import Layout from "@/components/Layout";
 import CurrencyConverter from "@/components/CurrencyConverter";
-import { useLanguage } from "@/i18n/LanguageContext";
-import { useSeo, SITE_URL } from "@/lib/seo";
+import ToolPageLayout from "@/components/ToolPageLayout";
 
 export default function CurrencyPage() {
-  const { t } = useLanguage();
-  useSeo({
-    title: `${t("header.currency.title")} — Lifetool`,
-    description: t("header.currency.desc"),
-    canonical: `${SITE_URL}/currency`,
-  });
   return (
-    <Layout title={t("header.currency.title")} description={t("header.currency.desc")}>
+    <ToolPageLayout toolId="currency">
       <CurrencyConverter />
-    </Layout>
+    </ToolPageLayout>
   );
 }
