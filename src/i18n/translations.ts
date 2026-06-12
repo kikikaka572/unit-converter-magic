@@ -413,6 +413,60 @@ const dict = {
     fr: "Pas encore de résultats",
   },
   "spin.history.ago": { ko: "분 전", en: "m ago", fr: "min" },
+
+  // Multi-watch / shared room (spin)
+  "spin.multiwatch.create": { ko: "같이 보기 만들기", en: "Create Room", fr: "Créer salon" },
+  "spin.multiwatch.join": { ko: "코드 입력", en: "Enter Code", fr: "Entrer code" },
+  "spin.multiwatch.leave": { ko: "나가기", en: "Leave", fr: "Quitter" },
+  "spin.multiwatch.copyCode": { ko: "코드 복사", en: "Copy Code", fr: "Copier code" },
+  "spin.multiwatch.copyLink": { ko: "링크 복사", en: "Copy Link", fr: "Copier lien" },
+
+  // Common game
+  "game.nickname": { ko: "닉네임", en: "Nickname", fr: "Pseudo" },
+  "game.nickname_placeholder": { ko: "최대 8자", en: "Max 8 chars", fr: "8 caractères max" },
+  "game.nickname_required": { ko: "닉네임을 입력하세요", en: "Nickname required", fr: "Pseudo requis" },
+  "game.nickname_too_long": { ko: "닉네임은 8자 이하여야 합니다", en: "Nickname must be 8 chars or less", fr: "Le pseudo doit comporter 8 caractères maximum" },
+  "game.create_room": { ko: "방 만들기", en: "Create Room", fr: "Créer salon" },
+  "game.join": { ko: "참가", en: "Join", fr: "Rejoindre" },
+  "game.or": { ko: "또는", en: "or", fr: "ou" },
+  "game.enter_room_code": { ko: "방 코드 입력", en: "Enter room code", fr: "Code du salon" },
+  "game.host": { ko: "방장", en: "Host", fr: "Hôte" },
+  "game.guest": { ko: "참가자", en: "Guest", fr: "Invité" },
+  "game.copy_code": { ko: "코드 복사", en: "Copy Code", fr: "Copier code" },
+  "game.copy_link": { ko: "링크 복사", en: "Copy Link", fr: "Copier lien" },
+  "game.leave": { ko: "나가기", en: "Leave", fr: "Quitter" },
+
+  // 눈치 게임
+  "header.nunchi.title": { ko: "눈치 게임", en: "Nunchi Game", fr: "Jeu Nunchi" },
+  "header.nunchi.desc": { ko: "같은 숫자 고르면 탈락!", en: "Pick the same number and you're out!", fr: "Même chiffre = élimination!" },
+  "nunchi.waiting_players": { ko: "2명 이상이 모이면 시작할 수 있어요", en: "Need 2+ players to start", fr: "Il faut 2+ joueurs pour commencer" },
+  "nunchi.ready_to_start": { ko: "게임 시작 준비 완료!", en: "Ready to start!", fr: "Prêt à jouer!" },
+  "nunchi.choose_range": { ko: "숫자 범위를 선택하세요", en: "Choose number range", fr: "Choisissez la plage" },
+  "nunchi.host_will_start": { ko: "방장이 게임을 시작합니다", en: "Waiting for host to start", fr: "L'hôte va démarrer" },
+  "nunchi.game_starting": { ko: "게임 시작!", en: "Starting!", fr: "Ça commence!" },
+  "nunchi.pick_prompt": { ko: "1 ~ {max} 중 숫자를 고르세요", en: "Pick a number from 1 to {max}", fr: "Choisissez un chiffre de 1 à {max}" },
+  "nunchi.you_lost": { ko: "탈락! 💥", en: "Eliminated! 💥", fr: "Éliminé! 💥" },
+  "nunchi.you_survived": { ko: "살아남았어요! 🎉", en: "You survived! 🎉", fr: "Vous avez survécu! 🎉" },
+  "nunchi.duplicate_numbers": { ko: "중복 숫자: {nums}", en: "Duplicate numbers: {nums}", fr: "Doublons: {nums}" },
+  "nunchi.losers": { ko: "탈락자: {names}", en: "Eliminated: {names}", fr: "Éliminés: {names}" },
+  "nunchi.play_again": { ko: "다시 하기", en: "Play Again", fr: "Rejouer" },
+
+  // 반응속도 대결
+  "header.reaction.title": { ko: "반응속도 대결", en: "Reaction Race", fr: "Course de réaction" },
+  "header.reaction.desc": { ko: "신호에 가장 빠르게 반응하세요!", en: "React to the signal as fast as possible!", fr: "Réagissez au signal le plus vite!" },
+  "reaction.waiting_players": { ko: "2명 이상이 모이면 시작할 수 있어요", en: "Need 2+ players to start", fr: "Il faut 2+ joueurs pour commencer" },
+  "reaction.ready_to_start": { ko: "게임 시작 준비 완료!", en: "Ready to start!", fr: "Prêt à jouer!" },
+  "reaction.choose_rounds": { ko: "라운드 수를 선택하세요", en: "Choose number of rounds", fr: "Choisissez le nombre de manches" },
+  "reaction.host_will_start": { ko: "방장이 게임을 시작합니다", en: "Waiting for host to start", fr: "L'hôte va démarrer" },
+  "reaction.round": { ko: "라운드", en: "Round", fr: "Manche" },
+  "reaction.wait": { ko: "대기 중...", en: "Waiting...", fr: "En attente..." },
+  "reaction.get_ready": { ko: "신호를 기다리세요", en: "Wait for the signal", fr: "Attendez le signal" },
+  "reaction.tap_now": { ko: "지금 탭!", en: "TAP NOW!", fr: "TAPEZ!" },
+  "reaction.wins": { ko: "승리!", en: "wins!", fr: "gagne!" },
+  "reaction.early_press": { ko: "조기 눌림", en: "Early press", fr: "Trop tôt" },
+  "reaction.you_pressed_early": { ko: "너무 일찍 눌렀습니다!", en: "You pressed too early!", fr: "Vous avez appuyé trop tôt!" },
+  "reaction.next_round": { ko: "다음 라운드", en: "Next Round", fr: "Manche suivante" },
+  "reaction.play_again": { ko: "다시 하기", en: "Play Again", fr: "Rejouer" },
 } as const;
 
 export type TranslationKey = keyof typeof dict;

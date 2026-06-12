@@ -263,6 +263,30 @@ export const TOOLS: Tool[] = [
       "bg-gradient-to-br from-fuchsia-100 via-pink-100 to-rose-200 dark:from-fuchsia-950 dark:via-pink-900 dark:to-rose-950",
     badge: "new",
   },
+  {
+    id: "nunchi",
+    path: "/nunchi",
+    category: "entertainment",
+    emoji: "🔢",
+    titleKey: "header.nunchi.title",
+    descKey: "header.nunchi.desc",
+    keywords: ["눈치게임", "숫자게임", "파티게임", "멀티플레이", "nunchi", "number game"],
+    gradient:
+      "bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-200 dark:from-cyan-950 dark:via-sky-900 dark:to-blue-950",
+    badge: "new",
+  },
+  {
+    id: "reaction",
+    path: "/reaction",
+    category: "entertainment",
+    emoji: "⚡",
+    titleKey: "header.reaction.title",
+    descKey: "header.reaction.desc",
+    keywords: ["반응속도", "반응게임", "파티게임", "멀티플레이", "reaction time", "speed"],
+    gradient:
+      "bg-gradient-to-br from-amber-100 via-orange-100 to-red-200 dark:from-amber-950 dark:via-orange-900 dark:to-red-950",
+    badge: "new",
+  },
 ];
 
 export const CATEGORY_LABELS: Record<ToolCategory, { ko: string; en: string; fr: string }> = {

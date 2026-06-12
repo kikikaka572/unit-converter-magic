@@ -106,3 +106,16 @@
 .tiptap-content a { color: #6366f1; text-decoration: underline; }
 .ProseMirror { outline: none; }
 .ProseMirror p.is-editor-empty:first-child::before { content: attr(data-placeholder); color: #94a3b8; pointer-events: none; float: left; height: 0; }
+
+@keyframes float-up {
+  0%   { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-120px) scale(1.4); }
+}
+.animate-float { animation: float-up 2.2s ease-out forwards; }
+
+@keyframes ping-once {
+  0%   { transform: scale(1); opacity: 1; }
+  60%  { transform: scale(1.25); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-ping-once { animation: ping-once 0.4s ease-out; }

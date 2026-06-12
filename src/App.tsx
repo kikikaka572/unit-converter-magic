@@ -33,6 +33,8 @@ import LifeGasPage from "./pages/LifeGasPage";
 import LifeMovingPage from "./pages/LifeMovingPage";
 import LifeDdayPage from "./pages/LifeDdayPage";
 import SpinPage from "./pages/SpinPage";
+import NunchiPage from "./pages/NunchiPage";
+import ReactionPage from "./pages/ReactionPage";
 
 const queryClient = new QueryClient();
 const routerBasename = import.meta.env.BASE_URL === "/" ? undefined : import.meta.env.BASE_URL;
@@ -84,6 +86,8 @@ const App = () => (
             <Route path="/size" element={<SizePage />} />
             <Route path="/ruler" element={<RulerPage />} />
             <Route path="/spin" element={<SpinPage />} />
+            <Route path="/nunchi" element={<NunchiPage />} />
+            <Route path="/reaction" element={<ReactionPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
