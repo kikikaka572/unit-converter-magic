@@ -63,34 +63,64 @@ export const useReactionRoom = ({
   const [presenceState, setPresenceState] = useState<Record<string, unknown[]>>({});
   const signalTimeRef = useRef<number>(0);
   const roundScoresRef = useRef<ReactionScore[]>([]);
+  const scoresRef = useRef<ReactionScore[]>([]);  // mirror of scores for stale-closure-safe access in async functions
   const isEarlyRef = useRef(false);
+
+  // Keep scoresRef in sync with scores state
+  useEffect(() => { scoresRef.current = scores; }, [scores]);
 
   const players: ReactionPlayer[] = Object.values(presenceState)
     .flat()
     .map(e => e as PresenceEntry)
     .filter((e): e is PresenceEntry => !!e.playerId);
 
+  // Extracted: apply ready-phase transition (same for host and guests)
+  const applyReady = useCallback((rounds: number, round: number, color: string) => {
+    setTotalRounds(rounds);
+    setCurrentRound(round);
+    setSignalColor(color);
+    setEarlyPressIds([]);
+    roundScoresRef.current = [];
+    isEarlyRef.current = false;
+    reactionSound.ready();
+    setPhase('ready');
+  }, []);
+
+  // Extracted: apply signal transition
+  const applySignal = useCallback((color: string, signalTime: number) => {
+    setSignalColor(color);
+    signalTimeRef.current = signalTime;
+    isEarlyRef.current = false;
+    reactionSound.go();
+    setPhase('signal');
+  }, []);
+
+  // Extracted: apply round result
+  const applyRoundResult = useCallback((allScores: ReactionScore[]) => {
+    setScores(allScores);
+    reactionSound.roundEnd();
+    setPhase('result');
+  }, []);
+
+  // Extracted: apply reset
+  const applyReset = useCallback(() => {
+    setPhase('waiting');
+    setScores([]);
+    scoresRef.current = [];
+    setCurrentRound(1);
+    setEarlyPressIds([]);
+    roundScoresRef.current = [];
+  }, []);
+
   const onMessage = useCallback((event: string, payload: unknown) => {
     if (event === 'game_start') {
       const p = payload as { rounds: number; round: number; color: string };
-      setTotalRounds(p.rounds);
-      setCurrentRound(p.round);
-      setSignalColor(p.color);
-      setScores([]);
-      setEarlyPressIds([]);
-      roundScoresRef.current = [];
-      isEarlyRef.current = false;
-      reactionSound.ready();
-      setPhase('ready');
+      applyReady(p.rounds, p.round, p.color);
     }
 
     if (event === 'signal') {
       const p = payload as { color: string; signalTime: number };
-      setSignalColor(p.color);
-      signalTimeRef.current = p.signalTime;
-      isEarlyRef.current = false;
-      reactionSound.go();
-      setPhase('signal');
+      applySignal(p.color, p.signalTime);
     }
 
     if (event === 'player_react') {
@@ -107,19 +137,13 @@ export const useReactionRoom = ({
 
     if (event === 'round_result') {
       const p = payload as { roundScores: ReactionScore[]; allScores: ReactionScore[] };
-      setScores(p.allScores);
-      reactionSound.roundEnd();
-      setPhase('result');
+      applyRoundResult(p.allScores);
     }
 
     if (event === 'game_reset') {
-      setPhase('waiting');
-      setScores([]);
-      setCurrentRound(1);
-      setEarlyPressIds([]);
-      roundScoresRef.current = [];
+      applyReset();
     }
-  }, []);
+  }, [applyReady, applySignal, applyRoundResult, applyReset]);
 
   const { broadcast, presenceState: rawPresence, isConnected } = useBroadcastChannel({
     channelName: roomId ? `reaction:${roomId}` : '',
@@ -129,25 +153,44 @@ export const useReactionRoom = ({
 
   useEffect(() => { setPresenceState(rawPresence); }, [rawPresence]);
 
-  const startGame = useCallback(async (rounds: number) => {
-    if (!isHost) return;
-    const color = SIGNAL_COLORS[Math.floor(Math.random() * SIGNAL_COLORS.length)];
-    await broadcast('game_start', { rounds, round: 1, color });
-    // Host fires the signal after a random delay 1.5-4s
+  // Host fires signal after random delay then collects for 3s
+  const runRound = useCallback(async (rounds: number, round: number, color: string) => {
     const delay = 1500 + Math.random() * 2500;
     await sleep(delay);
     const signalTime = Date.now();
-    signalTimeRef.current = signalTime;
-    roundScoresRef.current = [];
-    isEarlyRef.current = false;
+    // Apply locally for host (self: false won't deliver own broadcast)
+    applySignal(color, signalTime);
     await broadcast('signal', { color, signalTime });
-  }, [isHost, broadcast]);
+
+    // 3 seconds to collect all presses, then publish result
+    await sleep(3000);
+    // Use scoresRef (accumulated previous rounds) + roundScoresRef (this round)
+    const prev = scoresRef.current;
+    const allScores = [
+      ...prev,
+      ...roundScoresRef.current.filter(
+        s => !prev.some(e => e.playerId === s.playerId && e.round === s.round)
+      ),
+    ];
+    applyRoundResult(allScores);
+    await broadcast('round_result', { roundScores: roundScoresRef.current, allScores });
+  }, [applySignal, applyRoundResult, broadcast]);
+
+  const startGame = useCallback(async (rounds: number) => {
+    if (!isHost) return;
+    const color = SIGNAL_COLORS[Math.floor(Math.random() * SIGNAL_COLORS.length)];
+    // Apply locally for host (self: false won't deliver own broadcast)
+    applyReady(rounds, 1, color);
+    await broadcast('game_start', { rounds, round: 1, color });
+    await runRound(rounds, 1, color);
+  }, [isHost, broadcast, applyReady, runRound]);
 
   const pressButton = useCallback(() => {
     if (phase === 'ready') {
-      // Early press
       isEarlyRef.current = true;
       reactionSound.earlyPress();
+      // Apply locally (self: false won't deliver own early_press back)
+      setEarlyPressIds(prev => [...new Set([...prev, playerId])]);
       broadcast('early_press', { playerId });
       return;
     }
@@ -166,35 +209,19 @@ export const useReactionRoom = ({
       reactionSound.winner();
       return;
     }
-    setCurrentRound(next);
-    setEarlyPressIds([]);
-    roundScoresRef.current = [];
-    isEarlyRef.current = false;
     const color = SIGNAL_COLORS[Math.floor(Math.random() * SIGNAL_COLORS.length)];
+    // Apply locally for host
+    applyReady(totalRounds, next, color);
     await broadcast('game_start', { rounds: totalRounds, round: next, color });
-    const delay = 1500 + Math.random() * 2500;
-    await sleep(delay);
-    const signalTime = Date.now();
-    signalTimeRef.current = signalTime;
-    await broadcast('signal', { color, signalTime });
-  }, [isHost, currentRound, totalRounds, broadcast]);
-
-  // Host collects all presses after a grace period and publishes round_result
-  useEffect(() => {
-    if (!isHost || phase !== 'signal') return;
-    const timer = setTimeout(() => {
-      const allScores = [...scores, ...roundScoresRef.current.filter(
-        s => !scores.some(e => e.playerId === s.playerId && e.round === s.round)
-      )];
-      broadcast('round_result', { roundScores: roundScoresRef.current, allScores });
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [phase, isHost]); // eslint-disable-line react-hooks/exhaustive-deps
+    await runRound(totalRounds, next, color);
+  }, [isHost, currentRound, totalRounds, broadcast, applyReady, runRound]);
 
   const resetGame = useCallback(() => {
     if (!isHost) return;
+    // Apply locally for host
+    applyReset();
     broadcast('game_reset', {});
-  }, [isHost, broadcast]);
+  }, [isHost, broadcast, applyReset]);
 
   return {
     phase,

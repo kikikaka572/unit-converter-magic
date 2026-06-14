@@ -59,7 +59,6 @@ export const useNunchiRoom = ({
   const [duplicateNumbers, setDuplicateNumbers] = useState<number[]>([]);
   const [loserIds, setLoserIds] = useState<string[]>([]);
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
   const [presenceState, setPresenceState] = useState<Record<string, unknown[]>>({});
 
   const players: NunchiPlayer[] = Object.values(presenceState)
@@ -67,56 +66,69 @@ export const useNunchiRoom = ({
     .map(e => e as PresenceEntry)
     .filter((e): e is PresenceEntry => !!e.playerId);
 
+  // Extracted so both onMessage (guests) and startGame (host) can call it
+  const applyGameStart = useCallback((count: number) => {
+    if (countdownRef.current) clearInterval(countdownRef.current);
+    setTargetCount(count);
+    setPicks([]);
+    setMyPick(null);
+    setDuplicateNumbers([]);
+    setLoserIds([]);
+    setCountdown(3);
+    setPhase('countdown');
+    nunchiSound.countdown();
+
+    let c = 3;
+    countdownRef.current = setInterval(() => {
+      c--;
+      setCountdown(c);
+      if (c > 0) nunchiSound.countdown();
+      if (c <= 0) {
+        clearInterval(countdownRef.current!);
+        setPhase('playing');
+      }
+    }, 1000);
+  }, []);
+
+  // Extracted so both onMessage (guests) and the effect (host) can call it
+  const applyRoundResult = useCallback((dups: number[], losers: string[]) => {
+    setDuplicateNumbers(dups);
+    setLoserIds(losers);
+    setPhase('result');
+    if (losers.length > 0) nunchiSound.duplicate();
+    else nunchiSound.success();
+  }, []);
+
+  // Extracted so both onMessage (guests) and resetGame (host) can call it
+  const applyReset = useCallback(() => {
+    setPhase('waiting');
+    setPicks([]);
+    setMyPick(null);
+    setDuplicateNumbers([]);
+    setLoserIds([]);
+  }, []);
+
   const onMessage = useCallback((event: string, payload: unknown) => {
     if (event === 'game_start') {
       const p = payload as { count: number };
-      setTargetCount(p.count);
-      setPicks([]);
-      setMyPick(null);
-      setDuplicateNumbers([]);
-      setLoserIds([]);
-      setCountdown(3);
-      setPhase('countdown');
-      nunchiSound.countdown();
-
-      let c = 3;
-      countdownRef.current = setInterval(() => {
-        c--;
-        setCountdown(c);
-        if (c > 0) nunchiSound.countdown();
-        if (c <= 0) {
-          clearInterval(countdownRef.current!);
-          setPhase('playing');
-        }
-      }, 1000);
+      applyGameStart(p.count);
     }
 
     if (event === 'player_pick') {
       const p = payload as NunchiPick;
       nunchiSound.pick();
-      setPicks(prev => {
-        const next = [...prev, p];
-        return next;
-      });
+      setPicks(prev => [...prev, p]);
     }
 
     if (event === 'round_result') {
       const p = payload as { duplicates: number[]; losers: string[] };
-      setDuplicateNumbers(p.duplicates);
-      setLoserIds(p.losers);
-      setPhase('result');
-      if (p.losers.length > 0) nunchiSound.duplicate();
-      else nunchiSound.success();
+      applyRoundResult(p.duplicates, p.losers);
     }
 
     if (event === 'game_reset') {
-      setPhase('waiting');
-      setPicks([]);
-      setMyPick(null);
-      setDuplicateNumbers([]);
-      setLoserIds([]);
+      applyReset();
     }
-  }, []);
+  }, [applyGameStart, applyRoundResult, applyReset]);
 
   const { broadcast, presenceState: rawPresence, isConnected } = useBroadcastChannel({
     channelName: roomId ? `nunchi:${roomId}` : '',
@@ -143,26 +155,34 @@ export const useNunchiRoom = ({
       .filter(p => duplicates.includes(p.number))
       .map(p => p.playerId);
 
+    // Apply locally for host (self: false — host won't receive own broadcast)
+    applyRoundResult(duplicates, losers);
     broadcast('round_result', { duplicates, losers });
-  }, [picks, players.length, phase, isHost, broadcast]);
+  }, [picks, players.length, phase, isHost, broadcast, applyRoundResult]);
 
   const startGame = useCallback((count: number) => {
     if (!isHost) return;
+    // Apply locally first (host won't receive own broadcast due to self: false)
+    applyGameStart(count);
     broadcast('game_start', { count });
-  }, [isHost, broadcast]);
+  }, [isHost, broadcast, applyGameStart]);
 
   const pickNumber = useCallback((n: number) => {
     if (phase !== 'playing' || myPick !== null) return;
     setMyPick(n);
     const pick: NunchiPick = { playerId, nickname, number: n, pickedAt: Date.now() };
+    // Add locally (self: false won't deliver own broadcast back)
     setPicks(prev => [...prev, pick]);
+    nunchiSound.pick();
     broadcast('player_pick', pick);
   }, [phase, myPick, playerId, nickname, broadcast]);
 
   const resetGame = useCallback(() => {
     if (!isHost) return;
+    // Apply locally for host, then broadcast to guests
+    applyReset();
     broadcast('game_reset', {});
-  }, [isHost, broadcast]);
+  }, [isHost, broadcast, applyReset]);
 
   useEffect(() => () => { if (countdownRef.current) clearInterval(countdownRef.current); }, []);
 
