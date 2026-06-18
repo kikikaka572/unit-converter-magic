@@ -13,6 +13,7 @@ interface GameRoomBarProps {
   isHost: boolean;
   players: Player[];
   isConnected: boolean;
+  currentPlayerId?: string;
   onLeave: () => void;
   onCopyLink: () => void;
   linkCopied: boolean;
@@ -23,6 +24,7 @@ export default function GameRoomBar({
   isHost,
   players,
   isConnected,
+  currentPlayerId,
   onLeave,
   onCopyLink,
   linkCopied,
@@ -79,7 +81,7 @@ export default function GameRoomBar({
               key={p.id}
               className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${p.isHost ? 'bg-primary/15 text-primary' : 'bg-secondary text-secondary-foreground'}`}
             >
-              {p.nickname}{p.isHost && ' 👑'}
+              {p.nickname}{p.isHost ? ' 👑' : ''}{p.id === currentPlayerId ? ' (나)' : ''}
             </span>
           ))}
         </div>

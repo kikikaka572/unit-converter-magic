@@ -52,6 +52,7 @@ export default function ReactionPage() {
       isHost={isHost}
       players={players}
       isConnected={isConnected}
+      currentPlayerId={playerId}
       nickname={nickname}
       onNicknameChange={setNickname}
       isNicknameValid={isNicknameValid}

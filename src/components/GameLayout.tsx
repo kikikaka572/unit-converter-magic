@@ -15,6 +15,7 @@ interface GameLayoutProps {
   isHost: boolean;
   players: Player[];
   isConnected: boolean;
+  currentPlayerId?: string;
   nickname: string;
   onNicknameChange: (v: string) => void;
   isNicknameValid: boolean;
@@ -34,6 +35,7 @@ export default function GameLayout({
   isHost,
   players,
   isConnected,
+  currentPlayerId,
   nickname,
   onNicknameChange,
   isNicknameValid,
@@ -55,6 +57,7 @@ export default function GameLayout({
             isHost={isHost}
             players={players}
             isConnected={isConnected}
+            currentPlayerId={currentPlayerId}
             onLeave={onLeaveRoom}
             onCopyLink={onCopyLink}
             linkCopied={linkCopied}
