@@ -60,6 +60,8 @@ export const useNunchiRoom = ({
   const [loserIds, setLoserIds] = useState<string[]>([]);
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [presenceState, setPresenceState] = useState<Record<string, unknown[]>>({});
+  const expectedPlayersRef = useRef(0);
+  const evaluatedRef = useRef(false);
 
   const players: NunchiPlayer[] = Object.values(presenceState)
     .flat()
@@ -69,6 +71,7 @@ export const useNunchiRoom = ({
   // Extracted so both onMessage (guests) and startGame (host) can call it
   const applyGameStart = useCallback((count: number) => {
     if (countdownRef.current) clearInterval(countdownRef.current);
+    evaluatedRef.current = false;
     setTargetCount(count);
     setPicks([]);
     setMyPick(null);
@@ -134,6 +137,7 @@ export const useNunchiRoom = ({
     channelName: roomId ? `nunchi:${roomId}` : '',
     onMessage,
     presenceData: roomId ? { playerId, nickname, isHost } : undefined,
+    presenceKey: playerId,
   });
 
   useEffect(() => { setPresenceState(rawPresence); }, [rawPresence]);
@@ -141,9 +145,18 @@ export const useNunchiRoom = ({
   // Host evaluates results when all players have picked
   useEffect(() => {
     if (!isHost || phase !== 'playing') return;
-    if (picks.length < players.length || players.length < 2) return;
+    if (evaluatedRef.current) return;
 
-    const numbers = picks.map(p => p.number);
+    // Deduplicate by playerId — keep the first pick per player
+    const uniquePicks = picks.filter(
+      (p, i) => picks.findIndex(q => q.playerId === p.playerId) === i
+    );
+    const expected = expectedPlayersRef.current;
+    if (expected < 2 || uniquePicks.length < expected) return;
+
+    evaluatedRef.current = true;
+
+    const numbers = uniquePicks.map(p => p.number);
     const freq = numbers.reduce<Record<number, number>>((acc, n) => {
       acc[n] = (acc[n] ?? 0) + 1;
       return acc;
@@ -151,21 +164,23 @@ export const useNunchiRoom = ({
     const duplicates = Object.entries(freq)
       .filter(([, c]) => c > 1)
       .map(([n]) => Number(n));
-    const losers = picks
+    const losers = uniquePicks
       .filter(p => duplicates.includes(p.number))
       .map(p => p.playerId);
 
     // Apply locally for host (self: false — host won't receive own broadcast)
     applyRoundResult(duplicates, losers);
     broadcast('round_result', { duplicates, losers });
-  }, [picks, players.length, phase, isHost, broadcast, applyRoundResult]);
+  }, [picks, phase, isHost, broadcast, applyRoundResult]);
 
   const startGame = useCallback((count: number) => {
     if (!isHost) return;
+    // Snapshot player count at game start — presence state may lag mid-game
+    expectedPlayersRef.current = players.length;
     // Apply locally first (host won't receive own broadcast due to self: false)
     applyGameStart(count);
     broadcast('game_start', { count });
-  }, [isHost, broadcast, applyGameStart]);
+  }, [isHost, players.length, broadcast, applyGameStart]);
 
   const pickNumber = useCallback((n: number) => {
     if (phase !== 'playing' || myPick !== null) return;

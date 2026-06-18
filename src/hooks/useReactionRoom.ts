@@ -149,6 +149,7 @@ export const useReactionRoom = ({
     channelName: roomId ? `reaction:${roomId}` : '',
     onMessage,
     presenceData: roomId ? { playerId, nickname, isHost } : undefined,
+    presenceKey: playerId,
   });
 
   useEffect(() => { setPresenceState(rawPresence); }, [rawPresence]);

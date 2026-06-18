@@ -6,6 +6,7 @@ interface UseBroadcastChannelOptions {
   channelName: string;
   onMessage: (event: string, payload: unknown) => void;
   presenceData?: Record<string, unknown>;
+  presenceKey?: string;
 }
 
 interface UseBroadcastChannelReturn {
@@ -32,7 +33,7 @@ export const useBroadcastChannel = (
     if (!options.channelName) return;
 
     const ch = supabase.channel(options.channelName, {
-      config: { broadcast: { self: false }, presence: { key: '' } },
+      config: { broadcast: { self: false }, presence: { key: options.presenceKey ?? '' } },
     });
 
     ch.on('broadcast', { event: '*' }, ({ event, payload }) => {
