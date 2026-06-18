@@ -17,6 +17,13 @@ export type RoomRole = "host" | "viewer";
 
 export type FloatingReaction = { id: number; emoji: string; x: number };
 
+export interface ChatMessage {
+  id: string;
+  nickname: string;
+  text: string;
+  timestamp: number;
+}
+
 type Callbacks = {
   onSpinStart: (targetAngle: number, durationMs: number, startedAtMs: number, role: RoomRole | null) => void;
   onSpinEnd: (result: string, role: RoomRole | null) => void;
@@ -28,6 +35,7 @@ export function useSpinRoom(callbacks: Callbacks) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [floatingReactions, setFloatingReactions] = useState<FloatingReaction[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const channelRef = useRef<RealtimeChannel | null>(null);
   const callbacksRef = useRef(callbacks);
@@ -76,6 +84,10 @@ export function useSpinRoom(callbacks: Callbacks) {
         const emoji = (payload.payload as { emoji?: string }).emoji;
         if (emoji) addFloating(emoji);
       })
+      .on("broadcast", { event: "chat" }, (payload) => {
+        const msg = payload.payload as ChatMessage;
+        if (msg?.id) setChatMessages(prev => [...prev.slice(-99), msg]);
+      })
       .subscribe();
   }
 
@@ -123,6 +135,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     setRoom(null);
     setRole(null);
     setError(null);
+    setChatMessages([]);
   }, [room]);
 
   const syncItems = useCallback(async (items: string[]) => {
@@ -167,6 +180,19 @@ export function useSpinRoom(callbacks: Callbacks) {
     addFloating(emoji);
   }, [room]);
 
+  const sendChatMessage = useCallback((nickname: string, text: string) => {
+    if (!channelRef.current || !room || !text.trim()) return;
+    const msg: ChatMessage = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      nickname,
+      text: text.trim().slice(0, 100),
+      timestamp: Date.now(),
+    };
+    channelRef.current.send({ type: "broadcast", event: "chat", payload: msg });
+    // self: false → add own message locally
+    setChatMessages(prev => [...prev.slice(-99), msg]);
+  }, [room]);
+
   useEffect(() => {
     return () => { if (channelRef.current) supabase.removeChannel(channelRef.current); };
   }, []);
@@ -177,6 +203,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     loading,
     error,
     floatingReactions,
+    chatMessages,
     createRoom,
     joinRoom,
     leaveRoom,
@@ -185,5 +212,6 @@ export function useSpinRoom(callbacks: Callbacks) {
     notifySpinStart,
     notifySpinEnd,
     sendReaction,
+    sendChatMessage,
   };
 }

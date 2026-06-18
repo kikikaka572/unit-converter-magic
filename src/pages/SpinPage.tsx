@@ -7,8 +7,10 @@ import SpinEditor from "@/components/SpinEditor";
 import SpinResult from "@/components/SpinResult";
 import MultiWatchPanel from "@/components/MultiWatchPanel";
 import SpinReactions from "@/components/SpinReactions";
+import SpinChat from "@/components/SpinChat";
 import { useSpinWheel } from "@/hooks/useSpinWheel";
 import { useSpinRoom, type RoomRole } from "@/hooks/useSpinRoom";
+import { useNickname } from "@/hooks/useNickname";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 function relativeTime(timestamp: number, agoLabel: string): string {
@@ -19,6 +21,7 @@ function relativeTime(timestamp: number, agoLabel: string): string {
 
 export default function SpinPage() {
   const { t, lang } = useLanguage();
+  const { nickname } = useNickname();
   const wheelRef = useRef<SpinWheelHandle>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const roleRef = useRef<RoomRole | null>(null);
@@ -50,6 +53,7 @@ export default function SpinPage() {
     loading,
     error,
     floatingReactions,
+    chatMessages,
     createRoom,
     joinRoom,
     leaveRoom,
@@ -58,6 +62,7 @@ export default function SpinPage() {
     notifySpinStart,
     notifySpinEnd,
     sendReaction,
+    sendChatMessage,
   } = useSpinRoom({
     onSpinStart: (targetAngle, durationMs, startedAtMs, role) => {
       if (role === "viewer") {
@@ -216,6 +221,17 @@ export default function SpinPage() {
         {room && (
           <section className="pt-2">
             <SpinReactions floating={floatingReactions} onSend={sendReaction} />
+          </section>
+        )}
+
+        {/* Chat (room mode only) */}
+        {room && (
+          <section>
+            <SpinChat
+              messages={chatMessages}
+              myNickname={nickname}
+              onSend={(text) => sendChatMessage(nickname, text)}
+            />
           </section>
         )}
 
