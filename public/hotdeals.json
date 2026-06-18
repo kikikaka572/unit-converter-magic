@@ -1,7 +1,59 @@
 {
-  "generated_at": "2026-06-18T20:07:21.042Z",
+  "generated_at": "2026-06-18T22:49:58.943Z",
   "count": 300,
   "deals": [
+    {
+      "id": "464891d4a0f0f790",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713382",
+      "source": "ppomppu",
+      "title": "[STEAM] 사이버펑크 Cyberpunk 2077 70% 할인 (19,800원/무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713382",
+      "thumbnail_url": null,
+      "description": "스팀덱에서도 플레이가능한 싸이버팡크 2077입니다 22년에 나왔는데 여전히 긍정적 평가가 많은 게임입니다 DLC 포함 가격도 좋아보이는데, 일단 본판먼...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-06-18T22:20:52.000Z",
+      "fetched_at": "2026-06-18T22:49:58.940Z"
+    },
+    {
+      "id": "e96182408e1516cb",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713381",
+      "source": "ppomppu",
+      "title": "[롯데온]파프리카 2kg 가정용 빨강 노랑(8970/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713381",
+      "thumbnail_url": null,
+      "description": "파프리카 요즘 저렴해지긴 했는데2kg 8970원 농할쿠폰 붙은 것 중에서도 제일 저렴해보이네요구매평 최근순으로도 괜찮아요      ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-06-18T22:00:14.000Z",
+      "fetched_at": "2026-06-18T22:49:58.940Z"
+    },
+    {
+      "id": "5fec654ba0612636",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713380",
+      "source": "ppomppu",
+      "title": "[모나] 통화 210분, 데이터 4.5GB(월 110원/18개월간)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713380",
+      "thumbnail_url": null,
+      "description": "유플러스망18개월동안 월 요금 110원그후에는 평생 월 요금 550원 며칠전 올라온 요금제보다 실상 저렴해 졌습니다가성비 완전 혜자네요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-06-18T21:18:25.000Z",
+      "fetched_at": "2026-06-18T22:49:58.940Z"
+    },
+    {
+      "id": "5b0f333280793173",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104937",
+      "source": "ruliweb",
+      "title": "[스팀] 데드 스페이스 리메이크 / 90% 6600원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/104937",
+      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/06/19/19edc6a8f405724a7.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-06-18T20:30:18.000Z",
+      "fetched_at": "2026-06-18T22:49:58.752Z"
+    },
     {
       "id": "5f433c084a11466f",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/104936",
@@ -13,7 +65,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T20:00:38.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "abe5e72ad1da50ad",
@@ -26,7 +78,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T19:50:33.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "bf856558210b1620",
@@ -39,7 +91,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T18:35:33.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "2414ee9bdc4dba79",
@@ -52,7 +104,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T18:33:39.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "705d15b906f21188",
@@ -60,12 +112,12 @@
       "source": "ruliweb",
       "title": "[블리자드샵] 여름 할인 (6/19~7/8)",
       "url": "https://bbs.ruliweb.com/news/board/1020/read/104933",
-      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/06/19/19edbf99b761874ce.webp",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/06/19/19edcc0c2ff1874ce.webp",
       "description": "",
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T18:25:49.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "8bc786ed8465eb13",
@@ -78,7 +130,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T17:59:58.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "09d959f42eda9a77",
@@ -91,7 +143,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T17:53:09.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "a9e6924378d18bfd",
@@ -104,7 +156,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T17:39:52.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "49607975d74b674b",
@@ -130,7 +182,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T16:46:35.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "da8281de7d0ba86c",
@@ -143,7 +195,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T16:08:25.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "870ee9a0657aa45c",
@@ -156,7 +208,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:54:36.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "ef45863419b6d6ff",
@@ -169,7 +221,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:51:40.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "f1d07c64a7a4fa40",
@@ -195,7 +247,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:46:24.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "446c8b11108493a1",
@@ -208,7 +260,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:44:16.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "c0ebe4e2a5bef3d6",
@@ -217,11 +269,11 @@
       "title": "[사이소] 오미자닭갈비, 쌀, 참외, 김치, 쥬스용당근 (다양/무료)",
       "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=713371",
       "thumbnail_url": null,
-      "description": "https://www.cyso.co.kr/coupon/list쿠폰팩에서 15%쿠폰 다운상품선택후 제로페이 결제시 12%차감효과제로페이는 가입해놓으시면 여러곳에서 쓸수 있습니다.어플...",
+      "description": "https://www.cyso.co.kr/coupon/list쿠폰팩에서 15%쿠폰 다운상품선택후 비플페이 결제시 12%차감효과비플페이는 가입해놓으시면 여러곳에서 쓸수 있습니다.어플...",
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:34:28.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "76ed4ce879f31508",
@@ -234,7 +286,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:33:53.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "3d63134c6a50ce52",
@@ -247,7 +299,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:31:47.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "18d39836638da192",
@@ -260,7 +312,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:30:25.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "a91279a7c3b72762",
@@ -273,7 +325,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:27:39.000Z",
-      "fetched_at": "2026-06-18T20:07:21.039Z"
+      "fetched_at": "2026-06-18T22:49:58.940Z"
     },
     {
       "id": "d9b48886346c8ae9",
@@ -299,7 +351,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:24:38.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "e5a6a568c4ccc2f0",
@@ -351,7 +403,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:10:59.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "9457e1bb90ecefc3",
@@ -364,7 +416,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T15:00:02.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "382d50bf6d2bf8ee",
@@ -377,7 +429,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T14:00:31.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "485f2dcf3a83530b",
@@ -390,7 +442,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T13:50:29.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "8e5a82a844b39c63",
@@ -403,7 +455,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T13:14:57.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "12295b7bf9e9e2eb",
@@ -611,7 +663,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T10:48:05.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "02690f53511874c9",
@@ -624,7 +676,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T09:44:21.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "2a3f0292d52eba58",
@@ -637,7 +689,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T08:41:03.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "0538cc3597ce3af2",
@@ -650,7 +702,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T08:22:29.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "3f3e8ad5b221a82a",
@@ -702,7 +754,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T07:05:00.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "c0b560cfac7a150f",
@@ -845,7 +897,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T06:12:58.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "aff2a6e7d7134f46",
@@ -884,7 +936,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T05:37:32.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "b5250f297e9358c0",
@@ -897,7 +949,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T04:41:52.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "8e1b426e3a797afa",
@@ -910,7 +962,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T03:36:38.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "57bb0aebd88c0760",
@@ -923,7 +975,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T02:46:18.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "da7b4c0bff4ab00e",
@@ -1092,7 +1144,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T02:07:39.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "25eab9eac13b79ae",
@@ -1118,7 +1170,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T02:06:36.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "7155d90f568e34a4",
@@ -1144,7 +1196,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T02:05:30.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "5abbcad72beb5afb",
@@ -1170,7 +1222,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-18T01:52:03.000Z",
-      "fetched_at": "2026-06-18T20:07:20.521Z"
+      "fetched_at": "2026-06-18T22:49:58.752Z"
     },
     {
       "id": "14cbb319cd7eabca",
@@ -3848,58 +3900,6 @@
       "price": null,
       "category": null,
       "posted_at": "2026-06-15T14:46:35.000Z",
-      "fetched_at": "2026-06-15T14:53:51.959Z"
-    },
-    {
-      "id": "2aaf03c176cf23b2",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712247",
-      "source": "ppomppu",
-      "title": "[G마켓]CERINI by PAT 쿨핏 면스판 치노팬츠(20,990원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712247",
-      "thumbnail_url": null,
-      "description": "PAT 면스판 치노팬츠 무배에 20,990원나오는데결제하면 스마일캐시 5% 1049원 적립되네요 여름바지라 두껍지않고 스판끼 살짝있는 소재고 세탁...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-06-15T14:34:31.000Z",
-      "fetched_at": "2026-06-15T14:53:51.959Z"
-    },
-    {
-      "id": "7ee0c6e565fb8ca0",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712246",
-      "source": "ppomppu",
-      "title": "[네이버] 오뚜기 진라면 40봉 네이버멤버십 (18,940원) (무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712246",
-      "thumbnail_url": null,
-      "description": "멤버십 쿠폰   https://shopping.naver.com/festa/onsale/699ceb9398f1530c6f40ef49 전 쿠폰을 ...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-06-15T14:14:41.000Z",
-      "fetched_at": "2026-06-15T14:53:51.959Z"
-    },
-    {
-      "id": "f906d8e3a1b66f7b",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712245",
-      "source": "ppomppu",
-      "title": "[G마켓] 매일두유 고단백 190ml 48팩 (카드 26,530원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712245",
-      "thumbnail_url": null,
-      "description": "오랜만에 매일두유 딜이네요.비씨/농협/국민 기준 26530원, 해당카드없을시 27,920원입니다.매일두유 고단백 48팩 단백질함량 12g, 팩당 552.7원소비기한 27년...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-06-15T14:05:50.000Z",
-      "fetched_at": "2026-06-15T14:53:51.959Z"
-    },
-    {
-      "id": "4918944179ca4961",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712244",
-      "source": "ppomppu",
-      "title": "[오늘의집]워싱턴 생 체리 500g (10-10.5row)(13,595원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=712244",
-      "thumbnail_url": null,
-      "description": "쿠폰+카카오로 결제하면 됩니다검붉은 색으로 후숙되면 당도가 높고 빨간색은 새콤한 맛이나서 골라 먹는 재미가 있습니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-06-15T13:44:46.000Z",
       "fetched_at": "2026-06-15T14:53:51.959Z"
     }
   ]
