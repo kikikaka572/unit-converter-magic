@@ -21,7 +21,7 @@ function relativeTime(timestamp: number, agoLabel: string): string {
 
 export default function SpinPage() {
   const { t, lang } = useLanguage();
-  const { nickname } = useNickname();
+  const { nickname, setNickname } = useNickname();
   const wheelRef = useRef<SpinWheelHandle>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const roleRef = useRef<RoomRole | null>(null);
@@ -54,6 +54,7 @@ export default function SpinPage() {
     error,
     floatingReactions,
     chatMessages,
+    participantCount,
     createRoom,
     joinRoom,
     leaveRoom,
@@ -145,6 +146,7 @@ export default function SpinPage() {
           role={role}
           loading={loading}
           error={error}
+          participantCount={participantCount}
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
           onLeaveRoom={leaveRoom}
@@ -231,6 +233,7 @@ export default function SpinPage() {
               messages={chatMessages}
               myNickname={nickname}
               onSend={(text) => sendChatMessage(nickname, text)}
+              onNicknameChange={setNickname}
             />
           </section>
         )}

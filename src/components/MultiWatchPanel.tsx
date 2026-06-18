@@ -10,12 +10,13 @@ interface Props {
   role: RoomRole | null;
   loading: boolean;
   error: string | null;
+  participantCount?: number;
   onCreateRoom: () => void;
   onJoinRoom: (code: string) => void;
   onLeaveRoom: () => void;
 }
 
-export default function MultiWatchPanel({ room, role, loading, error, onCreateRoom, onJoinRoom, onLeaveRoom }: Props) {
+export default function MultiWatchPanel({ room, role, loading, error, participantCount, onCreateRoom, onJoinRoom, onLeaveRoom }: Props) {
   const [code, setCode] = useState("");
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -72,7 +73,7 @@ export default function MultiWatchPanel({ room, role, loading, error, onCreateRo
         </button>
         <div className="flex items-center gap-1 text-muted-foreground text-xs ml-1">
           <Users className="w-3 h-3" />
-          <span>{room.viewer_count}</span>
+          <span>{participantCount ?? room.viewer_count + 1}명</span>
         </div>
         {role === "host" && (
           <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">

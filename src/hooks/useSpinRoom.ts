@@ -36,6 +36,7 @@ export function useSpinRoom(callbacks: Callbacks) {
   const [error, setError] = useState<string | null>(null);
   const [floatingReactions, setFloatingReactions] = useState<FloatingReaction[]>([]);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [participantCount, setParticipantCount] = useState(0);
 
   const channelRef = useRef<RealtimeChannel | null>(null);
   const callbacksRef = useRef(callbacks);
@@ -56,7 +57,7 @@ export function useSpinRoom(callbacks: Callbacks) {
   function subscribeToRoom(roomId: string) {
     if (channelRef.current) supabase.removeChannel(channelRef.current);
 
-    channelRef.current = supabase
+    const channel = supabase
       .channel(`spin:${roomId}`, { config: { broadcast: { self: false } } })
       .on(
         // postgres_changes: persistent state only (items, viewer_count)
@@ -88,7 +89,18 @@ export function useSpinRoom(callbacks: Callbacks) {
         const msg = payload.payload as ChatMessage;
         if (msg?.id) setChatMessages(prev => [...prev.slice(-99), msg]);
       })
-      .subscribe();
+      .on("presence", { event: "sync" }, () => {
+        const state = channel.presenceState();
+        setParticipantCount(Object.values(state).flat().length);
+      });
+
+    channelRef.current = channel;
+
+    channel.subscribe(async (status) => {
+      if (status === "SUBSCRIBED") {
+        await channel.track({ userId: hostId.current });
+      }
+    });
   }
 
   const createRoom = useCallback(async (items: string[], currentAngle: number) => {
@@ -136,6 +148,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     setRole(null);
     setError(null);
     setChatMessages([]);
+    setParticipantCount(0);
   }, [room]);
 
   const syncItems = useCallback(async (items: string[]) => {
@@ -204,6 +217,7 @@ export function useSpinRoom(callbacks: Callbacks) {
     error,
     floatingReactions,
     chatMessages,
+    participantCount,
     createRoom,
     joinRoom,
     leaveRoom,
