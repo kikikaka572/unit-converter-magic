@@ -1,7 +1,280 @@
 {
-  "generated_at": "2026-07-07T06:34:32.040Z",
+  "generated_at": "2026-07-07T11:36:00.897Z",
   "count": 300,
   "deals": [
+    {
+      "id": "442a34d57e04f4ae",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718480",
+      "source": "ppomppu",
+      "title": "[떠리몰] 스리라차 나쵸 120g *12개입 x1박스 (업체별도 무료배송)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718480",
+      "thumbnail_url": null,
+      "description": "120g 대용량에  유통기한도 넉넉하네요.맥주 안주로 쟁여두기 좋음",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:32:49.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "898f10ab21a48ddc",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718479",
+      "source": "ppomppu",
+      "title": "[네이버] 고함량 호주 프로폴리스 영양제 10000mg 180캡슐 (79,000원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718479",
+      "thumbnail_url": null,
+      "description": "면역력에 좋은거에요사은퓸으로 프로폴리스 마누카꿀 캔디 증정 있습니다   멤버십 기준 적립금 최대 7천원 받을 수 있어요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:31:32.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "d6357686ea21410d",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718478",
+      "source": "ppomppu",
+      "title": "[w컨셉] 프로핏 WPI 파우더 초콜릿맛 1kg+10%적립 (49,900원/무료배송)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718478",
+      "thumbnail_url": null,
+      "description": "프로핏 WPI 파우더 1kg에 49,900원입니다10% 적립해주고 ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:30:52.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "9e4656782aa37939",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718477",
+      "source": "ppomppu",
+      "title": "[롯데온] 가평잣생막걸리 블랙 6도 970ml x 5병(15,840원,무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718477",
+      "thumbnail_url": null,
+      "description": "장마철 집에서 마실 수 있는 막걸리 딜 모음입니다.   가평잣생막걸리 블랙 6도 970ml x 5병15,840원,무배https://www.lotteon.com/p/produc...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:26:48.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "beae860d0aea3c08",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718476",
+      "source": "ppomppu",
+      "title": "[롯데온] 리얼 크리스피치킨 1.4kg (18,000원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718476",
+      "thumbnail_url": null,
+      "description": "국내산 닭가슴살로 만든거에요700g 짜리 2봉 오는거고 봉당 9,000원 입니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:26:23.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "40f69a52ffd6037a",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718475",
+      "source": "ppomppu",
+      "title": "[롯데온] 밀레 백화점 위크 모음전 반팔티 2개 (13,400~/3,000원)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718475",
+      "thumbnail_url": null,
+      "description": "티, 바지, 가방, 모자 등등 많습니다반팔 2팩 13,400원짜리도 있습니다역시즌 ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:23:57.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "1ab900e1a5327142",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718474",
+      "source": "ppomppu",
+      "title": "[네이버] 라플루 아몰레드 키즈 스마트워치 시계 (24,800원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718474",
+      "thumbnail_url": null,
+      "description": "2.01인치 아몰레드 대화면이라 보기편하고 작동법 심플해서 편합니다구매시 스트랩+보호필름 증정되고2만원대면 저렴합니다          &nbsp...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:22:30.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "1d71a0fefb635d5b",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718473",
+      "source": "ppomppu",
+      "title": "[네이버] 한돈 생돼지고기 돼지갈비 찜용 삼겹살 목살 항정살 (5,000원~/4,000원)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718473",
+      "thumbnail_url": null,
+      "description": "한돈 돼지 고기 행사하고 있습니다돼지고기 (찌개용) 500g 5,000원삼겹살 500g 9,900원 등   부위별 할인 가격은 다 다르네요        ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:20:21.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "932549b36e56ee98",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718472",
+      "source": "ppomppu",
+      "title": "[종근당건강몰] 아임비타 멀티비타민 이뮨샷 50병 (72,068원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718472",
+      "thumbnail_url": null,
+      "description": "링크 중단에서 장바쿠폰 받으면96,090원이고 페이코나 토스에서 종근당건강검색 후 25% 쿠폰 받으면 72,068원 나옵니다구매 후 3천원 적립받으면 체감가 66,368원이고개당 ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:19:05.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "95fa2ebd9d1e663e",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718470",
+      "source": "ppomppu",
+      "title": "[롯데온] 녹족 맨즈 테크니컬 반팔티셔츠 3장 (14,420원/무료배송)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718470",
+      "thumbnail_url": null,
+      "description": "녹족 티셔츠 3장에 14,420원이에요장당 4,806원정도라 가격 ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:17:30.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "fe017e685d47c60d",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718469",
+      "source": "ppomppu",
+      "title": "[G마켓] 루아즈 메탈 자이로볼 LUAZ-LE2 (7,820/2,500)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718469",
+      "thumbnail_url": null,
+      "description": "전에 올렸었던 메탈자이로볼입니다. 품절이 풀린거 확인하고 재 등록합니다. 여러개 구입해서 지인에게도 나눠주고 꾸준히 두달 정도 사용하고 있는데 전완근 운동에 확실...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:14:55.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "92b5a49552824b2b",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718468",
+      "source": "ppomppu",
+      "title": "[11번가] 국내산 프리미엄 원재료 열무김치 2kg + 500g ( 9,500/무베)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718468",
+      "thumbnail_url": null,
+      "description": "국내재료 이가격은 실화임.?",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:10:50.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "ca1f81c7bc1ca467",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718467",
+      "source": "ppomppu",
+      "title": "[G마켓]스케쳐스 남성 고워크 아치핏 샌들 (79,180/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718467",
+      "thumbnail_url": null,
+      "description": "나름 역대급 슬리퍼인데 산지 한달도 안되서 할인 더 들어갔네요ㅠ매장에서 신어보고 인터넷으로 9만원 중반에 구매했는데 슬리퍼 산거중 그냥 역대급입니다.그전에 나이키 리주버네이트 편하...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:09:46.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "4e041624ae12cbca",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718466",
+      "source": "ppomppu",
+      "title": "[네이버] 고당도 플럼코트 하모니 로얄과 (18-26과) 2kg (17,900원/무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718466",
+      "thumbnail_url": null,
+      "description": "하루 50박스 한정 하모니 로얄과 2kg 16브릭스 100g당 895원대네요상품 이상시 무료 재배송 가능하고자두+살구 교배종으로 1~2일정도 후숙해서 드시면 맛있습니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:05:15.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "22993128ebd4f4db",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718465",
+      "source": "ppomppu",
+      "title": "[롯데온] 발리 자유여행 4박 6일 vs 패키지 4박 6일 (791,680원~/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718465",
+      "thumbnail_url": null,
+      "description": "&lt;패키지&gt;   - 노팁, 노쇼핑- 남부투어/우붓관광 일정 포함- 전통마사지 포함   &lt;자유여행&gt;   - ...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T11:04:07.000Z",
+      "fetched_at": "2026-07-07T11:36:00.894Z"
+    },
+    {
+      "id": "528f1428f26edc50",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105439",
+      "source": "ruliweb",
+      "title": "[인벤]파이어 엠블렘 만자천홍Dagdan Collection / 148,000원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105439",
+      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/07/07/19f3be5a065149396.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T09:10:51.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
+    {
+      "id": "37aaa08fc92491ca",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105438",
+      "source": "ruliweb",
+      "title": "[11번가]오리온 와우스낵 1박스(16봉)(9,900원/무배)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105438",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/07/19f3bd2c842133f58.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T09:07:20.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
+    {
+      "id": "7c48471381854e78",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105437",
+      "source": "ruliweb",
+      "title": "[PlayShop] PS5 용과같이7 (9,900원)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105437",
+      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/07/07/19f3b6c31784bfa2f.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T07:15:45.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
+    {
+      "id": "6e6156e293dc73d5",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105436",
+      "source": "ruliweb",
+      "title": "[반다이몰] SMP 아머드코어6 루비콘 화염 AAP07 발테우스 / 590200원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105436",
+      "thumbnail_url": null,
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T07:01:30.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
+    {
+      "id": "dd79beb7ed2de50b",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105435",
+      "source": "ruliweb",
+      "title": "[게임터치몰]닌텐도스위치2 본체 포코피아 세트+포켓몬 레전드 ZA 797,800원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105435",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/07/19f3b5a38ab507aac.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T06:53:42.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
+    {
+      "id": "a04114a74e6cf078",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105434",
+      "source": "ruliweb",
+      "title": "[11번가] 닥터페퍼 350ml, 24개 (12,900원/무배)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105434",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/07/19f3b56c0ca4a167e.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-07T06:51:52.000Z",
+      "fetched_at": "2026-07-07T11:36:00.678Z"
+    },
     {
       "id": "509108a468eec0a8",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105433",
@@ -13,7 +286,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T06:28:30.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "a5aed0f895eab833",
@@ -26,7 +299,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T06:24:43.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "4386ef27c193a3a2",
@@ -136,14 +409,14 @@
       "id": "5987dbb596d22ed0",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105430",
       "source": "ruliweb",
-      "title": "닌텐도 스위치 2 + 닌텐도 스위치2 젤다 킹덤732,800원",
+      "title": "[카카오]닌텐도 스위치 2 + 닌텐도 스위치2 젤다 킹덤732,800원",
       "url": "https://bbs.ruliweb.com/news/board/1020/read/105430",
       "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/07/19f3b1703b2507aac.webp",
       "description": "",
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T05:40:25.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "eebff5cfb1221abe",
@@ -169,7 +442,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T05:36:23.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "3aa5ea8a9fac62a5",
@@ -188,14 +461,14 @@
       "id": "449fd6b4ef7ccb43",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105428",
       "source": "ruliweb",
-      "title": "[정가] 스위치2 포코피아 세트",
+      "title": "[플레이스위치] 스위치2 포코피아 세트 / 정가",
       "url": "https://bbs.ruliweb.com/news/board/1020/read/105428",
       "thumbnail_url": "https://i3.ruliweb.com/thumb/26/07/07/19f3b0cb14437b6.webp",
       "description": "",
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T05:28:44.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "039fc9e823afa3e0",
@@ -273,7 +546,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T04:33:46.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "cd63cfcce37b6c94",
@@ -286,20 +559,20 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T03:12:03.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "a9efb2ffba21dd9d",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105425",
       "source": "ruliweb",
-      "title": "홈플러스 남현점) 링피트 5만원, 철권8 2만원 등",
+      "title": "[홈플러스 남현점] 링피트 5만원, 철권8 2만원 등",
       "url": "https://bbs.ruliweb.com/news/board/1020/read/105425",
       "thumbnail_url": "https://i3.ruliweb.com/thumb/26/07/07/19f3a79bfd449e50e.webp",
       "description": "",
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T02:48:55.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "ffcb0bc7c72c84e9",
@@ -312,7 +585,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T02:41:30.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "4ece0ba507e201e4",
@@ -325,7 +598,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T02:19:34.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "d8224c910464f72c",
@@ -338,7 +611,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T02:10:52.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "bc1a96fc61386254",
@@ -351,7 +624,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T01:53:10.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "6851194e377cddcf",
@@ -377,7 +650,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T01:49:51.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "4513028fcd6647a2",
@@ -572,7 +845,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-07T00:28:43.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "abb484ad98122def",
@@ -585,7 +858,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T23:56:05.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "d6f988e993040d74",
@@ -598,7 +871,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T23:04:15.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "6c43373dd7996634",
@@ -858,7 +1131,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T15:13:15.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "9ebeedc15401fc2f",
@@ -871,7 +1144,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T15:06:45.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "d2bc891a8dd51a8f",
@@ -884,7 +1157,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T15:01:45.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "5fec7c78f501f9e3",
@@ -897,7 +1170,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T13:20:30.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "e887ce965a1404b0",
@@ -1105,7 +1378,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T10:23:44.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "b0308227ea013e44",
@@ -1118,7 +1391,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-06T10:00:43.000Z",
-      "fetched_at": "2026-07-07T06:34:31.874Z"
+      "fetched_at": "2026-07-07T11:36:00.678Z"
     },
     {
       "id": "dfcc42742aa7a1fb",
@@ -3628,279 +3901,6 @@
       "category": null,
       "posted_at": "2026-07-04T09:36:37.000Z",
       "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "119ab99d3b3bd4f0",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717692",
-      "source": "ppomppu",
-      "title": "[롯데온] 도루코 페이스 스타터킷 모션(면도기+면도날 5입)+면도날2입 증정 (13,800원) (무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717692",
-      "thumbnail_url": null,
-      "description": "롯데온에 도루코 페이스 스타터킷 모션 올라와 있어서 공유합니다.   구성은 면도기 본체와 면도날 5입에증정 면도날 2입까지 포함된 구성으로 보입니다.   총 면도날 7입 구성이라 ...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:33:28.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "9ce5f86a1643bc19",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717691",
-      "source": "ppomppu",
-      "title": "[지마켓] 순수람 채담카레 160g 10팩+카레 우동소스320g (11,620원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717691",
-      "thumbnail_url": null,
-      "description": "새싹수랑 채소 갈아만든 일본식카레고맛 진해서 담백하니 맛있습니다저 칼로리고 할인행사중이라 저렴하네요카드7%할인시 11,620원 나와요     ...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:32:38.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "c0770673daa90d80",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717690",
-      "source": "ppomppu",
-      "title": "[네이버] 달구벌 돼지생막창 500g (4,900원/네맴무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717690",
-      "thumbnail_url": null,
-      "description": "돼지생막창인데 500g 제품인데 100g 소스 포함입니다.가격은 네맴기준 1봉만 사도 무배라 상당히 저렴해요 알림받기 쿠폰까지 받으면 4,900원 나옵니다.간단하게 구워서 먹기 좋...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:30:40.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "0f579d4ccbf8b2f6",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717689",
-      "source": "ppomppu",
-      "title": "[롯데온] 아이더 공용 스테롤 S 윈드스토퍼 롱 구스다운 롱패딩 (171,870원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717689",
-      "thumbnail_url": null,
-      "description": "구스다운 소재에 윈드스토퍼 적용된 제품입니다남여공용으로 나왔고 모자는 탈부착 가능해요큰 사이즈는 일부 품절인데 나머지 사이즈는 여유 있네요구스다운에 롱기장이라 한겨울에도 입을수 있...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:27:46.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "a63f5540c1f275ac",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717688",
-      "source": "ppomppu",
-      "title": "[토스] EVA소재 욕실슬리퍼 블랙 250mm (3,900원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717688",
-      "thumbnail_url": null,
-      "description": "EVA소재 욕실 슬리퍼 무난한 디자인 기본에 충실해 보이는 제품입니다 가격 좋습니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:25:19.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "ea84998cfee965a2",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717687",
-      "source": "ppomppu",
-      "title": "[톡딜] 스테비아 대추방울토마토 로얄과 500gx2팩 (8900원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717687",
-      "thumbnail_url": null,
-      "description": "스테비아 방토라 따로 설탕 안뿌려서 먹어도 괜찮더라구요단맛 나는 편입니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:21:55.000Z",
-      "fetched_at": "2026-07-04T10:47:25.157Z"
-    },
-    {
-      "id": "74901ca6d9086334",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105373",
-      "source": "ruliweb",
-      "title": "[롯데온]빙그레 더단백드링크8종250ml14팩+14팩+14팩(49,560원/무료)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105373",
-      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/07/04/19f2c64dcc3595be5.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T09:10:52.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "857fa92082acd2fe",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105372",
-      "source": "ruliweb",
-      "title": "[알리] OLOyDDR5 32GB(16x2)5600MHz 513,000 국내",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105372",
-      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/04/19f2c4a785052cc84.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T08:42:45.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "8de4cbd491ae6d7c",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105371",
-      "source": "ruliweb",
-      "title": "[네이버]레넨 클래식 데이팩 X-Pac 20L 백팩 107,000원",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105371",
-      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/07/04/19f2c3c66ec59385a.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T08:21:34.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "d48f194640651acb",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105370",
-      "source": "ruliweb",
-      "title": "[스팀] 원숭이에게 먹이를 주지 마세요 (1750원/무료)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105370",
-      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/07/04/19f2c17beb1580f4f.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T07:45:57.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "79b42b3f42b81eeb",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105369",
-      "source": "ruliweb",
-      "title": "[롯데온] 도루코 페이스 스타터킷모션(면도기+면도날5입) (13,800원/무료)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105369",
-      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/07/04/19f2bf91400595be5.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T07:13:18.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "cbc237397810a1a8",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717656",
-      "source": "ppomppu",
-      "title": "[옥션]Aula 독거미 F108 pro 유무선 기계식 키보드 세이야축 8000mAh(49,880원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717656",
-      "thumbnail_url": null,
-      "description": "Aula 독거미 F108 Pro 세이야축 키보드 10%쿠폰에 7%카드사 적용하면 49,880원뜨네요몇일전 뜬거보다 카드할인 쓰면...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:43:48.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "d903974ce8985baa",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105368",
-      "source": "ruliweb",
-      "title": "롯데마트 오프라인 매장 스위치2",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105368",
-      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/04/19f2b8e796d4da6e1.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:20:47.000Z",
-      "fetched_at": "2026-07-06T01:59:15.739Z"
-    },
-    {
-      "id": "93fb43d98e9be464",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717655",
-      "source": "ppomppu",
-      "title": "[네이버] 평양냉면 10인분 2kg+양념장 500g (7,500원/네멤무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717655",
-      "thumbnail_url": null,
-      "description": "평양냉면 10인분 기준 7,500원이라 1인분당 750원입니다네이버 멤버십이면 무료배송이고 물냉, 비냉, 5인분 개별포장 옵션도 있습니다육즙만두 500g...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:05:45.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "e247fb767beb7067",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717654",
-      "source": "ppomppu",
-      "title": "[11번가] 깨끗한나라 순수프리미엄 30m, 30롤, 3팩(36,170원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717654",
-      "thumbnail_url": null,
-      "description": "너비 107mm 이고, 신한카드 결제시 360원 추가할인 됩니다.",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:03:39.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "733b46ebd5f30b5c",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717653",
-      "source": "ppomppu",
-      "title": "[네이버] 삼성 Q9000 스탠드 에어컨 17평 AF60F17D11BS (1,438,100원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717653",
-      "thumbnail_url": null,
-      "description": "네이버 5% 쿠폰과 카드 5% 할인 적용 시 1,438,100원 나오네요라이브 구매 시 신세계상품권 10만원도 증정 있습니다온누리상품권 + 신세계상품권 + N포인트 적립까지 반영하...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:03:14.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "9b2e76f47a62bd81",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717652",
-      "source": "ppomppu",
-      "title": "[네이버] 원할머니 명품버섯뚝배기불고기 4개+된장찌개 4개 (30,900원)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717652",
-      "thumbnail_url": null,
-      "description": "한팩에 3800원대정도 맛은 무난한데 불고기랑 된찌 반반이라 덜 질리고 끼니 때우기 좋을 듯 합니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:02:52.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "17df801351ede11e",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717651",
-      "source": "ppomppu",
-      "title": "[인더마켓] 슬립앤슬립 깊은잠베개 S (+베개커버) (91,000원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717651",
-      "thumbnail_url": null,
-      "description": "프로모션 \"칠월에는사천원할인\" 4천원 할인코드 넣으시면됩니다원래 가격대 있는 브랜드이긴한데현재 기준으로는 최저가 수준이네요온누리쓰시면 7% 할인 추가로 됩니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T05:02:50.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "84d9a324e12f30c2",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717650",
-      "source": "ppomppu",
-      "title": "[롯데온] 고디바 초콜릿 마카롱 세트+증정 (27,040원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717650",
-      "thumbnail_url": null,
-      "description": "카드할인 받으시면 가격 나옵니다아이스크림 바우처 1+1 증정도 있어서 괜찮네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T04:50:31.000Z",
-      "fetched_at": "2026-07-04T06:08:15.750Z"
-    },
-    {
-      "id": "09e6209e914ae20d",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717649",
-      "source": "ppomppu",
-      "title": "[g마켓] 빅토리아 탄산수 40개 (13400원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717649",
-      "thumbnail_url": null,
-      "description": "쿠폰 할인에 카드 할인 추가 하면 13400~13800원 내외 나오는거 같네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T04:40:23.000Z",
-      "fetched_at": "2026-07-04T06:08:15.751Z"
-    },
-    {
-      "id": "a167ded509376ace",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717647",
-      "source": "ppomppu",
-      "title": "[네이버] 아이스 타올 10매입 쿨 타월 특대형 사이즈 (9,900원/2개이상무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=717647",
-      "thumbnail_url": null,
-      "description": "쿨 타월 특대형 사이즈 총 10개입 입니다특가 적용되서 개당 990원이네요2세트 이상 구매 시 무배 가능합니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-04T04:06:37.000Z",
-      "fetched_at": "2026-07-04T06:08:15.751Z"
     }
   ]
 }
