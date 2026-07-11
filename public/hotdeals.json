@@ -1,7 +1,228 @@
 {
-  "generated_at": "2026-07-10T21:49:36.413Z",
+  "generated_at": "2026-07-11T01:24:36.618Z",
   "count": 300,
   "deals": [
+    {
+      "id": "1e37c9f6b38e302e",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105558",
+      "source": "ruliweb",
+      "title": "[땡겨요] 피자알볼로 8천원, 기영이숯불치킨 7천원 할인 (7/11)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105558",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/07/11/19f4ec3a1dc1874ce.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:22:38.000Z",
+      "fetched_at": "2026-07-11T01:24:36.504Z"
+    },
+    {
+      "id": "2fdf396decda6303",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719329",
+      "source": "ppomppu",
+      "title": "[연세유업]1급A원유 멸균 흰우유 190ml (24팩) 3박스 ( 39,900원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719329",
+      "thumbnail_url": null,
+      "description": "페이코 23% 쿠폰 받으면 3박스에 30,723원 나옵니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:15:56.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "e2c28807c469b12b",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719328",
+      "source": "ppomppu",
+      "title": "[지마켓] 전라도식 국내산 포기김치 10kg (26,950원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719328",
+      "thumbnail_url": null,
+      "description": "국내산 김치 10Kg 2만원 중반대 나옵니다전라도식이고 김치찌개용으로도 좋아요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:12:18.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "008cc86e9c50a90e",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719327",
+      "source": "ppomppu",
+      "title": "[지마켓] 에어메이드 1등급 제습기 17L (275,900원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719327",
+      "thumbnail_url": null,
+      "description": "냉각 살균 제습기인데 카드사 할인까지 받으면 제목가 나와요4종 건조키트도 주고 리뷰 작성시 청소키트도 주니 필요하신분들 봐보세요~   &nbsp...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:09:46.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "d67023366cd16fd8",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719326",
+      "source": "ppomppu",
+      "title": "[SSG] 지오다노 이지 버뮤다 쇼츠 (15,200원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719326",
+      "thumbnail_url": null,
+      "description": "무난한 여름 반바지입니다 허리 밴딩이라 편하게 입을거같네요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:07:19.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "ea3e37428e023943",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719325",
+      "source": "ppomppu",
+      "title": "[w컨셉] 두꺼운 프리미엄 70평량 고평량 물티슈 70매 20팩 (16,450원/무료배송)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719325",
+      "thumbnail_url": null,
+      "description": "W컨셉 30% 쿠폰 적용하면 팩당 약 800원입니다\r\n70평량 두툼해서 집에서 쓰기 좋습니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:05:08.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "db4174428bcf2204",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719324",
+      "source": "ppomppu",
+      "title": "[G마켓] 베르데 엑스트라버진 올리브오일 핸드피킹IOC 국제올리브협회 품질인증 1000ml (16,000원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719324",
+      "thumbnail_url": null,
+      "description": "핸드피킹 올리브를 저온냉압착으로 추출한 엑스트라버진 올리브오일이고 IOC 국제올리브협회 품질인증 제품입니다1000ml 용량 할인 적용되서 16,000원으로 구매 가능합니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:02:55.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "c3269a9f3caec7d5",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719323",
+      "source": "ppomppu",
+      "title": "[지마켓] 피엘디크 후레쉬 알로에 파우더리 선스틱 20g (7,900원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719323",
+      "thumbnail_url": null,
+      "description": "선크림에 덧바를 용도로 선스틱 알아보니 SPF50+ 기준으로 저렴하고 끈적임 없다는 후기많네요1개 7,900원 무배입니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:02:43.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "fbc10b0facf1309e",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719322",
+      "source": "ppomppu",
+      "title": "[W컨셉] 아망떼 물티슈 프렌즈 70매 20팩 (16,450원/무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719322",
+      "thumbnail_url": null,
+      "description": "70gsm 두께의 엠보싱 원단을 사용한 물티슈입니다20팩 구성이라 쟁여두기 좋아요30% 쿠폰 적용 시 16,450원으로 팩당 823원꼴입니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:02:40.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "5b744a3910bdd264",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719321",
+      "source": "ppomppu",
+      "title": "[톡딜] 엡손 미니 빔프로젝터 UHD 4K BOSE사운드 (782,163원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719321",
+      "thumbnail_url": null,
+      "description": "결제창에서 7% 쿠폰 적용 시최종가 782,163원 나옵니다- UHD 4K 해상도- 700 ISO 루멘- BOSE 사운드- 구글TV 내장(넷플릭스 4K 지원)- 오토 키스톤 지원",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T01:00:26.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "1fa73a97d5830bbe",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719320",
+      "source": "ppomppu",
+      "title": "[오늘의집] 스너글 오리지널 초고농축 섬유유연제 4L+2.6L 총 6.6L (23,976원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719320",
+      "thumbnail_url": null,
+      "description": "총 6.6L 구성이라 1L당 약 3,633원입니다대용량 섬유유연제 찾는 분들은 용량 대비 가격 괜찮아요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:57:11.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "6df370082563ded7",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719319",
+      "source": "ppomppu",
+      "title": "[옥션]BLDC 프리미엄 무선청소기 WW-800 (56,240원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719319",
+      "thumbnail_url": null,
+      "description": "30000pa 흡입력도 괜찮고 배터리도 꽤 오래 가네요무선이라 서브용으로 쓰기 좋을거같습니다.",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:56:38.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "294c89ef07f62a3a",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719318",
+      "source": "ppomppu",
+      "title": "[네이버] 하림 가리아게 1kg 1봉 (5,900원/네멤무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719318",
+      "thumbnail_url": null,
+      "description": "하림 가리아게 저렴하게 올라왔습니다1kg 1봉에 알림받기 쿠폰 받으면 5,900원입니다네이버멤버십은 배송비도 무료라 저렴하네요   용가리 300g도 3,900원이라 두 개 같이 구...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:51:04.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "985328a4490ce675",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719317",
+      "source": "ppomppu",
+      "title": "[롯데온] 랩신 항균 세탁세제 파우치 1.5L 2개 + 항균제 800ml 증정 (10,910원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719317",
+      "thumbnail_url": null,
+      "description": "여름에 쉰내 잡을때 쓰기 좋아요   파우치 총 3키로에 항균제도 같이 오는거고   엘포 1천원 적립도 있습니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:50:56.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "11a9c7e8d158046f",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105557",
+      "source": "ruliweb",
+      "title": "[네이버페이] 라방 5원",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/105557",
+      "thumbnail_url": null,
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:44:34.000Z",
+      "fetched_at": "2026-07-11T01:24:36.504Z"
+    },
+    {
+      "id": "ac4341c53ed1b386",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719316",
+      "source": "ppomppu",
+      "title": "[네이버] 프레시웰 생수 2L x 24개 (10,900원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719316",
+      "thumbnail_url": null,
+      "description": "생수 이리터 24개 개당 454원 입니다쟁여두고 먹기 좋아요",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:17:51.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
+    {
+      "id": "297c38bc49e143c4",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719315",
+      "source": "ppomppu",
+      "title": "[네이버] 더빅토리아 탄산음료 쿨라임 500ml 3개+더빅토리아 탄산음료 오이레몬 500ml 3개 (4,900원/무료)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=719315",
+      "thumbnail_url": null,
+      "description": "배송비 무료로 체험딜이네요탄산수 아니고 탄산음료라 향,맛 좀더 쎈편이었습니다",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-07-11T00:09:33.000Z",
+      "fetched_at": "2026-07-11T01:24:36.615Z"
+    },
     {
       "id": "31ddacba14cc23a8",
       "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105556",
@@ -182,7 +403,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T15:18:33.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "40318cd5efcc35db",
@@ -260,7 +481,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T15:08:47.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "5b06c887debad890",
@@ -351,7 +572,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T12:58:16.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "9a696ab905853493",
@@ -364,7 +585,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T12:48:54.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "707ceb5fb51d7708",
@@ -390,7 +611,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T12:18:25.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "70cbb9dfb4957e92",
@@ -585,7 +806,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T11:04:33.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "a41b22c2f57fd97d",
@@ -637,7 +858,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T10:57:16.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "5ccc0062cfe67b5e",
@@ -676,7 +897,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T10:13:01.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "878d1d56d8822a9e",
@@ -689,7 +910,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T10:08:01.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "080cb9e0293b9e02",
@@ -702,7 +923,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T10:05:51.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "048200deb475123b",
@@ -715,7 +936,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T08:52:19.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "eac8b22577643629",
@@ -728,7 +949,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T08:14:53.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "32c31c0f61166e91",
@@ -741,7 +962,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T06:38:33.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "c5f7099e8238b2b6",
@@ -871,7 +1092,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T06:00:00.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.504Z"
     },
     {
       "id": "1cf07a3d65f7d459",
@@ -962,7 +1183,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T04:52:59.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "5e4a91be7434f94c",
@@ -975,7 +1196,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T04:47:22.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "f0d4f983faae2b55",
@@ -988,7 +1209,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T04:44:39.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "7deeb11e8d4ce968",
@@ -1001,7 +1222,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T03:30:00.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "8d9ad960d0ae8cad",
@@ -1014,7 +1235,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T03:11:37.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "91a3cfda0135f1c3",
@@ -1027,7 +1248,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T03:04:50.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "0005cfb7c65c702c",
@@ -1040,7 +1261,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T03:00:00.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "02c52c6a77fc9c74",
@@ -1053,7 +1274,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T02:52:11.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "f90b4bb779d58689",
@@ -1066,7 +1287,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T02:26:50.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "edc7d5ad0fd7633b",
@@ -1079,7 +1300,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T02:19:50.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "b1670b26aafa3fce",
@@ -1092,7 +1313,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T02:17:19.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "70b2b16db3e0436a",
@@ -1105,7 +1326,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-07-10T02:13:24.000Z",
-      "fetched_at": "2026-07-10T21:49:36.264Z"
+      "fetched_at": "2026-07-11T01:24:36.505Z"
     },
     {
       "id": "89e8995dc3ebbb63",
@@ -3680,227 +3901,6 @@
       "category": null,
       "posted_at": "2026-07-08T07:52:36.000Z",
       "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "874a118b57ba7244",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718662",
-      "source": "ppomppu",
-      "title": "[오늘의집] 호텔, 편집숍 탈취 방향제 자동분사기 (28,310원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718662",
-      "thumbnail_url": null,
-      "description": "호텔이나 편집숍 같은 곳에서 나는향기 방향제 자동분사기입니다탈취효과도 있어서 꿉꿉한날 효과 좋습니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T07:28:35.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "6446e7a6e894b769",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718661",
-      "source": "ppomppu",
-      "title": "[G마켓] 포멀비키즈 3in1 핸드워시 1000ml+비치볼 2개 (7,920원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718661",
-      "thumbnail_url": null,
-      "description": "2개 구매 시 14,840원으로 개당 7,420원 나옵니다항균 99% 핸드워시이고 세정, 보습 같이 되는 3in1 타입입니다비치볼 2개 증정 포함입니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T07:25:07.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "fb95f1e7b0e166b6",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105464",
-      "source": "ruliweb",
-      "title": "[롯데온] 연세고칼슘검은콩+호두아몬드180ml24팩+24팩 (16,740원/무료)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105464",
-      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/07/08/19f409848a4595be5.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T07:20:05.000Z",
-      "fetched_at": "2026-07-09T01:46:49.334Z"
-    },
-    {
-      "id": "4fc4ba20ba2558ef",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718659",
-      "source": "ppomppu",
-      "title": "[ns몰] 정품 황도복숭아 중소과 4kg (13,900원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718659",
-      "thumbnail_url": null,
-      "description": "중소과 25과 내외입니다배송비 쿠폰 다운받으면 무배입니다아래 사진 참고하세요~",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T07:01:25.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "8d00d371e7491a7e",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718658",
-      "source": "ppomppu",
-      "title": "[W컨셉] 오리온 포카칩 5개 + 스윙칩 5개 + 썬핫 5개 + 오땅 5개 미니스낵박스 (17,200원 / 무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718658",
-      "thumbnail_url": null,
-      "description": "미니용량 과자들이라각각 50g, 45g, 59g, 80g씩 용량나오네요가격자체는 17,200원인데포토리뷰로 20% ...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:56:49.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "3dd15dd6af3278e1",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718656",
-      "source": "ppomppu",
-      "title": "[컬리] 프로넛 무설탕 자일리톨 캔디 8개입 세트 (17,920원/유료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718656",
-      "thumbnail_url": null,
-      "description": "무설탕이라 맛 깔끔하더라구요사무실이나 차에 두기 좋아요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:46:21.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "b6f3aebd963c94c9",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718655",
-      "source": "ppomppu",
-      "title": "[지마켓] 사조 안심닭가슴살 135g 10개 (16,900원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718655",
-      "thumbnail_url": null,
-      "description": "국내산 닭가슴살. 단백질 17g개당 1690원입니다.",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:34:02.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "a142317fe6a80221",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718654",
-      "source": "ppomppu",
-      "title": "[오늘의집] 블루베리 퓨레 100% 20g 14포 3박스 (16,745원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718654",
-      "thumbnail_url": null,
-      "description": "블루베리 100%를 통째로 갈아 만든 퓨레 스틱입니다\r\n15% 쿠폰 적용가 3박스 16,745원으로 박스당 약 5,581원꼴이라 가격 괜찮게 나왔네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:22:05.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "87ffb323e18c6870",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718653",
-      "source": "ppomppu",
-      "title": "[지마켓](현대홈쇼핑)제스프리 골드키위 특대과 3kg (21-23입/개당 130-140내외)(20,640원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718653",
-      "thumbnail_url": null,
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:21:49.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "e0d902f054872e56",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718652",
-      "source": "ppomppu",
-      "title": "[G마켓] 볶음김치 1kg (7,360원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718652",
-      "thumbnail_url": null,
-      "description": "국산 배추와 국산 고춧가루로 만든 볶음김치입니다쿠폰 적용 시 7,360원 100g당 736원꼴이고 밥반찬이나 두부김치로 먹기 좋아요그 외 물김치 / 깍두기도 할인하네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:10:07.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "03caafc35fb8dd75",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718651",
-      "source": "ppomppu",
-      "title": "[매일유업] 매일두유 고단백 190ml 24팩 (페이코 14,320원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718651",
-      "thumbnail_url": null,
-      "description": "기획전 쿠폰 3천원 받고페이코 매일유업 20% 쿠폰 같이 적용하시면 됩니다최종가 14,320원이고, 개당 약 597원 정도입니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:08:57.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "e6bee97e7910538f",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718649",
-      "source": "ppomppu",
-      "title": "[무신사] 미즈노 퍼포먼스 쿨토시 손목/손등커버형 (11,900원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718649",
-      "thumbnail_url": null,
-      "description": "3팩이에요! 뭐 쿨토시가 다 똑다고 생각하지만브랜드 빨이라도 생각하면3팩에 이 가격이니깐 태울만한 거 같아요!",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:00:20.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "92ab2f56ad55b59d",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718648",
-      "source": "ppomppu",
-      "title": "[롯데온] 남성 쿨 드로즈 심리스 사각팬티 3매 세트 (15,840원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718648",
-      "thumbnail_url": null,
-      "description": "블루, 네이비, 그레이 색상이고 한장에 5,300원 정도입니다얇아서 시원하게 입기 좋습니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T06:00:10.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "15255c1b2c2816e1",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/105462",
-      "source": "ruliweb",
-      "title": "[알라딘 등] 공각기동대 4K 블루레이 스틸북 한정판 / 58,600원 부터",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/105462",
-      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/07/08/19f4047ff7f2ec0dc.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T05:57:54.000Z",
-      "fetched_at": "2026-07-09T01:46:49.334Z"
-    },
-    {
-      "id": "524b0ee26cd2da6b",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718647",
-      "source": "ppomppu",
-      "title": "[G마켓] 서울멸균우유 1000ml (16,400원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718647",
-      "thumbnail_url": null,
-      "description": "우유 필요했는데 가격 괜찮네요",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T05:49:23.000Z",
-      "fetched_at": "2026-07-08T08:05:17.752Z"
-    },
-    {
-      "id": "66d038f76934da81",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718644",
-      "source": "ppomppu",
-      "title": "[G마켓] 라쿠진 저소음 펠티어 미니 제습기 (38,740 / 무료배송)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718644",
-      "thumbnail_url": null,
-      "description": "미니 제습기 가격 괜찮게 나왔어요.슈퍼딜 쿠폰 붙어서 3만원에 무료배송이면 옷장이나작은 방에 외출 후 습기 제거 하기 좋은 것 같아요.쿠폰 꼭 받아서 구매하세요~",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T05:31:45.000Z",
-      "fetched_at": "2026-07-08T05:40:16.276Z"
-    },
-    {
-      "id": "fc9a553e8d402c7f",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718643",
-      "source": "ppomppu",
-      "title": "[H몰] 한경희 무선 12인치 BLDC 완전분리 폴딩팬 1+1세트 (204,600원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=718643",
-      "thumbnail_url": null,
-      "description": "무선 12인치 폴더블 팬큘레이터 1+1세트즉할가에 페이/카드할인까지 더하면 204,600원 나옵니다라방 중 공짜찬스 2명 추첨있고 14일 체험찬스는 세트 구매 전원 가능합니다무이자...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-07-08T05:29:24.000Z",
-      "fetched_at": "2026-07-08T05:40:16.276Z"
     }
   ]
 }
