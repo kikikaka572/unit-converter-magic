@@ -1,7 +1,59 @@
 {
-  "generated_at": "2026-09-18T17:56:33.426Z",
+  "generated_at": "2026-09-18T20:12:30.990Z",
   "count": 300,
   "deals": [
+    {
+      "id": "da15ae0ef33ff58b",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/107376",
+      "source": "ruliweb",
+      "title": "[일본 아마존] 스위치2 스텔라 블레이드 스틸북 에디션 / 8234엔",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/107376",
+      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/09/19/1a0b6149ebaf78d.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-09-18T19:55:20.000Z",
+      "fetched_at": "2026-09-18T20:12:30.785Z"
+    },
+    {
+      "id": "7a724ecc3e11b772",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/107375",
+      "source": "ruliweb",
+      "title": "[스팀] PAPERHEAD EP.0 (무료)",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/107375",
+      "thumbnail_url": "https://i3.ruliweb.com/thumb/26/09/19/1a0b5c33f14242da.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-09-18T18:28:18.000Z",
+      "fetched_at": "2026-09-18T20:12:30.785Z"
+    },
+    {
+      "id": "d0bdaee5387a491c",
+      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/107374",
+      "source": "ruliweb",
+      "title": "[그린맨게이밍] 스퀘어 에닉스 TGS 세일 파판 등등...",
+      "url": "https://bbs.ruliweb.com/news/board/1020/read/107374",
+      "thumbnail_url": "https://i2.ruliweb.com/thumb/26/09/19/1a0b5c03bb3b24a9.webp",
+      "description": "",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-09-18T18:23:41.000Z",
+      "fetched_at": "2026-09-18T20:12:30.785Z"
+    },
+    {
+      "id": "e00aef6be5917595",
+      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=735515",
+      "source": "ppomppu",
+      "title": "[네이버] 메가커피 22%할인, 아메리카노 라떼 등 (다양/무배)",
+      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=735515",
+      "thumbnail_url": null,
+      "description": "메가커피 22% 할인입니다. 메가MGC커피 (ICE)아메리카노(1.560원)https://brand.naver.com/mega-mgccoffee/products/13728...",
+      "price": null,
+      "category": null,
+      "posted_at": "2026-09-18T18:04:52.000Z",
+      "fetched_at": "2026-09-18T20:12:30.987Z"
+    },
     {
       "id": "41a3890ddc22b7d4",
       "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=735514",
@@ -13,7 +65,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T17:03:32.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "152c998f61a89ebe",
@@ -26,7 +78,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T17:02:03.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "36e807a0d7fc5b80",
@@ -39,7 +91,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T16:50:21.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "709cc8bde58a84d1",
@@ -52,7 +104,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T16:30:05.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "32cf10d4101c2351",
@@ -65,7 +117,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T16:12:21.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "56bc9f980cf20481",
@@ -78,7 +130,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T16:03:57.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "d3000c7c3fc99004",
@@ -91,7 +143,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T16:01:46.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "95c0e564714b9311",
@@ -104,7 +156,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:51:42.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "385b3207875a7cbb",
@@ -117,7 +169,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:39:16.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "aefd74761126772c",
@@ -130,7 +182,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:29:37.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "f214210d1f75aa5b",
@@ -143,7 +195,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:23:38.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "6d8db04cacb376e0",
@@ -156,7 +208,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:18:42.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "2cb95af5e6db6362",
@@ -169,7 +221,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:12:05.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "547520a2f38c3c27",
@@ -182,7 +234,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:11:44.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "577a1f8c9e532b60",
@@ -195,7 +247,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:11:26.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "a2bd9a690a701743",
@@ -208,7 +260,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T15:04:23.000Z",
-      "fetched_at": "2026-09-18T17:56:33.423Z"
+      "fetched_at": "2026-09-18T20:12:30.987Z"
     },
     {
       "id": "d34dd90c9004221c",
@@ -234,7 +286,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T14:14:21.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "01fc86252d6af6e9",
@@ -247,7 +299,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T14:12:48.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "d72e79a5a3a0aa5e",
@@ -260,7 +312,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T13:15:08.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "2a25ea1c586eb1e8",
@@ -273,7 +325,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T13:09:21.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "ce5f803f69052126",
@@ -351,7 +403,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T12:40:24.000Z",
-      "fetched_at": "2026-09-18T17:56:33.174Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "5d3e583f706f95ca",
@@ -377,7 +429,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T12:21:26.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "026d3742b3d83d3c",
@@ -507,7 +559,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T10:10:14.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "b998c72a84d7bccb",
@@ -520,7 +572,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T10:06:13.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "48b5ddc1dbe851dc",
@@ -533,7 +585,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T08:01:37.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "9dc4d78dc71145c9",
@@ -663,7 +715,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T06:51:56.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.785Z"
     },
     {
       "id": "f3a7a81e2f86fd89",
@@ -689,7 +741,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T06:00:00.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "028138c397c6ee34",
@@ -767,7 +819,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T05:04:32.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "67f779ae35bf28eb",
@@ -780,7 +832,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T04:35:20.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "fd132c45969bc7de",
@@ -793,7 +845,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T04:17:23.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "803b1994ecf1c402",
@@ -806,7 +858,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T03:40:22.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "f6b2f66ff0e22d5c",
@@ -819,7 +871,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T03:27:23.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "638d30e038ff5c04",
@@ -832,7 +884,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T03:01:05.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "7e73e66c82c44ed0",
@@ -845,7 +897,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T03:01:00.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "57c24ee9717c0f2a",
@@ -858,7 +910,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T03:00:00.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "8f024a14598c35cd",
@@ -871,7 +923,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T02:54:51.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "b3aa75f5552dbb35",
@@ -884,7 +936,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T02:20:50.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "875a3e2f291915b5",
@@ -1040,7 +1092,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-18T01:30:37.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "d01ca0d31b0786b5",
@@ -1105,7 +1157,7 @@
       "price": null,
       "category": null,
       "posted_at": "2026-09-17T23:37:28.000Z",
-      "fetched_at": "2026-09-18T17:56:33.175Z"
+      "fetched_at": "2026-09-18T20:12:30.786Z"
     },
     {
       "id": "f8dd3babe4f3c61b",
@@ -3849,58 +3901,6 @@
       "category": null,
       "posted_at": "2026-09-15T16:50:24.000Z",
       "fetched_at": "2026-09-16T13:48:30.613Z"
-    },
-    {
-      "id": "e2e2bb9b6e6e1862",
-      "external_id": "https://bbs.ruliweb.com/news/board/1020/read/107262",
-      "source": "ruliweb",
-      "title": "[T멤버십] 이번주 T데이 혜택 (9/16)",
-      "url": "https://bbs.ruliweb.com/news/board/1020/read/107262",
-      "thumbnail_url": "https://i1.ruliweb.com/thumb/26/09/16/1a0a5f0a6571874ce.webp",
-      "description": "",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-09-15T16:40:22.000Z",
-      "fetched_at": "2026-09-16T13:48:30.613Z"
-    },
-    {
-      "id": "0290bf1a4a042be5",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734681",
-      "source": "ppomppu",
-      "title": "[종근당건강몰] 추석선물장만기회 역대가 락토핏 코어 360일분 외(43,433원 외/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734681",
-      "thumbnail_url": null,
-      "description": "25%, 20%, 15%, 10% 할인쿠폰 + 10,000원 즉시사용 쇼핑지원금종근당건강 공식몰, 종근당건강몰대한민국 1등 건강기능식품, 종근당건강 공식몰인 종근당건강몰입니다. 신...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-09-15T16:00:12.000Z",
-      "fetched_at": "2026-09-15T23:15:45.863Z"
-    },
-    {
-      "id": "e633ac9572d11500",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734680",
-      "source": "ppomppu",
-      "title": "[g마켓] 올리 탄산워싱소다 3kg 2개 + 베이킹소다 3kg 1개 증정 (9,860원/무배)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734680",
-      "thumbnail_url": null,
-      "description": "탄산워싱소다 3kg 2개 + 베이킹소다 3kg 1개 구성입니다빨래 얼룩, 쉰내 제거할때나 주방에 기름때 청소할때 쓰기 괜찮습니다",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-09-15T15:52:24.000Z",
-      "fetched_at": "2026-09-15T23:15:45.863Z"
-    },
-    {
-      "id": "3c4dbd1c0bb30991",
-      "external_id": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734679",
-      "source": "ppomppu",
-      "title": "[지마켓] 더 마데카크림 45ml 7개+15ml 2개_AE+사은품 (37,690원/무료)",
-      "url": "http://www.ppomppu.co.kr/zboard/view.php?id=ppomppu&no=734679",
-      "thumbnail_url": null,
-      "description": "마데카크림 45ml 7개에 15ml 2개 그리고 사은품으로5일체험분이랑 엠플패드 3매에 쇼핑백 포함 구성입니다2만원 이상 구매하면 2천원 추가할인 쿠폰도 있어서더 저렴하게 구매가능...",
-      "price": null,
-      "category": null,
-      "posted_at": "2026-09-15T15:30:18.000Z",
-      "fetched_at": "2026-09-15T23:15:45.863Z"
     }
   ]
 }
